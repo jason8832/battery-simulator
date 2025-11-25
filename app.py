@@ -23,7 +23,7 @@ st.markdown("""
 def load_engine2_model():
     # 실제 파일 로드 시도
     try:
-        db = pd.read_excel('database/engine2_database.xlsx', sheet_name='LCA_Data', engine='openpyxl')
+        db = pd.read_excel('engine2_database.xlsx', sheet_name='LCA_Data', engine='openpyxl')
     except:
         # 데모용 데이터 생성 (파일 없을 때)
         data = {
