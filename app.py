@@ -10,15 +10,13 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # --- [1.1] 헤더 디자인 (로고 + 제목 + 로고) ---
-# 로고 크기와 정렬을 위해 컬럼 비율 조정
 col1, col2, col3 = st.columns([1.5, 6, 1.5])
 
 with col1:
-    # GitHub에 올린 파일명과 정확히 일치해야 합니다.
     try:
         st.image("ajou_logo.png", use_container_width=True)
     except:
-        st.warning("로고 파일(ajou_logo.png)을 찾을 수 없습니다.")
+        st.warning("로고(ajou_logo.png) 없음")
 
 with col2:
     st.markdown("<h1 style='text-align: center;'>AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>", unsafe_allow_html=True)
@@ -28,13 +26,13 @@ with col3:
     try:
         st.image("google_logo.png", use_container_width=True)
     except:
-        st.warning("로고 파일(google_logo.png)을 찾을 수 없습니다.")
+        st.warning("로고(google_logo.png) 없음")
 
 st.markdown("---")
 st.info("💡 이 플랫폼은 **Engine 1(수명 예측)**과 **Engine 2(환경 영향 평가)**를 통합한 **Virtual Twin**입니다.")
 
 # ==============================================================================
-# [Engine 2] 데이터 로드 함수
+# [Engine 2] 데이터 로드 함수 (수정됨)
 # ==============================================================================
 @st.cache_resource
 def load_engine2_model():
@@ -56,7 +54,7 @@ def load_engine2_model():
             'Energy_kWh_per_m2': np.concatenate([np.random.uniform(0.5, 0.7, 50), np.random.uniform(0.1, 0.2, 100)]),
             'VOC_g_per_m2': np.concatenate([np.random.uniform(2.8, 3.2, 50), np.zeros(100)])
         }
-        db = pd.DataFrame(data)
+        db = pd.DataFrame(data) # <-- 여기 들여쓰기 수정 완료
 
     X = db.drop(columns=['CO2_kg_per_m2', 'Energy_kWh_per_m2', 'VOC_g_per_m2'], errors='ignore')
     targets = [c for c in ['CO2_kg_per_m2', 'Energy_kWh_per_m2', 'VOC_g_per_m2'] if c in db.columns]
@@ -217,9 +215,9 @@ with tab2:
             x = np.arange(3)
             width = 0.35
             
-            # [디자인 수정] PPT 색감 반영: NMP(Red/Salmon) vs Simulation(Green/Mint)
-            color_nmp = '#FA8072'  # Salmon (PPT의 붉은색 계열)
-            color_sim = '#90EE90'  # LightGreen (PPT의 초록색 계열)
+            # [디자인 수정] PPT 색감 반영
+            color_nmp = '#FA8072'  # Salmon
+            color_sim = '#90EE90'  # LightGreen
             
             ax.bar(x - width/2, nmp_mean.values, width, label='Reference (NMP)', color=color_nmp)
             ax.bar(x + width/2, pred, width, label='Current Simulation', color=color_sim)
@@ -235,18 +233,3 @@ with tab2:
             st.error(f"예측 오류: {e}")
     else:
         st.write("👈 왼쪽 사이드바에서 [Engine 2 예측 실행] 버튼을 눌러주세요.")
-```
-
----
-
-### 3단계: 테마 색상 적용 (config.toml)
-
-이전에 만드신 `.streamlit/config.toml` 파일의 내용을 아래 내용으로 바꿔주세요. (PPT의 아주대 블루 색상을 버튼과 강조색에 적용합니다.)
-
-```toml
-[theme]
-primaryColor="#005BAC"
-backgroundColor="#FFFFFF"
-secondaryBackgroundColor="#F0F2F6"
-textColor="#262730"
-font="sans serif"
