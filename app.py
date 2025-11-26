@@ -11,7 +11,7 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
-# [0] 디자인 & 헤더 설정 (HTML/CSS) - v3.2 (들여쓰기 제거 수정)
+# [0] 디자인 & 헤더 설정 (HTML/CSS)
 # ==============================================================================
 
 def get_img_as_base64(file):
@@ -25,59 +25,52 @@ def get_img_as_base64(file):
 img_ajou = get_img_as_base64("ajou_logo.png")
 img_google = get_img_as_base64("google_logo.png")
 
-# [중요] HTML 코드를 왼쪽 끝에 딱 붙여서 작성해야 합니다. (들여쓰기 금지)
+# HTML/CSS (들여쓰기 제거됨)
 header_html = f"""
 <style>
-/* 전체 폰트 설정 */
 html, body, [class*="css"] {{
     font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
 }}
-/* 헤더 컨테이너 (초록색 배경 박스) */
 .header-container {{
-    background-color: #E8F5E9; /* 구글 스타일 연한 초록 */
+    background-color: #E8F5E9;
     padding: 40px 20px;
     border-radius: 20px;
     margin-bottom: 30px;
-    text-align: center; /* 중앙 정렬 */
+    text-align: center;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    border-bottom: 5px solid #4CAF50; /* 하단 포인트 라인 */
+    border-bottom: 5px solid #4CAF50;
 }}
-/* 대제목 (한 줄로 길게) */
 .main-title {{
     font-size: 3.0rem;
     font-weight: 900;
-    color: #1B5E20; /* 진한 초록색 */
+    color: #1B5E20;
     margin: 0;
     padding-bottom: 10px;
-    white-space: nowrap; /* 한 줄 강제 유지 */
+    white-space: nowrap;
     letter-spacing: -1px;
 }}
-/* 부제목 */
 .sub-title {{
     font-size: 1.3rem;
     color: #555;
     margin-bottom: 25px;
     font-weight: 500;
 }}
-/* 로고 컨테이너 (제목 아래 배치) */
 .logo-box {{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px; /* 로고 사이 간격 */
+    gap: 30px;
     margin-top: 10px;
 }}
-/* 로고 이미지 크기 고정 (작게) */
 .logo-img {{
-    height: 55px; /* 높이 고정 */
+    height: 55px;
     width: auto;
     object-fit: contain;
     transition: transform 0.3s;
 }}
 .logo-img:hover {{
-    transform: scale(1.1); /* 마우스 올리면 살짝 커짐 */
+    transform: scale(1.1);
 }}
-/* 모바일 반응형 */
 @media (max-width: 900px) {{
     .main-title {{ font-size: 2.0rem; white-space: normal; }}
     .logo-img {{ height: 40px; }}
@@ -85,11 +78,8 @@ html, body, [class*="css"] {{
 </style>
 
 <div class="header-container">
-    <!-- 1. 대제목 -->
     <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
-    <!-- 2. 팀명 -->
     <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
-    <!-- 3. 로고 (제목 아래에 나란히) -->
     <div class="logo-box">
         <img src="data:image/png;base64,{img_ajou}" class="logo-img" title="Ajou University">
         <div style="width: 1px; height: 30px; background-color: #bbb;"></div>
@@ -98,10 +88,8 @@ html, body, [class*="css"] {{
 </div>
 """
 
-# HTML 렌더링
 st.markdown(header_html, unsafe_allow_html=True)
 
-# 안내 메시지 (초록 테마)
 st.info("""**💡 Virtual Twin Platform** 이 플랫폼은 **Engine 1(수명 예측)**과 **Engine 2(환경 영향 평가)**를 통합한 시뮬레이터입니다. 좌측 사이드바에서 조건을 설정하여 최적의 배터리 소재 조합을 탐색하세요.""")
 
 # ==============================================================================
@@ -112,7 +100,6 @@ def load_engine2_model():
     try:
         db = pd.read_excel('engine2_database.xlsx', sheet_name='LCA_Data', engine='openpyxl')
     except:
-        # 데모용 데이터
         data = {
             'Binder_Type': ['PVDF']*50 + ['CMGG']*50 + ['GG']*50,
             'Solvent_Type': ['NMP']*50 + ['Water']*50 + ['Water']*50,
@@ -194,8 +181,8 @@ with tab1:
             )
             st.divider()
             st.markdown("#### ⚙️ 예측 조건 설정")
-            init_cap_input = st.number_input("Initial specific capacity , (mAh/g)", 100.0, 400.0, 185.0)
-            cycle_input = st.number_input("Number of cycles for prediction", 200, 5000, 1000, step=100)
+            init_cap_input = st.number_input("초기 비용량 (Initial Capacity, mAh/g)", 100.0, 400.0, 185.0)
+            cycle_input = st.number_input("예측 사이클 수 (Prediction Cycles)", 200, 5000, 1000, step=100)
             
             st.caption("※ 실제 데이터베이스(textbooks)의 학습 패턴 기반")
             run_e1 = st.button("Engine 1 예측 실행", type="primary", use_container_width=True)
@@ -247,15 +234,18 @@ with tab1:
         else:
             st.info("좌측 패널에서 조건을 설정하고 [Engine 1 예측 실행]을 눌러주세요.")
 
-# --- TAB 2: Engine 2 ---
+# --- TAB 2: Engine 2 (레이아웃 변경: 사이드바 -> 좌측 패널) ---
 with tab2:
     model_e2, prep_e2, db_e2 = load_engine2_model()
     
     st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA)")
     
-    with st.sidebar:
-        st.header("🛠️ Engine 2 Parameter")
+    # [수정] 사이드바 대신 Engine 1과 동일한 2분할 레이아웃(col_input, col_view) 적용
+    col_input_e2, col_view_e2 = st.columns([1, 2])
+    
+    with col_input_e2:
         with st.container(border=True):
+            st.markdown("#### 🛠️ 공정 조건 설정")
             s_binder = st.selectbox("Binder Type", ["PVDF", "CMGG", "GG", "CMC"])
             s_solvent = st.radio("Solvent Type", ["NMP", "Water"])
             st.divider()
@@ -265,64 +255,66 @@ with tab2:
             st.write("")
             run_e2 = st.button("Engine 2 예측 실행", type="primary", use_container_width=True)
 
-    if run_e2:
-        input_data = pd.DataFrame({
-            'Binder_Type': [s_binder], 'Solvent_Type': [s_solvent],
-            'Binder_Amount_wt': [2.0], 'Graphite_wt': [97.0], 'SuperP_wt': [1.0],
-            'Coating_Thickness_mm': [0.1], 
-            'Drying_Temp_C': [s_temp], 'Drying_Time_min': [s_time],
-            'Areal_Mass_Loading_g_m2': [s_loading]
-        })
-        
-        try:
-            X_new = prep_e2.transform(input_data)
-            pred = model_e2.predict(X_new)[0] 
+    with col_view_e2:
+        if run_e2:
+            input_data = pd.DataFrame({
+                'Binder_Type': [s_binder], 'Solvent_Type': [s_solvent],
+                'Binder_Amount_wt': [2.0], 'Graphite_wt': [97.0], 'SuperP_wt': [1.0],
+                'Coating_Thickness_mm': [0.1], 
+                'Drying_Temp_C': [s_temp], 'Drying_Time_min': [s_time],
+                'Areal_Mass_Loading_g_m2': [s_loading]
+            })
             
-            col1, col2, col3 = st.columns(3)
-            col1.metric("CO₂ Emission", f"{pred[0]:.4f} kg/m²", delta="Low Carbon" if pred[0] < 0.1 else "High Carbon", delta_color="inverse")
-            col2.metric("Energy Consumption", f"{pred[1]:.4f} kWh/m²")
-            col3.metric("VOC Emission", f"{pred[2]:.4f} g/m²", delta="-100%" if pred[2]<0.01 else None, delta_color="inverse")
-            
-            st.divider()
-            st.markdown("#### 📊 Environmental Impact Comparison")
-            nmp_mean = db_e2[db_e2['Solvent_Type']=='NMP'][['CO2_kg_per_m2', 'Energy_kWh_per_m2', 'VOC_g_per_m2']].mean()
-            if nmp_mean.isnull().all():
-                nmp_mean = pd.Series([0.27, 0.6, 3.0], index=['CO2_kg_per_m2', 'Energy_kWh_per_m2', 'VOC_g_per_m2'])
+            try:
+                X_new = prep_e2.transform(input_data)
+                pred = model_e2.predict(X_new)[0] 
+                
+                # 결과 카드
+                col1, col2, col3 = st.columns(3)
+                col1.metric("CO₂ Emission", f"{pred[0]:.4f} kg/m²", delta="Low Carbon" if pred[0] < 0.1 else "High Carbon", delta_color="inverse")
+                col2.metric("Energy Consumption", f"{pred[1]:.4f} kWh/m²")
+                col3.metric("VOC Emission", f"{pred[2]:.4f} g/m²", delta="-100%" if pred[2]<0.01 else None, delta_color="inverse")
+                
+                st.divider()
+                st.markdown("#### 📊 Environmental Impact Comparison")
+                nmp_mean = db_e2[db_e2['Solvent_Type']=='NMP'][['CO2_kg_per_m2', 'Energy_kWh_per_m2', 'VOC_g_per_m2']].mean()
+                if nmp_mean.isnull().all():
+                    nmp_mean = pd.Series([0.27, 0.6, 3.0], index=['CO2_kg_per_m2', 'Energy_kWh_per_m2', 'VOC_g_per_m2'])
 
-            fig, ax = plt.subplots(figsize=(10, 5))
-            x = np.arange(3)
-            width = 0.35
-            
-            color_nmp = '#FF8A80'
-            color_sim = '#69F0AE'
-            
-            rects1 = ax.bar(x - width/2, nmp_mean.values, width, label='Reference (NMP)', color=color_nmp, edgecolor='white', alpha=0.9)
-            rects2 = ax.bar(x + width/2, pred, width, label='Current Simulation', color=color_sim, edgecolor='gray', linewidth=1)
-            
-            ax.set_xticks(x)
-            ax.set_xticklabels(['CO2', 'Energy', 'VOC'], fontsize=12, fontweight='bold')
-            ax.set_ylabel('Value', fontsize=11)
-            ax.set_title('Environmental Impact Comparison', fontsize=14, fontweight='bold', pad=15)
-            ax.legend(fontsize=10, frameon=True, shadow=True)
-            ax.grid(axis='y', linestyle=':', alpha=0.6)
-            ax.spines['top'].set_visible(False)
-            ax.spines['right'].set_visible(False)
-            
-            def autolabel(rects):
-                for rect in rects:
-                    height = rect.get_height()
-                    ax.annotate(f'{height:.2f}',
-                                xy=(rect.get_x() + rect.get_width() / 2, height),
-                                xytext=(0, 3),
-                                textcoords="offset points",
-                                ha='center', va='bottom', fontsize=9)
-            
-            autolabel(rects1)
-            autolabel(rects2)
-            
-            st.pyplot(fig)
-            
-        except Exception as e:
-            st.error(f"예측 오류: {e}")
-    else:
-        st.info("👈 왼쪽 사이드바에서 공정 조건을 설정하고 [Engine 2 예측 실행] 버튼을 눌러주세요.")
+                fig, ax = plt.subplots(figsize=(10, 5))
+                x = np.arange(3)
+                width = 0.35
+                
+                color_nmp = '#FF8A80'
+                color_sim = '#69F0AE'
+                
+                rects1 = ax.bar(x - width/2, nmp_mean.values, width, label='Reference (NMP)', color=color_nmp, edgecolor='white', alpha=0.9)
+                rects2 = ax.bar(x + width/2, pred, width, label='Current Simulation', color=color_sim, edgecolor='gray', linewidth=1)
+                
+                ax.set_xticks(x)
+                ax.set_xticklabels(['CO2', 'Energy', 'VOC'], fontsize=12, fontweight='bold')
+                ax.set_ylabel('Value', fontsize=11)
+                ax.set_title('Environmental Impact Comparison', fontsize=14, fontweight='bold', pad=15)
+                ax.legend(fontsize=10, frameon=True, shadow=True)
+                ax.grid(axis='y', linestyle=':', alpha=0.6)
+                ax.spines['top'].set_visible(False)
+                ax.spines['right'].set_visible(False)
+                
+                def autolabel(rects):
+                    for rect in rects:
+                        height = rect.get_height()
+                        ax.annotate(f'{height:.2f}',
+                                    xy=(rect.get_x() + rect.get_width() / 2, height),
+                                    xytext=(0, 3),
+                                    textcoords="offset points",
+                                    ha='center', va='bottom', fontsize=9)
+                
+                autolabel(rects1)
+                autolabel(rects2)
+                
+                st.pyplot(fig)
+                
+            except Exception as e:
+                st.error(f"예측 오류: {e}")
+        else:
+            st.info("좌측 패널에서 공정 조건을 설정하고 [Engine 2 예측 실행]을 눌러주세요.")
