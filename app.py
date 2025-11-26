@@ -11,7 +11,7 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
-# [0] 디자인 & 헤더 설정 (HTML/CSS)
+# [0] 디자인 & 헤더 설정 (HTML/CSS) - v3.1 디자인 혁신
 # ==============================================================================
 
 def get_img_as_base64(file):
@@ -25,96 +25,93 @@ def get_img_as_base64(file):
 img_ajou = get_img_as_base64("ajou_logo.png")
 img_google = get_img_as_base64("google_logo.png")
 
-# [수정 포인트] 
-# 1. 헤더 배경색을 초록색(#E8F5E9)으로 변경 (구글 스타일 연한 초록)
-# 2. 레이아웃을 Flex-column으로 변경하여 제목 아래에 로고 배치
-# 3. 로고 크기(height)를 40px로 축소
+# CSS 및 HTML 구조 정의
 header_html = f"""
 <style>
-    .stApp {{
-        background-color: #FFFFFF;
+    /* 전체 폰트 설정 */
+    html, body, [class*="css"] {{
+        font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
     }}
+    
+    /* 헤더 컨테이너 (초록색 배경 박스) */
     .header-container {{
-        display: flex;
-        flex-direction: column; /* 세로 정렬 (제목 위, 로고 아래) */
-        align-items: center;
-        justify-content: center;
-        background-color: #E8F5E9; /* 연한 초록색 배경 */
+        background-color: #E8F5E9; /* 구글 스타일 연한 초록 */
         padding: 40px 20px;
-        border-radius: 0px 0px 20px 20px; /* 아래쪽만 둥글게 */
-        margin-top: -60px; /* 상단 여백 제거하여 꽉 차게 */
+        border-radius: 20px;
         margin-bottom: 30px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        text-align: center; /* 중앙 정렬 */
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        border-bottom: 5px solid #4CAF50; /* 하단 포인트 라인 */
     }}
+    
+    /* 대제목 (한 줄로 길게) */
     .main-title {{
-        font-family: 'Helvetica Neue', sans-serif;
-        font-size: 3.2rem;
-        font-weight: 800;
-        color: #2E7D32; /* 진한 초록색 텍스트 */
+        font-size: 3.0rem;
+        font-weight: 900;
+        color: #1B5E20; /* 진한 초록색 */
         margin: 0;
-        text-align: center;
-        white-space: nowrap;
-        margin-bottom: 15px;
+        padding-bottom: 10px;
+        white-space: nowrap; /* 한 줄 강제 유지 */
+        letter-spacing: -1px;
     }}
+    
+    /* 부제목 */
     .sub-title {{
-        font-size: 1.2rem;
-        color: #555555;
-        text-align: center;
+        font-size: 1.3rem;
+        color: #555;
         margin-bottom: 25px;
         font-weight: 500;
     }}
-    .logo-container {{
+    
+    /* 로고 컨테이너 (제목 아래 배치) */
+    .logo-box {{
         display: flex;
-        flex-direction: row;
-        gap: 30px; /* 로고 사이 간격 */
+        justify-content: center;
         align-items: center;
-    }}
-    .logo-img {{
-        height: 45px; /* 로고 크기 작게 */
-        width: auto;
-        object-fit: contain;
-        opacity: 0.9;
-        transition: 0.3s;
-    }}
-    .logo-img:hover {{
-        opacity: 1;
-        transform: scale(1.05);
+        gap: 30px; /* 로고 사이 간격 */
+        margin-top: 10px;
     }}
     
-    /* 모바일 반응형 */
-    @media (max-width: 800px) {{
+    /* 로고 이미지 크기 고정 (작게) */
+    .logo-img {{
+        height: 55px; /* 높이 고정 */
+        width: auto;
+        object-fit: contain;
+        transition: transform 0.3s;
+    }}
+    .logo-img:hover {{
+        transform: scale(1.1); /* 마우스 올리면 살짝 커짐 */
+    }}
+    
+    /* 모바일 반응형 (화면 작을 때만 줄바꿈 허용) */
+    @media (max-width: 900px) {{
         .main-title {{ font-size: 2.0rem; white-space: normal; }}
-        .logo-img {{ height: 35px; }}
+        .logo-img {{ height: 40px; }}
     }}
 </style>
 
+<!-- HTML 본문 -->
 <div class="header-container">
-    <!-- 1. 대제목 (한 줄로 길게) -->
+    <!-- 1. 대제목 -->
     <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
     
-    <!-- 2. 부제목 -->
+    <!-- 2. 팀명 -->
     <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
     
-    <!-- 3. 로고들 (제목 아래에 배치) -->
-    <div class="logo-container">
+    <!-- 3. 로고 (제목 아래에 나란히) -->
+    <div class="logo-box">
         <img src="data:image/png;base64,{img_ajou}" class="logo-img" title="Ajou University">
-        <div style="width: 1px; height: 30px; background-color: #ccc;"></div> <!-- 구분선 -->
+        <div style="width: 1px; height: 30px; background-color: #bbb;"></div> <!-- 얇은 구분선 -->
         <img src="data:image/png;base64,{img_google}" class="logo-img" title="Google">
     </div>
 </div>
 """
 
+# HTML 렌더링
 st.markdown(header_html, unsafe_allow_html=True)
 
-# 안내 메시지 (스타일 개선)
-st.markdown("""
-<div style="background-color: #F1F8E9; padding: 15px; border-radius: 10px; border-left: 5px solid #2E7D32; color: #33691E;">
-    <strong>💡 Virtual Twin Platform</strong><br>
-    이 플랫폼은 <b>Engine 1(수명 예측)</b>과 <b>Engine 2(환경 영향 평가)</b>를 통합한 시뮬레이터입니다. 
-    좌측 사이드바에서 조건을 설정하여 최적의 배터리 소재 조합을 탐색하세요.
-</div>
-<br>
-""", unsafe_allow_html=True)
+# 안내 메시지 (초록 테마)
+st.info("""**💡 Virtual Twin Platform** 이 플랫폼은 **Engine 1(수명 예측)**과 **Engine 2(환경 영향 평가)**를 통합한 시뮬레이터입니다. 좌측 사이드바에서 조건을 설정하여 최적의 배터리 소재 조합을 탐색하세요.""")
 
 # ==============================================================================
 # [Engine 2] 데이터 로드 함수
