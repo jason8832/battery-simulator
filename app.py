@@ -7,17 +7,30 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
 # --- [1] 페이지 기본 설정 ---
-st.set_page_config(page_title="Battery AI Simulator", layout="wide")
+st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
-st.title("🔋 AI 기반 배터리 소재/공정 최적화 시뮬레이터")
-st.markdown("""
-**Team 스물다섯** | 아주대학교 AI 융합 캡스톤 디자인
-> 이 플랫폼은 **Engine 1(수명 예측)**과 **Engine 2(환경 영향 평가)**를 통합한 **Virtual Twin**입니다.
-""")
+# --- [1.1] 헤더 디자인 (아주대 로고 + 제목 + 구글 로고) ---
+col1, col2, col3 = st.columns([1, 6, 1])
+
+with col1:
+    # 아주대학교 로고
+    st.image("https://www.ajou.ac.kr/_res/ajou/kr/img/intro/img_symbol01.png", width=120)
+
+with col2:
+    st.title("AI 기반 배터리 소재/공정 최적화 시뮬레이터")
+    st.markdown("**Team 스물다섯** | Google-아주대학교 AI 융합 캡스톤 디자인")
+
+with col3:
+    # 구글 로고 (공식 이미지 링크 사용)
+    st.image("https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg", width=120)
+
+st.markdown("---") # 구분선 추가
+st.info("💡 이 플랫폼은 **Engine 1(수명 예측)**과 **Engine 2(환경 영향 평가)**를 통합한 **Virtual Twin**입니다.")
 
 # ==============================================================================
 # [Engine 2] 환경 영향 평가 모델 (LCA)
 # ==============================================================================
+# ... (이하 로직은 기존 v1.4와 동일합니다. 그대로 두셔도 됩니다.) ...
 
 @st.cache_resource
 def load_engine2_model():
