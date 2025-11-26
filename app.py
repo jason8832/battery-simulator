@@ -121,7 +121,7 @@ with tab1:
         # [기능 추가] 비용량 & 사이클 수 입력
         st.markdown("##### ⚙️ 예측 조건 설정")
         init_cap_input = st.number_input("초기 비용량 (Initial Capacity, mAh/g)", 100.0, 400.0, 185.0)
-        cycle_input = st.number_input("예측 사이클 수 (Prediction Cycles)", 500, 5000, 1000, step=100)
+        cycle_input = st.number_input("예측 사이클 수 (Prediction Cycles)", 200, 1000, 1000, step=100)
         
         st.caption("※ 실제 데이터베이스(textbooks)의 학습 패턴을 기반으로 생성된 시뮬레이션입니다.")
         run_e1 = st.button("Engine 1 수명 예측 실행")
