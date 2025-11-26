@@ -14,7 +14,6 @@ st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="
 # [0] 디자인 & 헤더 설정 (HTML/CSS)
 # ==============================================================================
 
-# 이미지 파일을 Base64 코드로 변환하는 함수 (HTML에 넣기 위해)
 def get_img_as_base64(file):
     try:
         with open(file, "rb") as f:
@@ -23,43 +22,35 @@ def get_img_as_base64(file):
     except:
         return ""
 
-# 로고 이미지 로드
 img_ajou = get_img_as_base64("ajou_logo.png")
 img_google = get_img_as_base64("google_logo.png")
 
-# CSS 스타일 및 헤더 HTML
-st.markdown(f"""
+# [수정 포인트] HTML 코드를 변수에 담을 때 들여쓰기를 제거했습니다.
+header_html = f"""
 <style>
-    /* 전체 배경색 */
     .stApp {{
         background-color: #FFFFFF;
     }}
-    
-    /* 헤더 컨테이너 스타일 (배경색 추가) */
     .header-container {{
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        background-color: #F0F4F8; /* 연한 회하늘색 배경 */
+        background-color: #F0F4F8;
         padding: 25px 40px;
         border-radius: 20px;
         margin-bottom: 30px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }}
-    
-    /* 제목 스타일 (한 줄로 길게, 글자 크기 조절) */
     .main-title {{
         font-family: 'Helvetica Neue', sans-serif;
-        font-size: 2.8rem; /* 글자 크기 키움 */
+        font-size: 2.8rem;
         font-weight: 800;
-        color: #005BAC; /* 아주대 블루 */
+        color: #005BAC;
         margin: 0;
         text-align: center;
-        white-space: nowrap; /* 줄바꿈 방지 (한 줄 유지) */
+        white-space: nowrap;
     }}
-    
-    /* 부제목 스타일 */
     .sub-title {{
         font-size: 1.3rem;
         color: #555555;
@@ -67,42 +58,34 @@ st.markdown(f"""
         margin-top: 10px;
         font-weight: 500;
     }}
-    
-    /* 로고 이미지 스타일 */
     .logo-img {{
-        height: 80px; /* 로고 높이 고정 */
+        height: 80px;
         width: auto;
         object-fit: contain;
     }}
-
-    /* 반응형 처리 (화면이 너무 작으면 줄바꿈 허용) */
     @media (max-width: 1200px) {{
-        .main-title {{ font-size: 2.2rem; white-space: normal; }}
-        .logo-img {{ height: 60px; }}
+        .main-title {{ font-size: 2.0rem; white-space: normal; }}
+        .logo-img {{ height: 50px; }}
+        .header-container {{ padding: 20px; }}
     }}
 </style>
 
-<!-- 헤더 HTML 구조 -->
 <div class="header-container">
-    <!-- 왼쪽: 아주대 로고 -->
     <div style="flex: 0 0 auto;">
         <img src="data:image/png;base64,{img_ajou}" class="logo-img">
     </div>
-    
-    <!-- 가운데: 제목 -->
     <div style="flex: 1; padding: 0 20px;">
         <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
         <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
     </div>
-    
-    <!-- 오른쪽: 구글 로고 -->
     <div style="flex: 0 0 auto;">
         <img src="data:image/png;base64,{img_google}" class="logo-img">
     </div>
 </div>
-""", unsafe_allow_html=True)
+"""
 
-# 안내 메시지
+st.markdown(header_html, unsafe_allow_html=True)
+
 st.info("""💡 이 플랫폼은 **Engine 1(수명 예측)**과 **Engine 2(환경 영향 평가)**를 통합한 **Virtual Twin**입니다.
 실시간 AI 분석을 통해 소재와 공정의 최적 조합을 탐색하세요.""")
 
@@ -114,7 +97,6 @@ def load_engine2_model():
     try:
         db = pd.read_excel('engine2_database.xlsx', sheet_name='LCA_Data', engine='openpyxl')
     except:
-        # 데모용 데이터
         data = {
             'Binder_Type': ['PVDF']*50 + ['CMGG']*50 + ['GG']*50,
             'Solvent_Type': ['NMP']*50 + ['Water']*50 + ['Water']*50,
@@ -176,7 +158,7 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     return x, np.clip(capacity, 0, None), ce
 
 # ==============================================================================
-# [메인 UI] 탭 구성
+# [메인 UI]
 # ==============================================================================
 
 tab1, tab2 = st.tabs(["⚡ Engine 1: 배터리 수명 예측", "🏭 Engine 2: 친환경 공정 최적화"])
@@ -214,11 +196,9 @@ with tab1:
                 
                 cycles, capacity, ce = predict_life_and_ce(decay_rate=decay, specific_cap_base=init_cap_input, cycles=cycle_input)
                 
-                # 그래프 디자인 업그레이드
                 plt.style.use('default')
                 fig2, (ax_cap, ax_ce) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
                 
-                # Capacity
                 ax_cap.plot(cycles[:100], capacity[:100], 'k-', linewidth=2.5, label='Input Data (1~100)')
                 ax_cap.plot(cycles[100:], capacity[100:], '--', color=color, linewidth=2.5, label=f'AI Prediction ({label})')
                 ax_cap.set_ylabel("Specific Capacity (mAh/g)", fontsize=11, fontweight='bold')
@@ -228,7 +208,6 @@ with tab1:
                 ax_cap.spines['top'].set_visible(False)
                 ax_cap.spines['right'].set_visible(False)
                 
-                # CE
                 ax_ce.plot(cycles, ce, '-', color='#007bff', linewidth=1.5, alpha=0.8, label='Coulombic Efficiency')
                 ax_ce.set_ylabel("Coulombic Efficiency (%)", fontsize=11, fontweight='bold')
                 ax_ce.set_xlabel("Cycle Number", fontsize=11, fontweight='bold')
