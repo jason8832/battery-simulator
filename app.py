@@ -29,11 +29,12 @@ with col3:
         st.warning("로고(google_logo.png) 없음")
 
 st.markdown("---")
-st.info("💡 이 플랫폼은 Engine 1(수명 예측)과 Engine 2(환경 영향 평가)를 통합한 최적화 시뮬레이터입니다.
-하영아 나 잘 만들었지 ✌🏻")
+
+st.info("""💡 이 플랫폼은 Engine 1(수명 예측)과 Engine 2(환경 영향 평가)를 통합한 최적화 시뮬레이터입니다.
+하영아 나 잘 만들었지 ✌🏻""")
 
 # ==============================================================================
-# [Engine 2] 데이터 로드 함수 (수정됨)
+# [Engine 2] 데이터 로드 함수
 # ==============================================================================
 @st.cache_resource
 def load_engine2_model():
@@ -55,7 +56,7 @@ def load_engine2_model():
             'Energy_kWh_per_m2': np.concatenate([np.random.uniform(0.5, 0.7, 50), np.random.uniform(0.1, 0.2, 100)]),
             'VOC_g_per_m2': np.concatenate([np.random.uniform(2.8, 3.2, 50), np.zeros(100)])
         }
-        db = pd.DataFrame(data) # <-- 여기 들여쓰기 수정 완료
+        db = pd.DataFrame(data)
 
     X = db.drop(columns=['CO2_kg_per_m2', 'Energy_kWh_per_m2', 'VOC_g_per_m2'], errors='ignore')
     targets = [c for c in ['CO2_kg_per_m2', 'Energy_kWh_per_m2', 'VOC_g_per_m2'] if c in db.columns]
