@@ -11,7 +11,7 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
-# [0] 디자인 & 헤더 설정 (HTML/CSS) - v3.1 디자인 혁신
+# [0] 디자인 & 헤더 설정 (HTML/CSS) - v3.2 (들여쓰기 제거 수정)
 # ==============================================================================
 
 def get_img_as_base64(file):
@@ -25,83 +25,74 @@ def get_img_as_base64(file):
 img_ajou = get_img_as_base64("ajou_logo.png")
 img_google = get_img_as_base64("google_logo.png")
 
-# CSS 및 HTML 구조 정의
+# [중요] HTML 코드를 왼쪽 끝에 딱 붙여서 작성해야 합니다. (들여쓰기 금지)
 header_html = f"""
 <style>
-    /* 전체 폰트 설정 */
-    html, body, [class*="css"] {{
-        font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
-    }}
-    
-    /* 헤더 컨테이너 (초록색 배경 박스) */
-    .header-container {{
-        background-color: #E8F5E9; /* 구글 스타일 연한 초록 */
-        padding: 40px 20px;
-        border-radius: 20px;
-        margin-bottom: 30px;
-        text-align: center; /* 중앙 정렬 */
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        border-bottom: 5px solid #4CAF50; /* 하단 포인트 라인 */
-    }}
-    
-    /* 대제목 (한 줄로 길게) */
-    .main-title {{
-        font-size: 3.0rem;
-        font-weight: 900;
-        color: #1B5E20; /* 진한 초록색 */
-        margin: 0;
-        padding-bottom: 10px;
-        white-space: nowrap; /* 한 줄 강제 유지 */
-        letter-spacing: -1px;
-    }}
-    
-    /* 부제목 */
-    .sub-title {{
-        font-size: 1.3rem;
-        color: #555;
-        margin-bottom: 25px;
-        font-weight: 500;
-    }}
-    
-    /* 로고 컨테이너 (제목 아래 배치) */
-    .logo-box {{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 30px; /* 로고 사이 간격 */
-        margin-top: 10px;
-    }}
-    
-    /* 로고 이미지 크기 고정 (작게) */
-    .logo-img {{
-        height: 55px; /* 높이 고정 */
-        width: auto;
-        object-fit: contain;
-        transition: transform 0.3s;
-    }}
-    .logo-img:hover {{
-        transform: scale(1.1); /* 마우스 올리면 살짝 커짐 */
-    }}
-    
-    /* 모바일 반응형 (화면 작을 때만 줄바꿈 허용) */
-    @media (max-width: 900px) {{
-        .main-title {{ font-size: 2.0rem; white-space: normal; }}
-        .logo-img {{ height: 40px; }}
-    }}
+/* 전체 폰트 설정 */
+html, body, [class*="css"] {{
+    font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
+}}
+/* 헤더 컨테이너 (초록색 배경 박스) */
+.header-container {{
+    background-color: #E8F5E9; /* 구글 스타일 연한 초록 */
+    padding: 40px 20px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    text-align: center; /* 중앙 정렬 */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-bottom: 5px solid #4CAF50; /* 하단 포인트 라인 */
+}}
+/* 대제목 (한 줄로 길게) */
+.main-title {{
+    font-size: 3.0rem;
+    font-weight: 900;
+    color: #1B5E20; /* 진한 초록색 */
+    margin: 0;
+    padding-bottom: 10px;
+    white-space: nowrap; /* 한 줄 강제 유지 */
+    letter-spacing: -1px;
+}}
+/* 부제목 */
+.sub-title {{
+    font-size: 1.3rem;
+    color: #555;
+    margin-bottom: 25px;
+    font-weight: 500;
+}}
+/* 로고 컨테이너 (제목 아래 배치) */
+.logo-box {{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* 로고 사이 간격 */
+    margin-top: 10px;
+}}
+/* 로고 이미지 크기 고정 (작게) */
+.logo-img {{
+    height: 55px; /* 높이 고정 */
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s;
+}}
+.logo-img:hover {{
+    transform: scale(1.1); /* 마우스 올리면 살짝 커짐 */
+}}
+/* 모바일 반응형 */
+@media (max-width: 900px) {{
+    .main-title {{ font-size: 2.0rem; white-space: normal; }}
+    .logo-img {{ height: 40px; }}
+}}
 </style>
 
-<!-- HTML 본문 -->
 <div class="header-container">
     <!-- 1. 대제목 -->
     <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
-    
     <!-- 2. 팀명 -->
     <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
-    
     <!-- 3. 로고 (제목 아래에 나란히) -->
     <div class="logo-box">
         <img src="data:image/png;base64,{img_ajou}" class="logo-img" title="Ajou University">
-        <div style="width: 1px; height: 30px; background-color: #bbb;"></div> <!-- 얇은 구분선 -->
+        <div style="width: 1px; height: 30px; background-color: #bbb;"></div>
         <img src="data:image/png;base64,{img_google}" class="logo-img" title="Google">
     </div>
 </div>
