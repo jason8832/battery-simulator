@@ -251,7 +251,7 @@ with tab2:
             st.divider()
             s_temp = st.slider("Drying Temp (°C)", 60, 180, 110)
             s_time = st.slider("Drying Time (min)", 10, 720, 120) 
-            s_loading = st.number_input("Mass Loading (mg/cm²)", 1.0, 50.0, 20.0)
+            s_loading = st.number_input("Loading mass (mg/cm²)", 1.0, 50.0, 20.0)
             st.write("")
             run_e2 = st.button("Engine 2 예측 실행", type="primary", use_container_width=True)
 
