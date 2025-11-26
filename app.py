@@ -25,7 +25,10 @@ def get_img_as_base64(file):
 img_ajou = get_img_as_base64("ajou_logo.png")
 img_google = get_img_as_base64("google_logo.png")
 
-# [수정 포인트] HTML 코드를 변수에 담을 때 들여쓰기를 제거했습니다.
+# [수정 포인트] 
+# 1. 헤더 배경색을 초록색(#E8F5E9)으로 변경 (구글 스타일 연한 초록)
+# 2. 레이아웃을 Flex-column으로 변경하여 제목 아래에 로고 배치
+# 3. 로고 크기(height)를 40px로 축소
 header_html = f"""
 <style>
     .stApp {{
@@ -33,61 +36,85 @@ header_html = f"""
     }}
     .header-container {{
         display: flex;
-        flex-direction: row;
+        flex-direction: column; /* 세로 정렬 (제목 위, 로고 아래) */
         align-items: center;
-        justify-content: space-between;
-        background-color: #F0F4F8;
-        padding: 25px 40px;
-        border-radius: 20px;
+        justify-content: center;
+        background-color: #E8F5E9; /* 연한 초록색 배경 */
+        padding: 40px 20px;
+        border-radius: 0px 0px 20px 20px; /* 아래쪽만 둥글게 */
+        margin-top: -60px; /* 상단 여백 제거하여 꽉 차게 */
         margin-bottom: 30px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }}
     .main-title {{
         font-family: 'Helvetica Neue', sans-serif;
-        font-size: 2.8rem;
+        font-size: 3.2rem;
         font-weight: 800;
-        color: #005BAC;
+        color: #2E7D32; /* 진한 초록색 텍스트 */
         margin: 0;
         text-align: center;
         white-space: nowrap;
+        margin-bottom: 15px;
     }}
     .sub-title {{
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         color: #555555;
         text-align: center;
-        margin-top: 10px;
+        margin-bottom: 25px;
         font-weight: 500;
     }}
+    .logo-container {{
+        display: flex;
+        flex-direction: row;
+        gap: 30px; /* 로고 사이 간격 */
+        align-items: center;
+    }}
     .logo-img {{
-        height: 80px;
+        height: 45px; /* 로고 크기 작게 */
         width: auto;
         object-fit: contain;
+        opacity: 0.9;
+        transition: 0.3s;
     }}
-    @media (max-width: 1200px) {{
+    .logo-img:hover {{
+        opacity: 1;
+        transform: scale(1.05);
+    }}
+    
+    /* 모바일 반응형 */
+    @media (max-width: 800px) {{
         .main-title {{ font-size: 2.0rem; white-space: normal; }}
-        .logo-img {{ height: 50px; }}
-        .header-container {{ padding: 20px; }}
+        .logo-img {{ height: 35px; }}
     }}
 </style>
 
 <div class="header-container">
-    <div style="flex: 0 0 auto;">
-        <img src="data:image/png;base64,{img_ajou}" class="logo-img">
-    </div>
-    <div style="flex: 1; padding: 0 20px;">
-        <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
-        <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
-    </div>
-    <div style="flex: 0 0 auto;">
-        <img src="data:image/png;base64,{img_google}" class="logo-img">
+    <!-- 1. 대제목 (한 줄로 길게) -->
+    <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
+    
+    <!-- 2. 부제목 -->
+    <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
+    
+    <!-- 3. 로고들 (제목 아래에 배치) -->
+    <div class="logo-container">
+        <img src="data:image/png;base64,{img_ajou}" class="logo-img" title="Ajou University">
+        <div style="width: 1px; height: 30px; background-color: #ccc;"></div> <!-- 구분선 -->
+        <img src="data:image/png;base64,{img_google}" class="logo-img" title="Google">
     </div>
 </div>
 """
 
 st.markdown(header_html, unsafe_allow_html=True)
 
-st.info("""💡 이 플랫폼은 **Engine 1(수명 예측)**과 **Engine 2(환경 영향 평가)**를 통합한 **Virtual Twin**입니다.
-실시간 AI 분석을 통해 소재와 공정의 최적 조합을 탐색하세요.""")
+# 안내 메시지 (스타일 개선)
+st.markdown("""
+<div style="background-color: #F1F8E9; padding: 15px; border-radius: 10px; border-left: 5px solid #2E7D32; color: #33691E;">
+    <strong>💡 Virtual Twin Platform</strong><br>
+    이 플랫폼은 <b>Engine 1(수명 예측)</b>과 <b>Engine 2(환경 영향 평가)</b>를 통합한 시뮬레이터입니다. 
+    좌측 사이드바에서 조건을 설정하여 최적의 배터리 소재 조합을 탐색하세요.
+</div>
+<br>
+""", unsafe_allow_html=True)
 
 # ==============================================================================
 # [Engine 2] 데이터 로드 함수
@@ -97,6 +124,7 @@ def load_engine2_model():
     try:
         db = pd.read_excel('engine2_database.xlsx', sheet_name='LCA_Data', engine='openpyxl')
     except:
+        # 데모용 데이터
         data = {
             'Binder_Type': ['PVDF']*50 + ['CMGG']*50 + ['GG']*50,
             'Solvent_Type': ['NMP']*50 + ['Water']*50 + ['Water']*50,
@@ -158,7 +186,7 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     return x, np.clip(capacity, 0, None), ce
 
 # ==============================================================================
-# [메인 UI]
+# [메인 UI] 탭 구성
 # ==============================================================================
 
 tab1, tab2 = st.tabs(["⚡ Engine 1: 배터리 수명 예측", "🏭 Engine 2: 친환경 공정 최적화"])
