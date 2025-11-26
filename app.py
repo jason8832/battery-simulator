@@ -67,7 +67,6 @@ def load_engine2_model():
 def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     """
     과학적 수명 예측 시뮬레이션 (Specific Capacity & Coulombic Efficiency)
-    - specific_cap_base: 초기 비용량 (mAh/g)
     """
     x = np.arange(1, cycles + 1)
     
@@ -80,9 +79,6 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     capacity = retention * specific_cap_base # mAh/g 단위로 변환
     
     # --- 2. Coulombic Efficiency (CE) Logic ---
-    # Sample A(우수): 99.95% 유지
-    # Sample B(보통): 99.85% 유지
-    # Sample C(불량): 99.5%에서 시작해서 점차 떨어짐
     if decay_rate < 2.0: # Excellent
         base_ce = 99.95
         ce_noise_scale = 0.02
@@ -100,13 +96,86 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     return x, np.clip(capacity, 0, None), ce
 
 # ==============================================================================
-# [메인 UI] 탭 구성
+# [메인 UI] 탭 구성 (순서 변경: Engine 1 -> Engine 2)
 # ==============================================================================
 
-tab1, tab2 = st.tabs(["🏭 Engine 2: 친환경 공정 최적화", "⚡ Engine 1: 배터리 수명 예측"])
+tab1, tab2 = st.tabs(["⚡ Engine 1: 배터리 수명 예측", "🏭 Engine 2: 친환경 공정 최적화"])
 
-# --- TAB 1: Engine 2 (환경) ---
+# --- TAB 1: Engine 1 (수명) ---
 with tab1:
+    st.subheader("Engine 1. 배터리 장기 수명 예측 (Cycle Life Prediction)")
+    st.markdown("""
+    **초기 100 Cycle 데이터**를 기반으로 **장기 수명 및 효율(CE)**을 예측합니다.
+    """)
+    
+    col_input, col_view = st.columns([1, 2])
+    
+    with col_input:
+        st.markdown("##### 🧪 테스트 샘플 선택")
+        sample_type = st.radio(
+            "어떤 소재의 패턴을 테스트하시겠습니까?",
+            ["Sample A (안정적 - CMGG)", "Sample B (일반적 - PVDF)", "Sample C (불안정 - 초기불량)"]
+        )
+        st.markdown("---")
+        
+        # [기능 추가] 비용량 & 사이클 수 입력
+        st.markdown("##### ⚙️ 예측 조건 설정")
+        init_cap_input = st.number_input("초기 비용량 (Initial Capacity, mAh/g)", 100.0, 400.0, 185.0)
+        cycle_input = st.number_input("예측 사이클 수 (Prediction Cycles)", 500, 5000, 1000, step=100)
+        
+        st.caption("※ 실제 데이터베이스(textbooks)의 학습 패턴을 기반으로 생성된 시뮬레이션입니다.")
+        run_e1 = st.button("Engine 1 수명 예측 실행")
+
+    with col_view:
+        if run_e1:
+            with st.spinner("AI가 초기 데이터를 분석하고 있습니다..."):
+                if "Sample A" in sample_type:
+                    decay = 1.0; label = "Excellent (CMGG)"; color = 'green'
+                elif "Sample B" in sample_type:
+                    decay = 2.5; label = "Normal (PVDF)"; color = 'orange'
+                else:
+                    decay = 5.0; label = "Poor (Defective)"; color = 'red'
+                
+                # 예측 실행 (입력받은 사이클 수 적용)
+                cycles, capacity, ce = predict_life_and_ce(decay_rate=decay, specific_cap_base=init_cap_input, cycles=cycle_input)
+                
+                # 그래프 그리기 (2행 1열 Subplots)
+                fig2, (ax_cap, ax_ce) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
+                
+                # 1. Capacity Graph
+                # [수정] 한글 깨짐 방지를 위해 영어 라벨 사용
+                ax_cap.plot(cycles[:100], capacity[:100], 'k-', linewidth=2, label='Input Data (1~100)')
+                ax_cap.plot(cycles[100:], capacity[100:], '--', color=color, linewidth=2, label=f'AI Prediction ({label})')
+                ax_cap.set_ylabel("Specific Capacity (mAh/g)", fontsize=10, fontweight='bold')
+                ax_cap.set_title(f"Discharge Capacity Prediction", fontsize=12, fontweight='bold')
+                ax_cap.legend(loc='upper right')
+                ax_cap.grid(True, alpha=0.3)
+                
+                # 2. CE Graph
+                ax_ce.plot(cycles, ce, '-', color='blue', linewidth=1, alpha=0.7, label='Coulombic Efficiency')
+                ax_ce.set_ylabel("Coulombic Efficiency (%)", fontsize=10, fontweight='bold')
+                ax_ce.set_xlabel("Cycle Number", fontsize=10, fontweight='bold')
+                ax_ce.set_ylim(98.0, 100.5) 
+                ax_ce.legend(loc='lower right')
+                ax_ce.grid(True, alpha=0.3)
+                
+                plt.tight_layout()
+                st.pyplot(fig2)
+                
+                # 결과 해석
+                eol_limit = init_cap_input * 0.8
+                eol_cycle = np.where(capacity < eol_limit)[0]
+                
+                st.info(f"📊 분석 리포트 ({cycle_input} Cycles)")
+                if len(eol_cycle) > 0:
+                    st.warning(f"⚠️ 예측 결과, 약 **{eol_cycle[0]} Cycle**에서 수명이 80%({eol_limit:.1f} mAh/g) 이하로 떨어질 것으로 예상됩니다.")
+                else:
+                    st.success(f"✅ 설정한 {cycle_input} Cycle까지 수명이 80% 이상 안정적으로 유지될 것으로 예측됩니다.")
+        else:
+            st.info("조건을 설정하고 [Engine 1 수명 예측 실행] 버튼을 눌러주세요.")
+
+# --- TAB 2: Engine 2 (환경) ---
+with tab2:
     model_e2, prep_e2, db_e2 = load_engine2_model()
     
     st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA)")
@@ -118,7 +187,6 @@ with tab1:
         s_solvent = st.radio("Solvent Type", ["NMP", "Water"])
         st.markdown("---")
         
-        # 범위 확대 반영 (v1.2)
         s_temp = st.slider("Drying Temp (°C)", 60, 180, 110)
         s_time = st.slider("Drying Time (min)", 10, 720, 120) 
         s_loading = st.number_input("Mass Loading (g/m²)", 1.0, 100.0, 20.0)
@@ -143,7 +211,7 @@ with tab1:
             col2.metric("에너지 소비", f"{pred[1]:.4f} kWh/m²")
             col3.metric("VOC 배출량", f"{pred[2]:.4f} g/m²", delta="-100%" if pred[2]<0.01 else None)
             
-            st.markdown("#### 📊 기존 NMP 공정 대비 비교")
+            st.markdown("#### 📊 기존 NMP 공정 대비 비교 (Comparison vs NMP Process)")
             nmp_mean = db_e2[db_e2['Solvent_Type']=='NMP'][['CO2_kg_per_m2', 'Energy_kWh_per_m2', 'VOC_g_per_m2']].mean()
             if nmp_mean.isnull().all():
                 nmp_mean = pd.Series([0.27, 0.6, 3.0], index=['CO2_kg_per_m2', 'Energy_kWh_per_m2', 'VOC_g_per_m2'])
@@ -151,82 +219,19 @@ with tab1:
             fig, ax = plt.subplots(figsize=(8, 4))
             x = np.arange(3)
             width = 0.35
-            ax.bar(x - width/2, nmp_mean.values, width, label='기존 NMP (Avg)', color='#ff9999')
-            ax.bar(x + width/2, pred, width, label='현재 시뮬레이션', color='#66b3ff')
+            
+            # [수정] 한글 깨짐 방지를 위해 영어 라벨 사용
+            ax.bar(x - width/2, nmp_mean.values, width, label='Reference (NMP)', color='#ff9999')
+            ax.bar(x + width/2, pred, width, label='Current Simulation', color='#66b3ff')
+            
             ax.set_xticks(x)
-            ax.set_xticklabels(['CO2', 'Energy', 'VOC'])
+            ax.set_xticklabels(['CO2', 'Energy', 'VOC'], fontsize=11, fontweight='bold')
             ax.legend()
+            ax.grid(axis='y', linestyle='--', alpha=0.5)
+            
             st.pyplot(fig)
             
         except Exception as e:
             st.error(f"예측 오류: {e}")
     else:
         st.write("👈 왼쪽 사이드바에서 [Engine 2 예측 실행] 버튼을 눌러주세요.")
-
-# --- TAB 2: Engine 1 (수명) ---
-with tab2:
-    st.subheader("Engine 1. 배터리 장기 수명 예측 (Cycle Life Prediction)")
-    st.markdown("""
-    **초기 100 Cycle 데이터**를 기반으로 **1000 Cycle 이후의 수명 및 효율(CE)**을 예측합니다.
-    """)
-    
-    col_input, col_view = st.columns([1, 2])
-    
-    with col_input:
-        st.markdown("##### 🧪 테스트 샘플 선택")
-        sample_type = st.radio(
-            "어떤 소재의 패턴을 테스트하시겠습니까?",
-            ["Sample A (안정적 - CMGG)", "Sample B (일반적 - PVDF)", "Sample C (불안정 - 초기불량)"]
-        )
-        st.markdown("---")
-        # 비용량 설정 기능 추가 (전문가용 느낌)
-        init_cap_input = st.number_input("초기 비용량 (mAh/g)", 100.0, 400.0, 185.0)
-        
-        st.caption("※ 실제 데이터베이스(textbooks)의 학습 패턴을 기반으로 생성된 시뮬레이션입니다.")
-        run_e1 = st.button("Engine 1 수명 예측 실행")
-
-    with col_view:
-        if run_e1:
-            with st.spinner("AI가 초기 데이터를 분석하고 있습니다..."):
-                if "Sample A" in sample_type:
-                    decay = 1.0; label = "Excellent (CMGG)"; color = 'green'
-                elif "Sample B" in sample_type:
-                    decay = 2.5; label = "Normal (PVDF)"; color = 'orange'
-                else:
-                    decay = 5.0; label = "Poor (Defective)"; color = 'red'
-                
-                # 예측 실행 (Capacity & CE)
-                cycles, capacity, ce = predict_life_and_ce(decay_rate=decay, specific_cap_base=init_cap_input)
-                
-                # 그래프 그리기 (2행 1열 Subplots)
-                fig2, (ax_cap, ax_ce) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
-                
-                # 1. Capacity Graph
-                ax_cap.plot(cycles[:100], capacity[:100], 'k-', linewidth=2, label='Input Data (1~100)')
-                ax_cap.plot(cycles[100:], capacity[100:], '--', color=color, linewidth=2, label=f'AI Prediction ({label})')
-                ax_cap.set_ylabel("Specific Capacity (mAh/g)", fontsize=10, fontweight='bold')
-                ax_cap.set_title(f"[Prediction] Discharge Capacity & Coulombic Efficiency", fontsize=12, fontweight='bold')
-                ax_cap.legend(loc='upper right')
-                ax_cap.grid(True, alpha=0.3)
-                
-                # 2. CE Graph
-                ax_ce.plot(cycles, ce, '-', color='blue', linewidth=1, alpha=0.7, label='Coulombic Efficiency')
-                ax_ce.set_ylabel("Coulombic Efficiency (%)", fontsize=10, fontweight='bold')
-                ax_ce.set_xlabel("Cycle Number", fontsize=10, fontweight='bold')
-                ax_ce.set_ylim(98.0, 100.5) # CE 범위 고정 (가시성 확보)
-                ax_ce.legend(loc='lower right')
-                ax_ce.grid(True, alpha=0.3)
-                
-                plt.tight_layout()
-                st.pyplot(fig2)
-                
-                # 결과 해석
-                eol_limit = init_cap_input * 0.8
-                eol_cycle = np.where(capacity < eol_limit)[0]
-                
-                if len(eol_cycle) > 0:
-                    st.warning(f"⚠️ 예측 결과, 약 **{eol_cycle[0]} Cycle**에서 수명이 80%({eol_limit:.1f} mAh/g) 이하로 떨어질 것으로 예상됩니다.")
-                else:
-                    st.success(f"✅ 1000 Cycle까지 수명이 80% 이상 유지될 것으로 예측됩니다. (CE 평균: {np.mean(ce):.2f}%)")
-        else:
-            st.info("샘플을 선택하고 [Engine 1 수명 예측 실행] 버튼을 눌러주세요.")
