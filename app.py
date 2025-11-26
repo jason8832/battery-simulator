@@ -194,8 +194,8 @@ with tab1:
             )
             st.divider()
             st.markdown("#### ⚙️ 예측 조건 설정")
-            init_cap_input = st.number_input("초기 비용량 (Initial Capacity, mAh/g)", 100.0, 400.0, 185.0)
-            cycle_input = st.number_input("예측 사이클 수 (Prediction Cycles)", 200, 5000, 1000, step=100)
+            init_cap_input = st.number_input("Initial specific capacity , (mAh/g)", 100.0, 400.0, 185.0)
+            cycle_input = st.number_input("Number of cycles for prediction", 200, 5000, 1000, step=100)
             
             st.caption("※ 실제 데이터베이스(textbooks)의 학습 패턴 기반")
             run_e1 = st.button("Engine 1 예측 실행", type="primary", use_container_width=True)
