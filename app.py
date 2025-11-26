@@ -9,35 +9,39 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 # --- [1] 페이지 기본 설정 ---
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
-# --- [1.1] 헤더 디자인 (아주대 로고 + 제목 + 구글 로고) ---
-col1, col2, col3 = st.columns([1, 6, 1])
+# --- [1.1] 헤더 디자인 (로고 + 제목 + 로고) ---
+# 로고 크기와 정렬을 위해 컬럼 비율 조정
+col1, col2, col3 = st.columns([1.5, 6, 1.5])
 
 with col1:
-    # 아주대학교 로고
-    st.image("https://www.ajou.ac.kr/_res/ajou/kr/img/intro/img_symbol01.png", width=120)
+    # GitHub에 올린 파일명과 정확히 일치해야 합니다.
+    try:
+        st.image("ajou_logo.png", use_container_width=True)
+    except:
+        st.warning("로고 파일(ajou_logo.png)을 찾을 수 없습니다.")
 
 with col2:
-    st.title("AI 기반 배터리 소재/공정 최적화 시뮬레이터")
-    st.markdown("**Team 스물다섯** | Google-아주대학교 AI 융합 캡스톤 디자인")
+    st.markdown("<h1 style='text-align: center;'>AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>", unsafe_allow_html=True)
+    st.markdown("<h5 style='text-align: center;'>Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</h5>", unsafe_allow_html=True)
 
 with col3:
-    # 구글 로고 (공식 이미지 링크 사용)
-    st.image("https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg", width=120)
+    try:
+        st.image("google_logo.png", use_container_width=True)
+    except:
+        st.warning("로고 파일(google_logo.png)을 찾을 수 없습니다.")
 
-st.markdown("---") # 구분선 추가
+st.markdown("---")
 st.info("💡 이 플랫폼은 **Engine 1(수명 예측)**과 **Engine 2(환경 영향 평가)**를 통합한 **Virtual Twin**입니다.")
 
 # ==============================================================================
-# [Engine 2] 환경 영향 평가 모델 (LCA)
+# [Engine 2] 데이터 로드 함수
 # ==============================================================================
-# ... (이하 로직은 기존 v1.4와 동일합니다. 그대로 두셔도 됩니다.) ...
-
 @st.cache_resource
 def load_engine2_model():
     try:
         db = pd.read_excel('engine2_database.xlsx', sheet_name='LCA_Data', engine='openpyxl')
     except:
-        # 데모용 데이터 생성
+        # 데모용 데이터 (파일 없을 시)
         data = {
             'Binder_Type': ['PVDF']*50 + ['CMGG']*50 + ['GG']*50,
             'Solvent_Type': ['NMP']*50 + ['Water']*50 + ['Water']*50,
@@ -74,52 +78,40 @@ def load_engine2_model():
     return model, preprocessor, db
 
 # ==============================================================================
-# [Engine 1] 수명 예측 모델 (Life Prediction) - Light Ver.
+# [Engine 1] 수명 예측 함수
 # ==============================================================================
-
 def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
-    """
-    과학적 수명 예측 시뮬레이션 (Specific Capacity & Coulombic Efficiency)
-    """
     x = np.arange(1, cycles + 1)
     
-    # --- 1. Capacity Logic (Specific Capacity) ---
     linear_fade = 0.00015 * x * decay_rate
     acc_fade = 1e-9 * np.exp(0.015 * x) * decay_rate
     cap_noise = np.random.normal(0, 0.0015, size=len(x))
     
     retention = 1.0 - linear_fade - acc_fade + cap_noise
-    capacity = retention * specific_cap_base # mAh/g 단위로 변환
+    capacity = retention * specific_cap_base
     
-    # --- 2. Coulombic Efficiency (CE) Logic ---
-    if decay_rate < 2.0: # Excellent
-        base_ce = 99.95
-        ce_noise_scale = 0.02
-    elif decay_rate < 4.0: # Normal
-        base_ce = 99.85
-        ce_noise_scale = 0.05
-    else: # Poor
-        base_ce = 99.6 - (x * 0.0008) # 효율 감소
-        ce_noise_scale = 0.15
+    if decay_rate < 2.0:
+        base_ce = 99.95; ce_noise_scale = 0.02
+    elif decay_rate < 4.0:
+        base_ce = 99.85; ce_noise_scale = 0.05
+    else:
+        base_ce = 99.6 - (x * 0.0008); ce_noise_scale = 0.15
         
     ce_noise = np.random.normal(0, ce_noise_scale, size=len(x))
-    ce = base_ce + ce_noise
-    ce = np.clip(ce, 0, 100.0) # 100% 넘지 않게
+    ce = np.clip(base_ce + ce_noise, 0, 100.0)
 
     return x, np.clip(capacity, 0, None), ce
 
 # ==============================================================================
-# [메인 UI] 탭 구성 (순서 변경: Engine 1 -> Engine 2)
+# [메인 UI]
 # ==============================================================================
 
 tab1, tab2 = st.tabs(["⚡ Engine 1: 배터리 수명 예측", "🏭 Engine 2: 친환경 공정 최적화"])
 
-# --- TAB 1: Engine 1 (수명) ---
+# --- TAB 1: Engine 1 ---
 with tab1:
     st.subheader("Engine 1. 배터리 장기 수명 예측 (Cycle Life Prediction)")
-    st.markdown("""
-    **초기 100 Cycle 데이터**를 기반으로 **장기 수명 및 효율(CE)**을 예측합니다.
-    """)
+    st.markdown("**초기 100 Cycle 데이터**를 기반으로 **장기 수명 및 효율(CE)**을 예측합니다.")
     
     col_input, col_view = st.columns([1, 2])
     
@@ -130,11 +122,9 @@ with tab1:
             ["Sample A (안정적 - CMGG)", "Sample B (일반적 - PVDF)", "Sample C (불안정 - 초기불량)"]
         )
         st.markdown("---")
-        
-        # [기능 추가] 비용량 & 사이클 수 입력
         st.markdown("##### ⚙️ 예측 조건 설정")
         init_cap_input = st.number_input("초기 비용량 (Initial Capacity, mAh/g)", 100.0, 400.0, 185.0)
-        cycle_input = st.number_input("예측 사이클 수 (Prediction Cycles)", 200, 1000, 1000, step=100)
+        cycle_input = st.number_input("예측 사이클 수 (Prediction Cycles)", 200, 5000, 1000, step=100)
         
         st.caption("※ 실제 데이터베이스(textbooks)의 학습 패턴을 기반으로 생성된 시뮬레이션입니다.")
         run_e1 = st.button("Engine 1 수명 예측 실행")
@@ -149,18 +139,15 @@ with tab1:
                 else:
                     decay = 5.0; label = "Poor (Defective)"; color = 'red'
                 
-                # 예측 실행 (입력받은 사이클 수 적용)
                 cycles, capacity, ce = predict_life_and_ce(decay_rate=decay, specific_cap_base=init_cap_input, cycles=cycle_input)
                 
-                # 그래프 그리기 (2행 1열 Subplots)
                 fig2, (ax_cap, ax_ce) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
                 
                 # 1. Capacity Graph
-                # [수정] 한글 깨짐 방지를 위해 영어 라벨 사용
                 ax_cap.plot(cycles[:100], capacity[:100], 'k-', linewidth=2, label='Input Data (1~100)')
                 ax_cap.plot(cycles[100:], capacity[100:], '--', color=color, linewidth=2, label=f'AI Prediction ({label})')
                 ax_cap.set_ylabel("Specific Capacity (mAh/g)", fontsize=10, fontweight='bold')
-                ax_cap.set_title(f"Discharge Capacity Prediction", fontsize=12, fontweight='bold')
+                ax_cap.set_title("Discharge Capacity Prediction", fontsize=12, fontweight='bold')
                 ax_cap.legend(loc='upper right')
                 ax_cap.grid(True, alpha=0.3)
                 
@@ -168,14 +155,13 @@ with tab1:
                 ax_ce.plot(cycles, ce, '-', color='blue', linewidth=1, alpha=0.7, label='Coulombic Efficiency')
                 ax_ce.set_ylabel("Coulombic Efficiency (%)", fontsize=10, fontweight='bold')
                 ax_ce.set_xlabel("Cycle Number", fontsize=10, fontweight='bold')
-                ax_ce.set_ylim(98.0, 100.5) 
+                ax_ce.set_ylim(98.0, 100.5)
                 ax_ce.legend(loc='lower right')
                 ax_ce.grid(True, alpha=0.3)
                 
                 plt.tight_layout()
                 st.pyplot(fig2)
                 
-                # 결과 해석
                 eol_limit = init_cap_input * 0.8
                 eol_cycle = np.where(capacity < eol_limit)[0]
                 
@@ -187,7 +173,7 @@ with tab1:
         else:
             st.info("조건을 설정하고 [Engine 1 수명 예측 실행] 버튼을 눌러주세요.")
 
-# --- TAB 2: Engine 2 (환경) ---
+# --- TAB 2: Engine 2 ---
 with tab2:
     model_e2, prep_e2, db_e2 = load_engine2_model()
     
@@ -199,11 +185,9 @@ with tab2:
         s_binder = st.selectbox("Binder Type", ["PVDF", "CMGG", "GG", "CMC"])
         s_solvent = st.radio("Solvent Type", ["NMP", "Water"])
         st.markdown("---")
-        
         s_temp = st.slider("Drying Temp (°C)", 60, 180, 110)
         s_time = st.slider("Drying Time (min)", 10, 720, 120) 
         s_loading = st.number_input("Mass Loading (g/m²)", 1.0, 100.0, 20.0)
-        
         run_e2 = st.button("Engine 2 예측 실행")
 
     if run_e2:
@@ -233,9 +217,12 @@ with tab2:
             x = np.arange(3)
             width = 0.35
             
-            # [수정] 한글 깨짐 방지를 위해 영어 라벨 사용
-            ax.bar(x - width/2, nmp_mean.values, width, label='Reference (NMP)', color='#ff9999')
-            ax.bar(x + width/2, pred, width, label='Current Simulation', color='#66b3ff')
+            # [디자인 수정] PPT 색감 반영: NMP(Red/Salmon) vs Simulation(Green/Mint)
+            color_nmp = '#FA8072'  # Salmon (PPT의 붉은색 계열)
+            color_sim = '#90EE90'  # LightGreen (PPT의 초록색 계열)
+            
+            ax.bar(x - width/2, nmp_mean.values, width, label='Reference (NMP)', color=color_nmp)
+            ax.bar(x + width/2, pred, width, label='Current Simulation', color=color_sim)
             
             ax.set_xticks(x)
             ax.set_xticklabels(['CO2', 'Energy', 'VOC'], fontsize=11, fontweight='bold')
@@ -248,3 +235,18 @@ with tab2:
             st.error(f"예측 오류: {e}")
     else:
         st.write("👈 왼쪽 사이드바에서 [Engine 2 예측 실행] 버튼을 눌러주세요.")
+```
+
+---
+
+### 3단계: 테마 색상 적용 (config.toml)
+
+이전에 만드신 `.streamlit/config.toml` 파일의 내용을 아래 내용으로 바꿔주세요. (PPT의 아주대 블루 색상을 버튼과 강조색에 적용합니다.)
+
+```toml
+[theme]
+primaryColor="#005BAC"
+backgroundColor="#FFFFFF"
+secondaryBackgroundColor="#F0F2F6"
+textColor="#262730"
+font="sans serif"
