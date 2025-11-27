@@ -363,6 +363,7 @@ with tab3:
 
     with col_view_e2:
         if run_e2:
+            # Case 1: PVDF + Water (부적절)
             if s_binder == "PVDF" and s_solvent == "Water":
                 st.error("🚫 **Error: 부적절한 소재 조합입니다 (Invalid Combination)**")
                 st.markdown("""
@@ -371,6 +372,18 @@ with tab3:
                 * 따라서 **Water(물)** 용매와는 슬러리(Slurry) 형성이 불가능합니다.
                 * PVDF를 사용하려면 반드시 **NMP**와 같은 유기 용매를 선택해야 합니다.
                 """)
+            
+            # Case 2: 수계 바인더(CMC, CMGG, GG) + NMP (부적절) - [추가된 로직]
+            elif s_binder in ["CMC", "CMGG", "GG"] and s_solvent == "NMP":
+                st.error("🚫 **Error: 부적절한 소재 조합입니다 (Invalid Combination)**")
+                st.markdown(f"""
+                **과학적 근거 (Scientific Basis):**
+                * **{s_binder}**는 수계 바인더(Water-based Binder)로, 주로 **물(Water)**에 용해하여 사용합니다.
+                * **NMP**와 같은 유기 용매에는 녹지 않거나 분산성이 매우 떨어져 전극 제조가 불가능합니다.
+                * {s_binder}를 사용하려면 **Water** 용매를 선택해야 합니다.
+                """)
+
+            # Case 3: 정상 실행
             else:
                 co2, energy, voc, co2_desc, voc_desc = calculate_lca_impact(
                     s_binder, s_solvent, s_temp, s_loading, s_time
