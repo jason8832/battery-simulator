@@ -262,7 +262,7 @@ with tab2:
                 'Binder_Amount_wt': [2.0], 'Graphite_wt': [97.0], 'SuperP_wt': [1.0],
                 'Coating_Thickness_mm': [0.1], 
                 'Drying_Temp_C': [s_temp], 'Drying_Time_min': [s_time],
-                'Areal_Mass_Loading_mg_cm2': [s_loading]
+                'Areal_Mass_Loading_mg_cm^2': [s_loading]
             })
             
             try:
