@@ -173,7 +173,7 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
     # 근거: 용매의 끓는점(BP)에 따른 건조 에너지 차이
     # NMP BP = 202°C (고온 건조 필요), Water BP = 100°C (저온 건조 가능)
     if solvent_type == "NMP":
-        boiling_point = 202.0
+        boiling_point = 204.1
         # NMP는 기화열은 낮으나(570 kJ/kg), 공정 온도가 높아야 하고 회수 설비 에너지가 추가됨
         process_penalty = 1.5 
     else:
