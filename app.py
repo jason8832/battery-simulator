@@ -6,6 +6,7 @@ import base64
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
+import os
 
 # --- [1] 페이지 기본 설정 ---
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
@@ -22,8 +23,9 @@ def get_img_as_base64(file):
     except:
         return ""
 
+# [수정] 이미지 로드 부분 추가
 img_ajou = get_img_as_base64("ajou_logo.png")
-img_ajou_sw = get_img_as_base64("ajou_sw_logo.png")
+img_ajou_sw = get_img_as_base64("ajou_sw_logo.png") 
 img_google = get_img_as_base64("google_logo.png")
 
 # HTML/CSS
@@ -60,7 +62,7 @@ html, body, [class*="css"] {{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 20px; /* 로고 간 간격 조절 */
     margin-top: 10px;
 }}
 .logo-img {{
@@ -82,8 +84,12 @@ html, body, [class*="css"] {{
     <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
     <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
     <div class="logo-box">
+        <img src="data:image/png;base64,{img_ajou_sw}" class="logo-img" title="Ajou SW">
+        
         <img src="data:image/png;base64,{img_ajou}" class="logo-img" title="Ajou University">
+        
         <div style="width: 1px; height: 30px; background-color: #bbb;"></div>
+        
         <img src="data:image/png;base64,{img_google}" class="logo-img" title="Google">
     </div>
 </div>
@@ -143,7 +149,10 @@ def load_engine2_model():
 @st.cache_data
 def load_real_case_data():
     try:
-        df = pd.read_csv("engine1_output.csv")
+        # 절대 경로 활용 (안정성 강화)
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(current_dir, "engine1_output.csv")
+        df = pd.read_csv(file_path)
         return df
     except FileNotFoundError:
         return None
