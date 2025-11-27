@@ -15,23 +15,27 @@ st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="
 # [0] 디자인 & 헤더 설정 (HTML/CSS)
 # ==============================================================================
 
-def get_img_as_base64(file):
-    """이미지 파일을 Base64 문자열로 변환 (파일 없으면 빈 문자열 반환)"""
+def get_img_tag(file, title):
+    """
+    이미지 파일을 읽어서 완벽한 HTML <img> 태그를 반환하는 함수
+    (파일이 없거나 에러 발생 시 빈 문자열 반환하여 화면 깨짐 방지)
+    """
     if not os.path.exists(file):
         return ""
     try:
         with open(file, "rb") as f:
             data = f.read()
-        return base64.b64encode(data).decode()
+        b64_data = base64.b64encode(data).decode()
+        return f'<img src="data:image/png;base64,{b64_data}" class="logo-img" title="{title}">'
     except:
         return ""
 
-# 이미지 로드 (파일이 없어도 에러나지 않게 처리함)
-img_ajou = get_img_as_base64("ajou_logo.png")
-img_ajou_sw = get_img_as_base64("ajou_sw_logo.png") 
-img_google = get_img_as_base64("google_logo.png")
+# [핵심 수정] HTML 태그를 미리 생성 (f-string 오류 방지)
+tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW")
+tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University")
+tag_google  = get_img_tag("google_logo.png", "Google")
 
-# HTML/CSS (로고 크기 35px로 축소)
+# HTML/CSS
 header_html = f"""
 <style>
 html, body, [class*="css"] {{
@@ -65,11 +69,11 @@ html, body, [class*="css"] {{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px; /* 로고 간격 */
+    gap: 15px;
     margin-top: 5px;
 }}
 .logo-img {{
-    height: 35px; /* 로고 크기 축소 (55px -> 35px) */
+    height: 30px; /* 로고 크기 축소 (30px) */
     width: auto;
     object-fit: contain;
     transition: transform 0.3s;
@@ -84,7 +88,7 @@ html, body, [class*="css"] {{
 }}
 @media (max-width: 900px) {{
     .main-title {{ font-size: 1.8rem; white-space: normal; }}
-    .logo-img {{ height: 30px; }}
+    .logo-img {{ height: 25px; }}
 }}
 </style>
 
@@ -92,13 +96,10 @@ html, body, [class*="css"] {{
     <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
     <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
     <div class="logo-box">
-        {'<img src="data:image/png;base64,' + img_ajou_sw + '" class="logo-img" title="Ajou SW">' if img_ajou_sw else ''}
-        
-        {'<img src="data:image/png;base64,' + img_ajou + '" class="logo-img" title="Ajou University">' if img_ajou else ''}
-        
+        {tag_ajou_sw}
+        {tag_ajou}
         <div class="separator"></div>
-        
-        {'<img src="data:image/png;base64,' + img_google + '" class="logo-img" title="Google">' if img_google else ''}
+        {tag_google}
     </div>
 </div>
 """
