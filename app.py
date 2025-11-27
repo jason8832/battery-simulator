@@ -202,7 +202,7 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
     # 끓는점보다 낮게 건조하면 건조 효율이 떨어져 시간이 더 걸리거나 에너지가 더 듬 (페널티)
     efficiency = 1.0 if drying_temp >= boiling_point else 0.6
     
-    # [수정됨] 에너지 계산 계수 조정: 10000.0 -> 50000.0 (값을 줄임)
+    # 에너지 계산 계수 조정
     energy_val = (delta_T * drying_time * process_penalty) / (efficiency * 50000.0)
     
     return co2_val, energy_val, voc_val, co2_desc, voc_desc
@@ -259,16 +259,18 @@ with tab1:
                 
                 ax_cap.plot(cycles[:100], capacity[:100], 'k-', linewidth=2.5, label='Input Data (1~100)')
                 ax_cap.plot(cycles[100:], capacity[100:], '--', color=color, linewidth=2.5, label=f'AI Prediction ({label})')
-                ax_cap.set_ylabel("Capacity (mAh/g)", fontsize=11, fontweight='bold')
-                ax_cap.set_title("Discharge Capacity Prediction", fontsize=14, fontweight='bold')
-                ax_cap.legend(); ax_cap.grid(True, linestyle='--', alpha=0.4)
+                ax_cap.set_ylabel("Specific Capacity (mAh/g)", fontsize=11, fontweight='bold')
+                ax_cap.set_title("Discharge Capacity Prediction", fontsize=14, fontweight='bold', pad=15)
+                ax_cap.legend(loc='upper right', frameon=True, shadow=True)
+                ax_cap.grid(True, linestyle='--', alpha=0.4)
                 ax_cap.spines['top'].set_visible(False); ax_cap.spines['right'].set_visible(False)
                 
                 ax_ce.plot(cycles, ce, '-', color='#007bff', linewidth=1.5, alpha=0.8, label='Coulombic Efficiency')
-                ax_ce.set_ylabel("CE (%)", fontsize=11, fontweight='bold')
+                ax_ce.set_ylabel("Coulombic Efficiency (%)", fontsize=11, fontweight='bold')
                 ax_ce.set_xlabel("Cycle Number", fontsize=11, fontweight='bold')
                 ax_ce.set_ylim(98.0, 100.5)
-                ax_ce.legend(); ax_ce.grid(True, linestyle='--', alpha=0.4)
+                ax_ce.legend(loc='lower right', frameon=True, shadow=True)
+                ax_ce.grid(True, linestyle='--', alpha=0.4)
                 ax_ce.spines['top'].set_visible(False); ax_ce.spines['right'].set_visible(False)
                 
                 plt.tight_layout()
@@ -276,10 +278,14 @@ with tab1:
                 
                 eol_limit = init_cap_input * 0.8
                 eol_cycle = np.where(capacity < eol_limit)[0]
+                
+                st.markdown("#### 📊 AI Analysis Report")
                 if len(eol_cycle) > 0:
-                    st.error(f"⚠️ Warning: {eol_cycle[0]} Cycle에서 수명 종료(EOL) 예상")
+                    st.error(f"⚠️ **Warning:** 약 **{eol_cycle[0]} Cycle**에서 수명이 80%({eol_limit:.1f} mAh/g) 이하로 떨어질 것으로 예상됩니다.")
                 else:
-                    st.success(f"✅ Stable: {cycle_input} Cycle까지 안정적")
+                    st.success(f"✅ **Stable:** 설정한 **{cycle_input} Cycle**까지 수명이 80% 이상 안정적으로 유지됩니다.")
+        else:
+            st.info("좌측 패널에서 조건을 설정하고 [가상 예측 실행]을 눌러주세요.")
 
 # ------------------------------------------------------------------------------
 # TAB 2: 실제 실험 검증
@@ -345,7 +351,6 @@ with tab3:
     with col_input_e2:
         with st.container(border=True):
             st.markdown("#### 🛠️ 공정 조건 설정")
-            # [수정됨] SBR 제거
             s_binder = st.selectbox("Binder Type", ["PVDF", "CMGG", "GG", "CMC"])
             s_solvent = st.radio("Solvent Type", ["NMP", "Water"])
             st.divider()
@@ -358,7 +363,6 @@ with tab3:
 
     with col_view_e2:
         if run_e2:
-            # [수정됨] PVDF + Water 부적절한 조합 시 실행 차단 및 경고 표시
             if s_binder == "PVDF" and s_solvent == "Water":
                 st.error("🚫 **Error: 부적절한 소재 조합입니다 (Invalid Combination)**")
                 st.markdown("""
@@ -368,12 +372,10 @@ with tab3:
                 * PVDF를 사용하려면 반드시 **NMP**와 같은 유기 용매를 선택해야 합니다.
                 """)
             else:
-                # [핵심] 머신러닝 대신 과학적 수식 함수 호출 (정상 실행)
                 co2, energy, voc, co2_desc, voc_desc = calculate_lca_impact(
                     s_binder, s_solvent, s_temp, s_loading, s_time
                 )
                 
-                # 결과 카드 표시
                 col1, col2, col3 = st.columns(3)
                 col1.metric("CO₂ Emission", f"{co2:.4f} kg/m²", delta=co2_desc, delta_color="inverse")
                 col2.metric("Energy Consumption", f"{energy:.4f} kWh/m²", help="Based on Solvent BP & Drying Temp")
@@ -381,7 +383,6 @@ with tab3:
                 
                 st.divider()
                 
-                # 상세 분석 텍스트 (교수님 피드백 근거 제시용)
                 st.markdown("#### 📋 Scientific Basis for Calculation")
                 
                 with st.expander("1. VOC (휘발성 유기화합물) 산출 근거", expanded=True):
@@ -407,14 +408,13 @@ with tab3:
                     else:
                         st.write("물은 끓는점이 100°C로 낮아, 상대적으로 적은 에너지로도 건조가 가능합니다.")
 
-                # 그래프 그리기
                 st.markdown("---")
                 st.markdown("#### 📊 Comparative Analysis (NMP vs Water Process)")
                 
-                # 비교군 데이터 생성 (NMP 기준)
                 ref_co2, ref_energy, ref_voc, _, _ = calculate_lca_impact("PVDF", "NMP", 130, s_loading, 60)
                 
-                labels = ['CO₂ (kg)', 'Energy (kWh)', 'VOC (g)']
+                # [수정됨] 그래프 라벨 단위 통일 (kg -> kg/m²)
+                labels = ['CO₂ (kg/m²)', 'Energy (kWh/m²)', 'VOC (g/m²)']
                 current_vals = [co2, energy, voc]
                 ref_vals = [ref_co2, ref_energy, ref_voc]
 
@@ -431,7 +431,6 @@ with tab3:
                 ax.legend()
                 ax.grid(axis='y', linestyle=':', alpha=0.5)
                 
-                # 값 표시
                 def autolabel(rects):
                     for rect in rects:
                         h = rect.get_height()
