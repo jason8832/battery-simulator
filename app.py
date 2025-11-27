@@ -90,7 +90,7 @@ html, body, [class*="css"] {{
 
 st.markdown(header_html, unsafe_allow_html=True)
 
-st.info("""**💡 Virtual Twin Platform** 이 플랫폼은 Engine 1(수명 예측)과 Engine 2(환경 영향 평가)를 통합한 시뮬레이터입니다. 아래 탭을 선택하여 기능을 사용해보세요.""")
+st.info("""이 플랫폼은 Engine 1(수명 예측)과 Engine 2(환경 영향 평가)를 통합한 시뮬레이터입니다. 아래 탭을 선택하여 기능을 사용해보세요.""")
 
 # ==============================================================================
 # [데이터 로드 함수 모음]
@@ -177,8 +177,8 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
 # ==============================================================================
 
 tab1, tab2, tab3 = st.tabs([
-    "🧪 Engine 1: 가상 시뮬레이터", 
-    "📊 Engine 1: 실제 실험 검증", 
+    "🧪 Engine 1-1: 가상 시뮬레이터", 
+    "📊 Engine 1-2: 실제 실험 검증", 
     "🏭 Engine 2: 친환경 공정 최적화"
 ])
 
@@ -258,7 +258,7 @@ with tab1:
 with tab2:
     st.subheader("Engine 1. 실제 실험 데이터 검증 (Real-world Validation)")
     st.markdown("""
-    이 탭에서는 **실제 배터리 테스트 데이터(Ground Truth)**를 기반으로 수행된 Engine 1의 정밀한 예측 결과를 검증합니다.
+    이 탭에서는 실제 배터리 테스트 데이터(Ground Truth)를 기반으로 수행된 Engine 1의 정밀한 예측 결과를 검증합니다.
     (Engine 1 ML 모델을 통해 사전 연산된 데이터를 로드합니다.)
     """)
     st.divider()
