@@ -16,6 +16,9 @@ st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="
 # ==============================================================================
 
 def get_img_as_base64(file):
+    """이미지 파일을 Base64 문자열로 변환 (파일 없으면 빈 문자열 반환)"""
+    if not os.path.exists(file):
+        return ""
     try:
         with open(file, "rb") as f:
             data = f.read()
@@ -23,12 +26,12 @@ def get_img_as_base64(file):
     except:
         return ""
 
-# [수정] 이미지 로드 부분 추가
+# 이미지 로드 (파일이 없어도 에러나지 않게 처리함)
 img_ajou = get_img_as_base64("ajou_logo.png")
 img_ajou_sw = get_img_as_base64("ajou_sw_logo.png") 
 img_google = get_img_as_base64("google_logo.png")
 
-# HTML/CSS
+# HTML/CSS (로고 크기 35px로 축소)
 header_html = f"""
 <style>
 html, body, [class*="css"] {{
@@ -36,37 +39,37 @@ html, body, [class*="css"] {{
 }}
 .header-container {{
     background-color: #E8F5E9;
-    padding: 40px 20px;
+    padding: 30px 20px;
     border-radius: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     text-align: center;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     border-bottom: 5px solid #4CAF50;
 }}
 .main-title {{
-    font-size: 3.0rem;
+    font-size: 2.5rem;
     font-weight: 900;
     color: #1B5E20;
     margin: 0;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     white-space: nowrap;
     letter-spacing: -1px;
 }}
 .sub-title {{
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: #555;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     font-weight: 500;
 }}
 .logo-box {{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px; /* 로고 간 간격 조절 */
-    margin-top: 10px;
+    gap: 15px; /* 로고 간격 */
+    margin-top: 5px;
 }}
 .logo-img {{
-    height: 55px;
+    height: 35px; /* 로고 크기 축소 (55px -> 35px) */
     width: auto;
     object-fit: contain;
     transition: transform 0.3s;
@@ -74,9 +77,14 @@ html, body, [class*="css"] {{
 .logo-img:hover {{
     transform: scale(1.1);
 }}
+.separator {{
+    width: 1px; 
+    height: 20px; 
+    background-color: #bbb;
+}}
 @media (max-width: 900px) {{
-    .main-title {{ font-size: 2.0rem; white-space: normal; }}
-    .logo-img {{ height: 40px; }}
+    .main-title {{ font-size: 1.8rem; white-space: normal; }}
+    .logo-img {{ height: 30px; }}
 }}
 </style>
 
@@ -84,13 +92,13 @@ html, body, [class*="css"] {{
     <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
     <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
     <div class="logo-box">
-        <img src="data:image/png;base64,{img_ajou_sw}" class="logo-img" title="Ajou SW">
+        {'<img src="data:image/png;base64,' + img_ajou_sw + '" class="logo-img" title="Ajou SW">' if img_ajou_sw else ''}
         
-        <img src="data:image/png;base64,{img_ajou}" class="logo-img" title="Ajou University">
+        {'<img src="data:image/png;base64,' + img_ajou + '" class="logo-img" title="Ajou University">' if img_ajou else ''}
         
-        <div style="width: 1px; height: 30px; background-color: #bbb;"></div>
+        <div class="separator"></div>
         
-        <img src="data:image/png;base64,{img_google}" class="logo-img" title="Google">
+        {'<img src="data:image/png;base64,' + img_google + '" class="logo-img" title="Google">' if img_google else ''}
     </div>
 </div>
 """
@@ -109,7 +117,7 @@ def load_engine2_model():
     try:
         db = pd.read_excel('engine2_database.xlsx', sheet_name='LCA_Data', engine='openpyxl')
     except:
-        # Fallback dummy data generation (if file missing)
+        # Fallback dummy data generation
         data = {
             'Binder_Type': ['PVDF']*50 + ['CMGG']*50 + ['GG']*50,
             'Solvent_Type': ['NMP']*50 + ['Water']*50 + ['Water']*50,
@@ -149,7 +157,6 @@ def load_engine2_model():
 @st.cache_data
 def load_real_case_data():
     try:
-        # 절대 경로 활용 (안정성 강화)
         current_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(current_dir, "engine1_output.csv")
         df = pd.read_csv(file_path)
@@ -158,7 +165,7 @@ def load_real_case_data():
         return None
 
 # ==============================================================================
-# [Engine 1] 가상 시뮬레이터용 수명 예측 함수 (Rule-based)
+# [Engine 1] 가상 시뮬레이터용 수명 예측 함수
 # ==============================================================================
 def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     x = np.arange(1, cycles + 1)
@@ -183,7 +190,7 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     return x, np.clip(capacity, 0, None), ce
 
 # ==============================================================================
-# [메인 UI] 탭 구성 (3단 구조)
+# [메인 UI] 탭 구성
 # ==============================================================================
 
 tab1, tab2, tab3 = st.tabs([
@@ -193,7 +200,7 @@ tab1, tab2, tab3 = st.tabs([
 ])
 
 # ------------------------------------------------------------------------------
-# TAB 1: 가상 시뮬레이터 (Interactive)
+# TAB 1: 가상 시뮬레이터
 # ------------------------------------------------------------------------------
 with tab1:
     st.subheader("Engine 1. 배터리 수명 가상 시뮬레이터 (Interactive Mode)")
@@ -263,7 +270,7 @@ with tab1:
             st.info("좌측 패널에서 조건을 설정하고 [가상 예측 실행]을 눌러주세요.")
 
 # ------------------------------------------------------------------------------
-# TAB 2: 실제 실험 검증 (Data-Driven Validation)
+# TAB 2: 실제 실험 검증
 # ------------------------------------------------------------------------------
 with tab2:
     st.subheader("Engine 1. 실제 실험 데이터 검증 (Real-world Validation)")
@@ -311,7 +318,7 @@ with tab2:
                 # 1. 학습 데이터 (History)
                 ax.plot(history['Cycle'], history['Capacity'], 'o-', color='black', markersize=4, alpha=0.7, label='Input History (Cycle 1~100)')
 
-                # 2. 연결선 (끊어짐 방지)
+                # 2. 연결선
                 if not history.empty and not prediction.empty:
                     connect_x = [history['Cycle'].iloc[-1], prediction['Cycle'].iloc[0]]
                     connect_y = [history['Capacity'].iloc[-1], prediction['Capacity'].iloc[0]]
@@ -337,7 +344,7 @@ with tab2:
                 st.error("선택한 샘플의 데이터가 비어있습니다.")
 
 # ------------------------------------------------------------------------------
-# TAB 3: 친환경 공정 최적화 (Engine 2)
+# TAB 3: 친환경 공정 최적화
 # ------------------------------------------------------------------------------
 with tab3:
     model_e2, prep_e2, db_e2 = load_engine2_model()
@@ -372,7 +379,6 @@ with tab3:
                 X_new = prep_e2.transform(input_data)
                 pred = model_e2.predict(X_new)[0] 
                 
-                # 결과 카드
                 col1, col2, col3 = st.columns(3)
                 col1.metric("CO₂ Emission", f"{pred[0]:.4f} kg/m²", delta="Low Carbon" if pred[0] < 0.1 else "High Carbon", delta_color="inverse")
                 col2.metric("Energy Consumption", f"{pred[1]:.4f} kWh/m²")
