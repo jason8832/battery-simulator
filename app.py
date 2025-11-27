@@ -90,7 +90,7 @@ html, body, [class*="css"] {{
 
 st.markdown(header_html, unsafe_allow_html=True)
 
-st.info("""**💡 Virtual Twin Platform** 이 플랫폼은 **Engine 1(수명 예측)**과 **Engine 2(환경 영향 평가)**를 통합한 시뮬레이터입니다. 좌측 사이드바에서 조건을 설정하여 최적의 배터리 소재 조합을 탐색하세요.""")
+st.info("""**💡 Virtual Twin Platform** 이 플랫폼은 Engine 1(수명 예측)과 Engine 2(환경 영향 평가)를 통합한 시뮬레이터입니다. 좌측 사이드바에서 조건을 설정하여 최적의 배터리 소재 조합을 탐색하세요.""")
 
 # ==============================================================================
 # [Engine 2] 데이터 로드 함수
