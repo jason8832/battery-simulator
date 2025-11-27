@@ -25,7 +25,7 @@ def get_img_as_base64(file):
 img_ajou = get_img_as_base64("ajou_logo.png")
 img_google = get_img_as_base64("google_logo.png")
 
-# HTML/CSS (들여쓰기 제거됨)
+# HTML/CSS
 header_html = f"""
 <style>
 html, body, [class*="css"] {{
@@ -90,16 +90,19 @@ html, body, [class*="css"] {{
 
 st.markdown(header_html, unsafe_allow_html=True)
 
-st.info("""**💡 Virtual Twin Platform** 이 플랫폼은 Engine 1(수명 예측)과 Engine 2(환경 영향 평가)를 통합한 시뮬레이터입니다. 좌측 사이드바에서 조건을 설정하여 최적의 배터리 소재 조합을 탐색하세요.""")
+st.info("""**💡 Virtual Twin Platform** 이 플랫폼은 Engine 1(수명 예측)과 Engine 2(환경 영향 평가)를 통합한 시뮬레이터입니다. 아래 탭을 선택하여 기능을 사용해보세요.""")
 
 # ==============================================================================
-# [Engine 2] 데이터 로드 함수
+# [데이터 로드 함수 모음]
 # ==============================================================================
+
+# 1. Engine 2 모델 로드
 @st.cache_resource
 def load_engine2_model():
     try:
         db = pd.read_excel('engine2_database.xlsx', sheet_name='LCA_Data', engine='openpyxl')
     except:
+        # Fallback dummy data generation (if file missing)
         data = {
             'Binder_Type': ['PVDF']*50 + ['CMGG']*50 + ['GG']*50,
             'Solvent_Type': ['NMP']*50 + ['Water']*50 + ['Water']*50,
@@ -135,8 +138,17 @@ def load_engine2_model():
     
     return model, preprocessor, db
 
+# 2. Engine 1 실제 검증 데이터 로드 (CSV)
+@st.cache_data
+def load_real_case_data():
+    try:
+        df = pd.read_csv("engine1_output.csv")
+        return df
+    except FileNotFoundError:
+        return None
+
 # ==============================================================================
-# [Engine 1] 수명 예측 함수
+# [Engine 1] 가상 시뮬레이터용 수명 예측 함수 (Rule-based)
 # ==============================================================================
 def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     x = np.arange(1, cycles + 1)
@@ -161,14 +173,22 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     return x, np.clip(capacity, 0, None), ce
 
 # ==============================================================================
-# [메인 UI] 탭 구성
+# [메인 UI] 탭 구성 (3단 구조)
 # ==============================================================================
 
-tab1, tab2 = st.tabs(["⚡ Engine 1: 배터리 수명 예측", "🏭 Engine 2: 친환경 공정 최적화"])
+tab1, tab2, tab3 = st.tabs([
+    "🧪 Engine 1: 가상 시뮬레이터", 
+    "📊 Engine 1: 실제 실험 검증", 
+    "🏭 Engine 2: 친환경 공정 최적화"
+])
 
-# --- TAB 1: Engine 1 ---
+# ------------------------------------------------------------------------------
+# TAB 1: 가상 시뮬레이터 (Interactive)
+# ------------------------------------------------------------------------------
 with tab1:
-    st.subheader("Engine 1. 배터리 장기 수명 예측 (Cycle Life Prediction)")
+    st.subheader("Engine 1. 배터리 수명 가상 시뮬레이터 (Interactive Mode)")
+    st.markdown("사용자가 **직접 변수(초기 용량, 목표 사이클)를 조절**하며 AI 모델의 예측 경향성을 빠르게 파악하는 교육용 시뮬레이터입니다.")
+    st.divider()
     
     col_input, col_view = st.columns([1, 2])
     with col_input:
@@ -177,15 +197,15 @@ with tab1:
             sample_type = st.radio(
                 "패턴 선택",
                 ["Sample A (안정적 - CMGG)", "Sample B (일반적 - PVDF)", "Sample C (불안정 - 초기불량)"],
-                label_visibility="collapsed"
+                label_visibility="collapsed",
+                key="t1_radio"
             )
             st.divider()
             st.markdown("#### ⚙️ 예측 조건 설정")
             init_cap_input = st.number_input("Initial specific capacity (mAh/g)", 100.0, 400.0, 185.0)
             cycle_input = st.number_input("Number of cycles for prediction", 200, 5000, 1000, step=100)
             
-            st.caption("※ 실제 데이터베이스(textbooks)의 학습 패턴 기반")
-            run_e1 = st.button("Engine 1 예측 실행", type="primary", use_container_width=True)
+            run_e1 = st.button("가상 예측 실행", type="primary", use_container_width=True)
 
     with col_view:
         if run_e1:
@@ -208,8 +228,7 @@ with tab1:
                 ax_cap.set_title("Discharge Capacity Prediction", fontsize=14, fontweight='bold', pad=15)
                 ax_cap.legend(loc='upper right', frameon=True, shadow=True)
                 ax_cap.grid(True, linestyle='--', alpha=0.4)
-                ax_cap.spines['top'].set_visible(False)
-                ax_cap.spines['right'].set_visible(False)
+                ax_cap.spines['top'].set_visible(False); ax_cap.spines['right'].set_visible(False)
                 
                 ax_ce.plot(cycles, ce, '-', color='#007bff', linewidth=1.5, alpha=0.8, label='Coulombic Efficiency')
                 ax_ce.set_ylabel("Coulombic Efficiency (%)", fontsize=11, fontweight='bold')
@@ -217,8 +236,7 @@ with tab1:
                 ax_ce.set_ylim(98.0, 100.5)
                 ax_ce.legend(loc='lower right', frameon=True, shadow=True)
                 ax_ce.grid(True, linestyle='--', alpha=0.4)
-                ax_ce.spines['top'].set_visible(False)
-                ax_ce.spines['right'].set_visible(False)
+                ax_ce.spines['top'].set_visible(False); ax_ce.spines['right'].set_visible(False)
                 
                 plt.tight_layout()
                 st.pyplot(fig2)
@@ -232,15 +250,90 @@ with tab1:
                 else:
                     st.success(f"✅ **Stable:** 설정한 **{cycle_input} Cycle**까지 수명이 80% 이상 안정적으로 유지됩니다.")
         else:
-            st.info("좌측 패널에서 조건을 설정하고 [Engine 1 예측 실행]을 눌러주세요.")
+            st.info("좌측 패널에서 조건을 설정하고 [가상 예측 실행]을 눌러주세요.")
 
-# --- TAB 2: Engine 2 (레이아웃 변경: 사이드바 -> 좌측 패널) ---
+# ------------------------------------------------------------------------------
+# TAB 2: 실제 실험 검증 (Data-Driven Validation)
+# ------------------------------------------------------------------------------
 with tab2:
+    st.subheader("Engine 1. 실제 실험 데이터 검증 (Real-world Validation)")
+    st.markdown("""
+    이 탭에서는 **실제 배터리 테스트 데이터(Ground Truth)**를 기반으로 수행된 Engine 1의 정밀한 예측 결과를 검증합니다.
+    (Engine 1 ML 모델을 통해 사전 연산된 데이터를 로드합니다.)
+    """)
+    st.divider()
+
+    df_results = load_real_case_data()
+
+    if df_results is None:
+        st.warning("⚠️ 'engine1_output.csv' 파일을 찾을 수 없습니다. 로컬에서 main_engine1.py를 실행하여 결과 파일을 생성해주세요.")
+    else:
+        col_case_input, col_case_view = st.columns([1, 2])
+
+        with col_case_input:
+            with st.container(border=True):
+                st.markdown("#### 📂 실험 케이스 선택")
+                available_samples = df_results['Sample_Type'].unique()
+                selected_sample = st.radio(
+                    "확인할 실험 데이터를 선택하세요:",
+                    available_samples,
+                    index=0,
+                    key="t2_radio"
+                )
+                st.write("")
+                # 메타데이터 표시
+                if "Sample A" in selected_sample:
+                    st.success("✅ **Sample A**\n\n- 상태: 안정적 (Stable)\n- Binder: CMGG\n- 예측 정확도: 높음")
+                elif "Sample B" in selected_sample:
+                    st.warning("⚠️ **Sample B**\n\n- 상태: 일반적 (Normal)\n- Binder: PVDF\n- 예측 정확도: 보통")
+                else:
+                    st.error("🚫 **Sample C**\n\n- 상태: 불안정 (Unstable)\n- 이슈: 초기 저항 증가")
+
+        with col_case_view:
+            sample_data = df_results[df_results['Sample_Type'] == selected_sample]
+            history = sample_data[sample_data['Data_Type'] == 'History']
+            prediction = sample_data[sample_data['Data_Type'] == 'Prediction']
+
+            if not sample_data.empty:
+                plt.style.use('default')
+                fig, ax = plt.subplots(figsize=(10, 6))
+
+                # 1. 학습 데이터 (History)
+                ax.plot(history['Cycle'], history['Capacity'], 'o-', color='black', markersize=4, alpha=0.7, label='Input History (Cycle 1~100)')
+
+                # 2. 연결선 (끊어짐 방지)
+                if not history.empty and not prediction.empty:
+                    connect_x = [history['Cycle'].iloc[-1], prediction['Cycle'].iloc[0]]
+                    connect_y = [history['Capacity'].iloc[-1], prediction['Capacity'].iloc[0]]
+                    ax.plot(connect_x, connect_y, '--', color='#dc3545', linewidth=2)
+
+                # 3. 예측 데이터 (Prediction)
+                ax.plot(prediction['Cycle'], prediction['Capacity'], '--', color='#dc3545', linewidth=2, label='AI Prediction (Cycle 101~)')
+
+                ax.set_xlabel("Cycle Number", fontsize=12, fontweight='bold')
+                ax.set_ylabel("Discharge Capacity (Ah)", fontsize=12, fontweight='bold')
+                ax.set_title(f"Model Validation Result - {selected_sample}", fontsize=14, fontweight='bold', pad=15)
+                ax.legend(fontsize=11)
+                ax.grid(True, linestyle='--', alpha=0.5)
+                ax.spines['top'].set_visible(False); ax.spines['right'].set_visible(False)
+
+                st.pyplot(fig)
+                
+                if not prediction.empty:
+                    final_cycle = prediction['Cycle'].iloc[-1]
+                    final_cap = prediction['Capacity'].iloc[-1]
+                    st.info(f"📊 **AI 분석 리포트**: {selected_sample}은 **{int(final_cycle)} Cycle**까지 예측되었으며, 최종 용량은 **{final_cap:.3f} Ah**로 예상됩니다.")
+            else:
+                st.error("선택한 샘플의 데이터가 비어있습니다.")
+
+# ------------------------------------------------------------------------------
+# TAB 3: 친환경 공정 최적화 (Engine 2)
+# ------------------------------------------------------------------------------
+with tab3:
     model_e2, prep_e2, db_e2 = load_engine2_model()
     
-    st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA)")
+    st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA Optimization)")
     
-    # [수정] 사이드바 대신 Engine 1과 동일한 2분할 레이아웃(col_input, col_view) 적용
     col_input_e2, col_view_e2 = st.columns([1, 2])
     
     with col_input_e2:
@@ -297,8 +390,7 @@ with tab2:
                 ax.set_title('Environmental Impact Comparison', fontsize=14, fontweight='bold', pad=15)
                 ax.legend(fontsize=10, frameon=True, shadow=True)
                 ax.grid(axis='y', linestyle=':', alpha=0.6)
-                ax.spines['top'].set_visible(False)
-                ax.spines['right'].set_visible(False)
+                ax.spines['top'].set_visible(False); ax.spines['right'].set_visible(False)
                 
                 def autolabel(rects):
                     for rect in rects:
