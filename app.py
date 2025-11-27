@@ -23,6 +23,7 @@ def get_img_as_base64(file):
         return ""
 
 img_ajou = get_img_as_base64("ajou_logo.png")
+img_ajou_sw = get_img_as_base64("ajou_sw_logo.png")
 img_google = get_img_as_base64("google_logo.png")
 
 # HTML/CSS
