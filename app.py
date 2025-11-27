@@ -273,7 +273,7 @@ with tab2:
                 col1, col2, col3 = st.columns(3)
                 col1.metric("CO₂ Emission", f"{pred[0]:.4f} kg/m²", delta="Low Carbon" if pred[0] < 0.1 else "High Carbon", delta_color="inverse")
                 col2.metric("Energy Consumption", f"{pred[1]:.4f} kWh/m²")
-                col3.metric("VOC Emission", f"{pred[2]:.4f} g/m²", delta="-100%" if pred[2]<0.01 else None, delta_color="inverse")
+                col3.metric("VOC Emission", f"{pred[2]:.4f} mg/cm²", delta="-100%" if pred[2]<0.01 else None, delta_color="inverse")
                 
                 st.divider()
                 st.markdown("#### 📊 Environmental Impact Comparison")
