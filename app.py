@@ -340,7 +340,7 @@ with tab2:
                 st.error("데이터 없음")
 
 # ------------------------------------------------------------------------------
-# TAB 3: 친환경 공정 최적화 (Engine 2 - Logic Updated)
+# TAB 3: 친환경 공정 최적화 (Engine 2 - Anode Optimized)
 # ------------------------------------------------------------------------------
 with tab3:
     st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA Optimization)")
@@ -350,9 +350,10 @@ with tab3:
     
     with col_input_e2:
         with st.container(border=True):
-            st.markdown("#### 🛠️ 공정 조건 설정")
-            s_binder = st.selectbox("Binder Type", ["PVDF", "CMGG", "GG", "CMC"])
-            s_solvent = st.radio("Solvent Type", ["NMP", "Water"])
+            st.markdown("#### 🛠️ 공정 조건 설정 (음극)")
+            # [음극용 바인더 순서 변경: 수계가 메인이므로 SBR, CMC 등을 앞으로]
+            s_binder = st.selectbox("Binder Type", ["SBR", "CMC", "CMGG", "GG", "PVDF"]) 
+            s_solvent = st.radio("Solvent Type", ["Water", "NMP"])
             st.divider()
             s_temp = st.slider("Drying Temp (°C)", 60, 200, 110)
             s_time = st.slider("Drying Time (min)", 10, 720, 60) 
@@ -373,8 +374,8 @@ with tab3:
                 * PVDF를 사용하려면 반드시 **NMP**와 같은 유기 용매를 선택해야 합니다.
                 """)
             
-            # Case 2: 수계 바인더(CMC, CMGG, GG) + NMP (부적절) - [추가된 로직]
-            elif s_binder in ["CMC", "CMGG", "GG"] and s_solvent == "NMP":
+            # Case 2: 수계 바인더(CMC, CMGG, GG, SBR) + NMP (부적절)
+            elif s_binder in ["CMC", "CMGG", "GG", "SBR"] and s_solvent == "NMP":
                 st.error("🚫 **Error: 부적절한 소재 조합입니다 (Invalid Combination)**")
                 st.markdown(f"""
                 **과학적 근거 (Scientific Basis):**
@@ -422,11 +423,11 @@ with tab3:
                         st.write("물은 끓는점이 100°C로 낮아, 상대적으로 적은 에너지로도 건조가 가능합니다.")
 
                 st.markdown("---")
-                st.markdown("#### 📊 Comparative Analysis (NMP vs Water Process)")
+                st.markdown("#### 📊 Comparative Analysis (Organic NMP vs Aqueous Water Process)")
                 
+                # 기준점(Reference)은 '음극이라도 유기용매(NMP)를 썼을 경우'를 가정하여 계산
                 ref_co2, ref_energy, ref_voc, _, _ = calculate_lca_impact("PVDF", "NMP", 130, s_loading, 60)
                 
-                # [수정됨] 그래프 라벨 단위 통일 (kg -> kg/m²)
                 labels = ['CO₂ (kg/m²)', 'Energy (kWh/m²)', 'VOC (g/m²)']
                 current_vals = [co2, energy, voc]
                 ref_vals = [ref_co2, ref_energy, ref_voc]
@@ -435,8 +436,9 @@ with tab3:
                 width = 0.35
 
                 fig, ax = plt.subplots(figsize=(8, 5))
-                rects1 = ax.bar(x - width/2, ref_vals, width, label='Reference (PVDF/NMP)', color='#FF8A80', alpha=0.8)
-                rects2 = ax.bar(x + width/2, current_vals, width, label='Current Settings', color='#69F0AE', edgecolor='black')
+                # [수정] 라벨을 'Reference (Organic Process)'로 변경하여 음극 상황에 맞춤
+                rects1 = ax.bar(x - width/2, ref_vals, width, label='Reference (Organic Process: NMP)', color='#FF8A80', alpha=0.8)
+                rects2 = ax.bar(x + width/2, current_vals, width, label='Current Settings (Aqueous)', color='#69F0AE', edgecolor='black')
 
                 ax.set_ylabel('Impact Value')
                 ax.set_title('Environmental Impact Comparison')
