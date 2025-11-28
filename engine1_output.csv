@@ -1,279 +1,142 @@
-﻿Sample_Type,Cycle,Capacity,Data_Type,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,1,205.5,HistorySample A ,1,59.55,History
-Sample A ,2,61.4,History
-Sample A ,3,61.0,History
-Sample A ,4,59.8,History
-Sample A ,5,58.42,History
-Sample A ,6,56.79,History
-Sample A ,7,54.71,History
-Sample A ,8,52.49,History
-Sample A ,9,50.44,History
-Sample A ,10,48.17,History
-Sample A ,11,45.99,History
-Sample A ,12,43.71,History
-Sample A ,13,41.36,History
-Sample A ,14,39.01,History
-Sample A ,15,36.93,History
-Sample A ,16,34.85,History
-Sample A ,17,32.83,History
-Sample A ,18,30.81,History
-Sample A ,19,29.0,History
-Sample A ,20,27.36,History
-Sample A ,21,26.02,History
-Sample A ,22,24.8,History
-Sample A ,23,23.93,History
-Sample A ,24,23.08,History
-Sample A ,25,22.5,History
-Sample A ,26,21.73,History
-Sample A ,27,21.46,History
-Sample A ,28,21.39,History
-Sample A ,29,21.5,History
-Sample A ,30,21.6,History
-Sample A ,31,21.95,History
-Sample A ,32,22.08,History
-Sample A ,33,22.6,History
-Sample A ,34,23.37,History
-Sample A ,35,24.07,History
-Sample A ,36,24.83,History
-Sample A ,37,25.77,History
-Sample A ,38,26.77,History
-Sample A ,39,27.75,History
-Sample A ,40,28.8,History
-Sample A ,41,29.88,History
-Sample A ,42,31.1,History
-Sample A ,43,32.16,History
-Sample A ,44,33.2,History
-Sample A ,45,34.28,History
-Sample A ,46,35.25,History
-Sample A ,47,36.24,History
-Sample A ,48,37.35,History
-Sample A ,49,38.44,History
-Sample A ,50,39.38,History
-Sample A ,51,40.41,History
-Sample A ,52,41.6,History
-Sample A ,53,42.56,History
-Sample A ,54,43.39,History
-Sample A ,55,44.42,History
-Sample A ,56,45.49,History
-Sample A ,57,46.44,History
-Sample A ,58,47.54,History
-Sample A ,59,48.44,History
-Sample A ,60,49.51,History
-Sample A ,61,50.57,History
-Sample A ,62,51.61,History
-Sample A ,63,52.63,History
-Sample A ,64,53.47,History
-Sample A ,65,54.56,History
-Sample A ,66,55.29,History
-Sample A ,67,56.32,History
-Sample A ,68,57.16,History
-Sample A ,69,58.1,History
-Sample A ,70,59.21,History
-Sample A ,71,60.28,History
-Sample A ,72,61.32,History
-Sample A ,73,62.2,History
-Sample A ,74,63.04,History
-Sample A ,75,63.96,History
-Sample A ,76,64.95,History
-Sample A ,77,66.0,History
-Sample A ,78,66.95,History
-Sample A ,79,67.7,History
-Sample A ,80,68.65,History
-Sample A ,81,69.51,History
-Sample A ,82,70.4,History
-Sample A ,83,71.38,History
-Sample A ,84,72.34,History
-Sample A ,85,73.22,History
-Sample A ,86,74.16,History
-Sample A ,87,75.16,History
-Sample A ,88,76.11,History
-Sample A ,89,76.89,History
-Sample A ,90,77.79,History
-Sample A ,91,78.62,History
-Sample A ,92,79.24,History
-Sample A ,93,80.08,History
-Sample A ,94,80.76,History
-Sample A ,95,81.55,History
-Sample A ,96,82.4,History
-Sample A ,97,83.35,History
-Sample A ,98,83.95,History
-Sample A ,99,84.75,History
-Sample A ,100,85.48,History
-Sample A ,101,118.8606686513179,Prediction
-Sample A ,102,118.5671470971355,Prediction
-Sample A ,103,118.58463634840967,Prediction
-Sample A ,104,118.62150634043844,Prediction
-Sample A ,105,118.6077786882667,Prediction
-Sample A ,106,118.67930473418124,Prediction
-Sample A ,107,118.703859515493,Prediction
-Sample A ,108,119.08147607203864,Prediction
-Sample A ,109,118.48036732476875,Prediction
-Sample A ,110,118.65254774934965,Prediction
-Sample A ,111,118.70288190074237,Prediction
-Sample A ,112,118.75045890306734,Prediction
-Sample A ,113,118.75288066324808,Prediction
-Sample A ,114,118.963961512614,Prediction
-Sample A ,115,119.00588102841412,Prediction
-Sample A ,116,119.11820060209763,Prediction
-Sample A ,117,119.16028075563597,Prediction
-Sample A ,118,119.19369600938889,Prediction
-Sample A ,119,119.20125345031722,Prediction
-Sample A ,120,119.24619276669968,Prediction
-Sample A ,121,119.53426202351989,Prediction
-Sample A ,122,119.54187324766988,Prediction
-Sample A ,123,119.60253414280146,Prediction
-Sample A ,124,119.6061549347199,Prediction
-Sample A ,125,119.60713211152546,Prediction
-Sample A ,126,119.61804059757611,Prediction
-Sample A ,127,119.70468909377549,Prediction
-Sample A ,128,119.7063036947903,Prediction
-Sample A ,129,119.71626907800095,Prediction
-Sample A ,130,119.98789707992741,Prediction
-Sample A ,131,119.95379587381532,Prediction
-Sample A ,132,119.85970469288401,Prediction
-Sample A ,133,120.02402159341968,Prediction
-Sample A ,134,120.0169068169364,Prediction
-Sample A ,135,119.96644998988288,Prediction
-Sample A ,136,119.97035903547291,Prediction
-Sample A ,137,119.9930079060207,Prediction
-Sample A ,138,120.01765249571216,Prediction
+﻿Sample_Type,Cycle,Capacity,Data_Type
+Sample A ,1,197.26,History
+Sample A ,2,197.8,History
+Sample A ,3,195.14,History
+Sample A ,4,190.55,History
+Sample A ,5,185.49,History
+Sample A ,6,179.76,History
+Sample A ,7,173.44,History
+Sample A ,8,167.83,History
+Sample A ,9,162.4,History
+Sample A ,10,157.01,History
+Sample A ,11,151.99,History
+Sample A ,12,146.73,History
+Sample A ,13,141.9,History
+Sample A ,14,137.36,History
+Sample A ,15,132.63,History
+Sample A ,16,124.24,History
+Sample A ,17,124.51,History
+Sample A ,18,121.15,History
+Sample A ,19,118.53,History
+Sample A ,20,115.37,History
+Sample A ,21,113.37,History
+Sample A ,22,111.4,History
+Sample A ,23,109.7,History
+Sample A ,24,108.51,History
+Sample A ,25,107.61,History
+Sample A ,26,107.02,History
+Sample A ,27,106.82,History
+Sample A ,28,106.7,History
+Sample A ,29,106.62,History
+Sample A ,30,107.75,History
+Sample A ,31,109.16,History
+Sample A ,32,110.5,History
+Sample A ,33,111.96,History
+Sample A ,34,114.13,History
+Sample A ,35,118.06,History
+Sample A ,36,121.41,History
+Sample A ,37,122.08,History
+Sample A ,38,124.01,History
+Sample A ,39,126.91,History
+Sample A ,40,129.14,History
+Sample A ,41,132.57,History
+Sample A ,42,134.71,History
+Sample A ,43,135.93,History
+Sample A ,44,138.86,History
+Sample A ,45,138.91,History
+Sample A ,46,142.83,History
+Sample A ,47,143.82,History
+Sample A ,48,143.66,History
+Sample A ,49,145.26,History
+Sample A ,50,148.9,History
+Sample A ,51,150.07,History
+Sample A ,52,138.31,History
+Sample A ,53,152.26,History
+Sample A ,54,155.44,History
+Sample A ,55,156.31,History
+Sample A ,56,157.83,History
+Sample A ,57,158.84,History
+Sample A ,58,160.32,History
+Sample A ,59,161.14,History
+Sample A ,60,163.39,History
+Sample A ,61,164.24,History
+Sample A ,62,165.22,History
+Sample A ,63,167.56,History
+Sample A ,64,168.51,History
+Sample A ,65,169.5,History
+Sample A ,66,170.58,History
+Sample A ,67,171.91,History
+Sample A ,68,173.14,History
+Sample A ,69,174.46,History
+Sample A ,70,175.66,History
+Sample A ,71,176.77,History
+Sample A ,72,177.81,History
+Sample A ,73,179.15,History
+Sample A ,74,180.52,History
+Sample A ,75,181.86,History
+Sample A ,76,182.16,History
+Sample A ,77,183.1,History
+Sample A ,78,183.79,History
+Sample A ,79,185.29,History
+Sample A ,80,186.4,History
+Sample A ,81,186.5,History
+Sample A ,82,187.07,History
+Sample A ,83,187.65,History
+Sample A ,84,188.49,History
+Sample A ,85,189.05,History
+Sample A ,86,189.62,History
+Sample A ,87,190.31,History
+Sample A ,88,191.33,History
+Sample A ,89,192.25,History
+Sample A ,90,193.04,History
+Sample A ,91,194.03,History
+Sample A ,92,195.03,History
+Sample A ,93,196.3,History
+Sample A ,94,197.43,History
+Sample A ,95,198.36,History
+Sample A ,96,199.57,History
+Sample A ,97,200.49,History
+Sample A ,98,201.09,History
+Sample A ,99,202.43,History
+Sample A ,100,203.41,History
+Sample A ,101,120.01880345202794,Prediction
+Sample A ,102,119.93577739871807,Prediction
+Sample A ,103,119.93868101518197,Prediction
+Sample A ,104,119.96581390170299,Prediction
+Sample A ,105,119.89444672845758,Prediction
+Sample A ,106,119.95031510070207,Prediction
+Sample A ,107,120.13098738004837,Prediction
+Sample A ,108,119.97888289727665,Prediction
+Sample A ,109,119.63994200841175,Prediction
+Sample A ,110,119.71966721829367,Prediction
+Sample A ,111,119.98708804268354,Prediction
+Sample A ,112,120.08155618488635,Prediction
+Sample A ,113,120.081470279628,Prediction
+Sample A ,114,120.2719311925788,Prediction
+Sample A ,115,120.27403350821761,Prediction
+Sample A ,116,120.51910733468398,Prediction
+Sample A ,117,120.56745573997624,Prediction
+Sample A ,118,120.64899309474599,Prediction
+Sample A ,119,120.65629544816262,Prediction
+Sample A ,120,120.7046466711708,Prediction
+Sample A ,121,120.92366149769784,Prediction
+Sample A ,122,121.05955490978509,Prediction
+Sample A ,123,121.05709618984405,Prediction
+Sample A ,124,121.0341231620147,Prediction
+Sample A ,125,121.03321127828336,Prediction
+Sample A ,126,121.00503651845355,Prediction
+Sample A ,127,121.12317127690494,Prediction
+Sample A ,128,121.04059946420465,Prediction
+Sample A ,129,121.05513139991264,Prediction
+Sample A ,130,121.12473981203239,Prediction
+Sample A ,131,120.82373954731344,Prediction
+Sample A ,132,120.82366274620267,Prediction
+Sample A ,133,121.16822213460581,Prediction
+Sample A ,134,121.15398665743287,Prediction
+Sample A ,135,121.12655095197584,Prediction
+Sample A ,136,121.13663074473551,Prediction
+Sample A ,137,121.15165655056882,Prediction
+Sample A ,138,121.18357606887024,Prediction
 Sample B ,1,205.5,History
 Sample B ,2,205.27,History
 Sample B ,3,200.67,History
@@ -374,179 +237,179 @@ Sample B ,97,163.48,History
 Sample B ,98,164.1,History
 Sample B ,99,164.71,History
 Sample B ,100,165.46,History
-Sample B ,101,115.53737772315246,Prediction
-Sample B ,102,115.27893447607887,Prediction
-Sample B ,103,115.29169812446631,Prediction
-Sample B ,104,115.44752781424359,Prediction
-Sample B ,105,115.63607378846696,Prediction
-Sample B ,106,115.63981185990474,Prediction
-Sample B ,107,115.67231354689984,Prediction
-Sample B ,108,115.76978622696927,Prediction
-Sample B ,109,115.46185676212562,Prediction
-Sample B ,110,115.4806994202982,Prediction
-Sample B ,111,115.55431420150198,Prediction
-Sample B ,112,115.63827018310288,Prediction
-Sample B ,113,115.63739204565641,Prediction
-Sample B ,114,115.62305742162089,Prediction
-Sample B ,115,115.73893267289705,Prediction
-Sample B ,116,116.02601457197359,Prediction
-Sample B ,117,116.11245501143246,Prediction
-Sample B ,118,116.19384854120054,Prediction
-Sample B ,119,116.24249941461373,Prediction
-Sample B ,120,116.28562584418856,Prediction
-Sample B ,121,116.58711600671477,Prediction
-Sample B ,122,116.65699217208805,Prediction
-Sample B ,123,116.7603844792682,Prediction
-Sample B ,124,116.7868174672358,Prediction
-Sample B ,125,116.78729624495944,Prediction
-Sample B ,126,116.78391133586926,Prediction
-Sample B ,127,116.93540026918367,Prediction
-Sample B ,128,116.99692382853507,Prediction
-Sample B ,129,116.99591016582804,Prediction
-Sample B ,130,117.12660236276403,Prediction
-Sample B ,131,117.03346527926433,Prediction
-Sample B ,132,117.03346527926433,Prediction
-Sample B ,133,117.29723604755937,Prediction
-Sample B ,134,117.29149188637318,Prediction
-Sample B ,135,117.29112114362017,Prediction
-Sample B ,136,117.2983523385117,Prediction
-Sample B ,137,117.30104157540134,Prediction
-Sample B ,138,117.34650244145853,Prediction
-Sample C ,1,197.26,History
-Sample C ,2,197.8,History
-Sample C ,3,195.14,History
-Sample C ,4,190.55,History
-Sample C ,5,185.49,History
-Sample C ,6,179.76,History
-Sample C ,7,173.44,History
-Sample C ,8,167.83,History
-Sample C ,9,162.4,History
-Sample C ,10,157.01,History
-Sample C ,11,151.99,History
-Sample C ,12,146.73,History
-Sample C ,13,141.9,History
-Sample C ,14,137.36,History
-Sample C ,15,132.63,History
-Sample C ,16,124.24,History
-Sample C ,17,124.51,History
-Sample C ,18,121.15,History
-Sample C ,19,118.53,History
-Sample C ,20,115.37,History
-Sample C ,21,113.37,History
-Sample C ,22,111.4,History
-Sample C ,23,109.7,History
-Sample C ,24,108.51,History
-Sample C ,25,107.61,History
-Sample C ,26,107.02,History
-Sample C ,27,106.82,History
-Sample C ,28,106.7,History
-Sample C ,29,106.62,History
-Sample C ,30,107.75,History
-Sample C ,31,109.16,History
-Sample C ,32,110.5,History
-Sample C ,33,111.96,History
-Sample C ,34,114.13,History
-Sample C ,35,118.06,History
-Sample C ,36,121.41,History
-Sample C ,37,122.08,History
-Sample C ,38,124.01,History
-Sample C ,39,126.91,History
-Sample C ,40,129.14,History
-Sample C ,41,132.57,History
-Sample C ,42,134.71,History
-Sample C ,43,135.93,History
-Sample C ,44,138.86,History
-Sample C ,45,138.91,History
-Sample C ,46,142.83,History
-Sample C ,47,143.82,History
-Sample C ,48,143.66,History
-Sample C ,49,145.26,History
-Sample C ,50,148.9,History
-Sample C ,51,150.07,History
-Sample C ,52,138.31,History
-Sample C ,53,152.26,History
-Sample C ,54,155.44,History
-Sample C ,55,156.31,History
-Sample C ,56,157.83,History
-Sample C ,57,158.84,History
-Sample C ,58,160.32,History
-Sample C ,59,161.14,History
-Sample C ,60,163.39,History
-Sample C ,61,164.24,History
-Sample C ,62,165.22,History
-Sample C ,63,167.56,History
-Sample C ,64,168.51,History
-Sample C ,65,169.5,History
-Sample C ,66,170.58,History
-Sample C ,67,171.91,History
-Sample C ,68,173.14,History
-Sample C ,69,174.46,History
-Sample C ,70,175.66,History
-Sample C ,71,176.77,History
-Sample C ,72,177.81,History
-Sample C ,73,179.15,History
-Sample C ,74,180.52,History
-Sample C ,75,181.86,History
-Sample C ,76,182.16,History
-Sample C ,77,183.1,History
-Sample C ,78,183.79,History
-Sample C ,79,185.29,History
-Sample C ,80,186.4,History
-Sample C ,81,186.5,History
-Sample C ,82,187.07,History
-Sample C ,83,187.65,History
-Sample C ,84,188.49,History
-Sample C ,85,189.05,History
-Sample C ,86,189.62,History
-Sample C ,87,190.31,History
-Sample C ,88,191.33,History
-Sample C ,89,192.25,History
-Sample C ,90,193.04,History
-Sample C ,91,194.03,History
-Sample C ,92,195.03,History
-Sample C ,93,196.3,History
-Sample C ,94,197.43,History
-Sample C ,95,198.36,History
-Sample C ,96,199.57,History
-Sample C ,97,200.49,History
-Sample C ,98,201.09,History
-Sample C ,99,202.43,History
-Sample C ,100,203.41,History
-Sample C ,101,120.07565085638736,Prediction
-Sample C ,102,120.13732259481638,Prediction
-Sample C ,103,119.96459789768409,Prediction
-Sample C ,104,119.97422991999476,Prediction
-Sample C ,105,120.16662694488292,Prediction
-Sample C ,106,120.09603050195375,Prediction
-Sample C ,107,120.0976843574959,Prediction
-Sample C ,108,119.98573971129689,Prediction
-Sample C ,109,119.4084837716336,Prediction
-Sample C ,110,119.40551206970055,Prediction
-Sample C ,111,119.52822234704064,Prediction
-Sample C ,112,119.61378015439509,Prediction
-Sample C ,113,119.61403890018286,Prediction
-Sample C ,114,119.59447502192096,Prediction
-Sample C ,115,119.71560176280323,Prediction
-Sample C ,116,119.73834411376428,Prediction
-Sample C ,117,119.81961680647781,Prediction
-Sample C ,118,119.85629999514786,Prediction
-Sample C ,119,119.85654263467815,Prediction
-Sample C ,120,119.92929479481455,Prediction
-Sample C ,121,120.11737803525325,Prediction
-Sample C ,122,120.36275157454529,Prediction
-Sample C ,123,120.42534291905598,Prediction
-Sample C ,124,120.34380542885451,Prediction
-Sample C ,125,120.34573130982668,Prediction
-Sample C ,126,120.34507992638933,Prediction
-Sample C ,127,120.45405902003948,Prediction
-Sample C ,128,120.47606780979196,Prediction
-Sample C ,129,120.47496009773153,Prediction
-Sample C ,130,120.55849087417405,Prediction
-Sample C ,131,120.43085668992057,Prediction
-Sample C ,132,120.38987801185854,Prediction
-Sample C ,133,120.61856276337629,Prediction
-Sample C ,134,120.61395381405542,Prediction
-Sample C ,135,120.62337311690885,Prediction
-Sample C ,136,120.62037389449375,Prediction
-Sample C ,137,120.67610758347755,Prediction
-Sample C ,138,120.71209698329017,Prediction
+Sample B ,101,123.52958828232768,Prediction
+Sample B ,102,123.49058889406443,Prediction
+Sample B ,103,123.49743717520242,Prediction
+Sample B ,104,123.44458775131724,Prediction
+Sample B ,105,123.67852202857912,Prediction
+Sample B ,106,123.70725218087114,Prediction
+Sample B ,107,123.95540529667187,Prediction
+Sample B ,108,124.04633519025252,Prediction
+Sample B ,109,123.73453017654406,Prediction
+Sample B ,110,123.64707284031734,Prediction
+Sample B ,111,123.74849280270064,Prediction
+Sample B ,112,123.85600041969673,Prediction
+Sample B ,113,123.84997862788842,Prediction
+Sample B ,114,123.96718858732983,Prediction
+Sample B ,115,123.99355796440524,Prediction
+Sample B ,116,124.02680589415014,Prediction
+Sample B ,117,124.05641771087207,Prediction
+Sample B ,118,124.08390535062755,Prediction
+Sample B ,119,124.10163607796012,Prediction
+Sample B ,120,124.18484109643485,Prediction
+Sample B ,121,124.30203111491564,Prediction
+Sample B ,122,124.3016903966794,Prediction
+Sample B ,123,124.35951470474734,Prediction
+Sample B ,124,124.38860167469947,Prediction
+Sample B ,125,124.39184022619257,Prediction
+Sample B ,126,124.42239368868103,Prediction
+Sample B ,127,124.5020916472863,Prediction
+Sample B ,128,124.5831399468419,Prediction
+Sample B ,129,124.60032068621739,Prediction
+Sample B ,130,124.62914530482298,Prediction
+Sample B ,131,124.37026787815586,Prediction
+Sample B ,132,124.36906048455722,Prediction
+Sample B ,133,124.43941531258365,Prediction
+Sample B ,134,124.43658285487903,Prediction
+Sample B ,135,124.42214378406312,Prediction
+Sample B ,136,124.42672836279642,Prediction
+Sample B ,137,124.43465197656842,Prediction
+Sample B ,138,124.48292524534558,Prediction
+Sample C ,1,59.55,History
+Sample C ,2,61.4,History
+Sample C ,3,61.0,History
+Sample C ,4,59.8,History
+Sample C ,5,58.42,History
+Sample C ,6,56.79,History
+Sample C ,7,54.71,History
+Sample C ,8,52.49,History
+Sample C ,9,50.44,History
+Sample C ,10,48.17,History
+Sample C ,11,45.99,History
+Sample C ,12,43.71,History
+Sample C ,13,41.36,History
+Sample C ,14,39.01,History
+Sample C ,15,36.93,History
+Sample C ,16,34.85,History
+Sample C ,17,32.83,History
+Sample C ,18,30.81,History
+Sample C ,19,29.0,History
+Sample C ,20,27.36,History
+Sample C ,21,26.02,History
+Sample C ,22,24.8,History
+Sample C ,23,23.93,History
+Sample C ,24,23.08,History
+Sample C ,25,22.5,History
+Sample C ,26,21.73,History
+Sample C ,27,21.46,History
+Sample C ,28,21.39,History
+Sample C ,29,21.5,History
+Sample C ,30,21.6,History
+Sample C ,31,21.95,History
+Sample C ,32,22.08,History
+Sample C ,33,22.6,History
+Sample C ,34,23.37,History
+Sample C ,35,24.07,History
+Sample C ,36,24.83,History
+Sample C ,37,25.77,History
+Sample C ,38,26.77,History
+Sample C ,39,27.75,History
+Sample C ,40,28.8,History
+Sample C ,41,29.88,History
+Sample C ,42,31.1,History
+Sample C ,43,32.16,History
+Sample C ,44,33.2,History
+Sample C ,45,34.28,History
+Sample C ,46,35.25,History
+Sample C ,47,36.24,History
+Sample C ,48,37.35,History
+Sample C ,49,38.44,History
+Sample C ,50,39.38,History
+Sample C ,51,40.41,History
+Sample C ,52,41.6,History
+Sample C ,53,42.56,History
+Sample C ,54,43.39,History
+Sample C ,55,44.42,History
+Sample C ,56,45.49,History
+Sample C ,57,46.44,History
+Sample C ,58,47.54,History
+Sample C ,59,48.44,History
+Sample C ,60,49.51,History
+Sample C ,61,50.57,History
+Sample C ,62,51.61,History
+Sample C ,63,52.63,History
+Sample C ,64,53.47,History
+Sample C ,65,54.56,History
+Sample C ,66,55.29,History
+Sample C ,67,56.32,History
+Sample C ,68,57.16,History
+Sample C ,69,58.1,History
+Sample C ,70,59.21,History
+Sample C ,71,60.28,History
+Sample C ,72,61.32,History
+Sample C ,73,62.2,History
+Sample C ,74,63.04,History
+Sample C ,75,63.96,History
+Sample C ,76,64.95,History
+Sample C ,77,66.0,History
+Sample C ,78,66.95,History
+Sample C ,79,67.7,History
+Sample C ,80,68.65,History
+Sample C ,81,69.51,History
+Sample C ,82,70.4,History
+Sample C ,83,71.38,History
+Sample C ,84,72.34,History
+Sample C ,85,73.22,History
+Sample C ,86,74.16,History
+Sample C ,87,75.16,History
+Sample C ,88,76.11,History
+Sample C ,89,76.89,History
+Sample C ,90,77.79,History
+Sample C ,91,78.62,History
+Sample C ,92,79.24,History
+Sample C ,93,80.08,History
+Sample C ,94,80.76,History
+Sample C ,95,81.55,History
+Sample C ,96,82.4,History
+Sample C ,97,83.35,History
+Sample C ,98,83.95,History
+Sample C ,99,84.75,History
+Sample C ,100,85.48,History
+Sample C ,101,131.03469709916118,Prediction
+Sample C ,102,130.71539961378295,Prediction
+Sample C ,103,130.7411500267249,Prediction
+Sample C ,104,130.72041349875,Prediction
+Sample C ,105,130.80999710745306,Prediction
+Sample C ,106,130.8234911034087,Prediction
+Sample C ,107,130.8327186942217,Prediction
+Sample C ,108,130.9999650979439,Prediction
+Sample C ,109,130.68158047297504,Prediction
+Sample C ,110,130.69698665363651,Prediction
+Sample C ,111,130.7984342007989,Prediction
+Sample C ,112,131.05840519828274,Prediction
+Sample C ,113,131.05809263759645,Prediction
+Sample C ,114,131.3295420000792,Prediction
+Sample C ,115,131.32049444324923,Prediction
+Sample C ,116,131.5372843036522,Prediction
+Sample C ,117,131.51904139931614,Prediction
+Sample C ,118,131.54803073425134,Prediction
+Sample C ,119,131.5540249179271,Prediction
+Sample C ,120,131.6284220299186,Prediction
+Sample C ,121,131.72142300296272,Prediction
+Sample C ,122,131.7563942528537,Prediction
+Sample C ,123,131.82605706739267,Prediction
+Sample C ,124,131.86758535751218,Prediction
+Sample C ,125,131.87918774069067,Prediction
+Sample C ,126,131.91864245332553,Prediction
+Sample C ,127,131.93424583570763,Prediction
+Sample C ,128,131.98338678583403,Prediction
+Sample C ,129,131.99427235005294,Prediction
+Sample C ,130,132.03300044464825,Prediction
+Sample C ,131,131.9227100865887,Prediction
+Sample C ,132,131.79750742088186,Prediction
+Sample C ,133,131.9251695423247,Prediction
+Sample C ,134,131.92243284681297,Prediction
+Sample C ,135,131.9057459723965,Prediction
+Sample C ,136,131.90344978419864,Prediction
+Sample C ,137,132.05648509572114,Prediction
+Sample C ,138,132.21792391781736,Prediction
