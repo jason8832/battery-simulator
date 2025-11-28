@@ -401,13 +401,13 @@ with tab3:
                 
                 with st.expander("1. VOC (휘발성 유기화합물) 산출 근거", expanded=True):
                     if s_solvent == "NMP":
-                        st.write("🔴 **High Risk:** 용매로 **NMP(N-Methyl-2-pyrrolidone)**가 사용되었습니다. NMP는 생식 독성이 있는 유기용매로, 건조 과정에서 VOC가 다량 발생하며 엄격한 배기 장치가 필요합니다.")
+                        st.write("🔴 **High Risk:** 용매로 NMP(N-Methyl-2-pyrrolidone)가 사용되었습니다. NMP는 생식 독성이 있는 유기용매로, 건조 과정에서 VOC가 다량 발생하며 엄격한 배기 장치가 필요합니다.")
                     else:
-                        st.write("🟢 **Safe:** 용매로 **Water(물)**이 사용되었습니다. 건조 시 수증기만 배출되므로 VOC 발생량은 **0**에 수렴합니다.")
+                        st.write("🟢 **Safe:** 용매로 Water(물)가 사용되었습니다. 건조 시 수증기만 배출되므로 VOC 발생량은 **0**에 수렴합니다.")
 
                 with st.expander("2. CO₂ (탄소 배출량) 산출 근거", expanded=True):
                     if "PVDF" in s_binder:
-                        st.write("🔴 **High Emission:** 바인더로 **PVDF**가 사용되었습니다.")
+                        st.write("🔴 **High Emission:** 바인더로 PVDF가 사용되었습니다.")
                         st.latex(r"-(C_2H_2F_2)_n-")
                         st.write("화학 구조 내 **불소(F)** 원소로 인해 합성 및 폐기 과정에서 GWP(지구온난화지수)가 매우 높습니다.")
                     else:
