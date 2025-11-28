@@ -455,4 +455,4 @@ with tab3:
                 st.pyplot(fig)
 
         else:
-            st.info("좌측 패널에서 공정 조건을 설정하고 [Engine 2 계산 실행]을 눌러주세요.")'
+            st.info("좌측 패널에서 공정 조건을 설정하고 [Engine 2 계산 실행]을 눌러주세요.")
