@@ -228,7 +228,7 @@ with tab1:
     col_input, col_view = st.columns([1, 2])
     with col_input:
         with st.container(border=True):
-            st.markdown("#### 🔋샘플 안정도")
+            st.markdown("#### 🔋 샘플 안정도")
             sample_type = st.radio(
                 "패턴 선택",
                 ["Perfectly Stable ", "Stable", "Unstable"],
