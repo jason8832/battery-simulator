@@ -228,10 +228,10 @@ with tab1:
     col_input, col_view = st.columns([1, 2])
     with col_input:
         with st.container(border=True):
-            st.markdown("#### 🧪 테스트 샘플 선택")
+            st.markdown("#### Sample Stability")
             sample_type = st.radio(
                 "패턴 선택",
-                ["Sample A (안정적 - CMGG)", "Sample B (일반적 - PVDF)", "Sample C (불안정 - 초기불량)"],
+                ["Perfectly Stable ", "Stable", "Unstable"],
                 label_visibility="collapsed",
                 key="t1_radio"
             )
