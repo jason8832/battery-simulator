@@ -238,7 +238,7 @@ with tab1:
             st.divider()
             st.markdown("#### ⚙️ 예측 조건 설정")
             init_cap_input = st.number_input("Initial specific capacity (mAh/g)", 100.0, 400.0, 185.0)
-            cycle_input = st.number_input("Number of cycles for prediction", 200, 5000, 1000, step=100)
+            cycle_input = st.number_input("Number of cycles for prediction", 200, 2000, 500, step=50)
             
             run_e1 = st.button("가상 예측 실행", type="primary", use_container_width=True)
 
