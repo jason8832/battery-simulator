@@ -411,7 +411,7 @@ with tab3:
                         st.latex(r"-(C_2H_2F_2)_n-")
                         st.write("화학 구조 내 **불소(F)** 원소로 인해 합성 및 폐기 과정에서 GWP(지구온난화지수)가 매우 높습니다.")
                     else:
-                        st.write(f"🟢 **Low Emission:** 바인더로 **{s_binder}**가 사용되었습니다. 이는 **천연 유래 고분자(Bio-based)**로, C, H, O 기반의 구조를 가지며 불소를 포함하지 않아 탄소 배출이 적습니다.")
+                        st.write(f"🟢 **Low Emission:** 바인더로 **{s_binder}**가 사용되었습니다. 이는 천연 유래 고분자(Bio-based)로, C, H, O 기반의 구조를 가지며 불소를 포함하지 않아 탄소 배출이 적습니다.")
 
                 with st.expander("3. Energy (에너지 소비) 산출 근거", expanded=True):
                     bp = 204.1 if s_solvent == "NMP" else 100
