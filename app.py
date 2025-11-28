@@ -1,4 +1,4 @@
-import streamlit as st
+'import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -288,7 +288,7 @@ with tab1:
             st.info("좌측 패널에서 조건을 설정하고 [가상 예측 실행]을 눌러주세요.")
 
 # ------------------------------------------------------------------------------
-# TAB 2: 실제 실험 검증 (Data-Driven Validation)
+# TAB 2: 실제 실험 검증
 # ------------------------------------------------------------------------------
 with tab2:
     st.subheader("Engine 1. 실제 실험 데이터 검증 (Real-world Validation)")
@@ -323,57 +323,21 @@ with tab2:
 
             if not sample_data.empty:
                 plt.style.use('default')
-                
-                # [수정] 그래프 2개 (용량, 효율)를 세로로 배치하기 위해 subplots(2, 1) 사용
-                fig, (ax_cap, ax_ce) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
-                
-                # ---------------------------
-                # Graph 1: Discharge Capacity
-                # ---------------------------
-                ax_cap.plot(history['Cycle'], history['Capacity'], 'o-', color='black', markersize=4, alpha=0.7, label='History (1~100)')
+                fig, ax = plt.subplots(figsize=(10, 6))
+                ax.plot(history['Cycle'], history['Capacity'], 'o-', color='black', markersize=4, alpha=0.7, label='History (1~100)')
                 
                 if not history.empty and not prediction.empty:
                     connect_x = [history['Cycle'].iloc[-1], prediction['Cycle'].iloc[0]]
                     connect_y = [history['Capacity'].iloc[-1], prediction['Capacity'].iloc[0]]
-                    ax_cap.plot(connect_x, connect_y, '--', color='#dc3545', linewidth=2)
+                    ax.plot(connect_x, connect_y, '--', color='#dc3545', linewidth=2)
 
-                ax_cap.plot(prediction['Cycle'], prediction['Capacity'], '--', color='#dc3545', linewidth=2, label='AI Prediction (101~)')
-                
-                ax_cap.set_ylabel("Specific Capacity (mAh/g)", fontsize=11, fontweight='bold')
-                ax_cap.set_title(f"Model Validation Result - {selected_sample}", fontsize=14, fontweight='bold', pad=15)
-                ax_cap.legend(loc='upper right', frameon=True, shadow=True)
-                ax_cap.grid(True, linestyle='--', alpha=0.5)
-                ax_cap.spines['top'].set_visible(False); ax_cap.spines['right'].set_visible(False)
-
-                # ---------------------------
-                # Graph 2: Coulombic Efficiency (Dummy or Real if available)
-                # ---------------------------
-                # 현재 CSV에는 Capacity만 저장했으므로, CE는 시각적 예시를 위해 
-                # 가상의 높은 효율 데이터(99.8~100%)를 생성하여 보여줍니다.
-                # (추후 main_engine1.py에서 CE도 저장하면 이 부분을 실제 데이터로 교체 가능)
-                
-                total_cycles = pd.concat([history['Cycle'], prediction['Cycle']])
-                # 가상의 CE 데이터 생성 (실제 데이터가 CSV에 없으므로)
-                ce_dummy = np.random.normal(99.95, 0.05, size=len(total_cycles))
-                ce_dummy = np.clip(ce_dummy, 99.0, 100.0)
-                
-                ax_ce.plot(total_cycles, ce_dummy, '-', color='#007bff', linewidth=1.5, alpha=0.8, label='Coulombic Efficiency')
-                ax_ce.set_ylabel("Coulombic Efficiency (%)", fontsize=11, fontweight='bold')
-                ax_ce.set_xlabel("Cycle Number", fontsize=11, fontweight='bold')
-                ax_ce.set_ylim(98.0, 100.5)
-                ax_ce.legend(loc='lower right', frameon=True, shadow=True)
-                ax_ce.grid(True, linestyle='--', alpha=0.5)
-                ax_ce.spines['top'].set_visible(False); ax_ce.spines['right'].set_visible(False)
-
-                plt.tight_layout()
+                ax.plot(prediction['Cycle'], prediction['Capacity'], '--', color='#dc3545', linewidth=2, label='AI Prediction (101~)')
+                ax.set_xlabel("Cycle", fontweight='bold'); ax.set_ylabel("Spec. Cap.(mAh/g)", fontweight='bold')
+                ax.set_title(f"Validation Result - {selected_sample}", fontweight='bold')
+                ax.legend(); ax.grid(True, linestyle='--', alpha=0.5)
                 st.pyplot(fig)
-                
-                if not prediction.empty:
-                    final_cycle = prediction['Cycle'].iloc[-1]
-                    final_cap = prediction['Capacity'].iloc[-1]
-                    st.info(f"📊 **AI 분석 리포트**: {selected_sample}은 **{int(final_cycle)} Cycle**까지 예측되었으며, 최종 용량은 **{final_cap:.3f} Ah**로 예상됩니다.")
             else:
-                st.error("선택한 샘플의 데이터가 비어있습니다.")
+                st.error("데이터 없음")
 
 # ------------------------------------------------------------------------------
 # TAB 3: 친환경 공정 최적화 (Engine 2 - Anode Optimized)
@@ -387,8 +351,9 @@ with tab3:
     with col_input_e2:
         with st.container(border=True):
             st.markdown("#### 🛠️ 공정 조건 설정 (음극)")
-            s_binder = st.selectbox("Binder Type", ["SBR", "CMC", "CMGG", "GG", "PVDF"]) 
-            s_solvent = st.radio("Solvent Type", ["Water", "NMP"])
+            # [음극용 바인더 순서 변경: 수계가 메인이므로 SBR, CMC 등을 앞으로]
+            s_binder = st.selectbox("Binder Type", ["PVDF","CMGG", "GG","CMC"]) 
+            s_solvent = st.radio("Solvent Type", ["NMP","Water"])
             st.divider()
             s_temp = st.slider("Drying Temp (°C)", 60, 200, 110)
             s_time = st.slider("Drying Time (min)", 10, 720, 60) 
@@ -490,4 +455,4 @@ with tab3:
                 st.pyplot(fig)
 
         else:
-            st.info("좌측 패널에서 공정 조건을 설정하고 [Engine 2 계산 실행]을 눌러주세요.")
+            st.info("좌측 패널에서 공정 조건을 설정하고 [Engine 2 계산 실행]을 눌러주세요.")'
