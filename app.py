@@ -332,7 +332,7 @@ with tab2:
                     ax.plot(connect_x, connect_y, '--', color='#dc3545', linewidth=2)
 
                 ax.plot(prediction['Cycle'], prediction['Capacity'], '--', color='#dc3545', linewidth=2, label='AI Prediction (101~)')
-                ax.set_xlabel("Cycle", fontweight='bold'); ax.set_ylabel("Capacity (Ah)", fontweight='bold')
+                ax.set_xlabel("Cycle", fontweight='bold'); ax.set_ylabel("Spec. Cap.(mAh/g)", fontweight='bold')
                 ax.set_title(f"Validation Result - {selected_sample}", fontweight='bold')
                 ax.legend(); ax.grid(True, linestyle='--', alpha=0.5)
                 st.pyplot(fig)
