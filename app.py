@@ -304,17 +304,17 @@ with tab2:
 
         with col_case_input:
             with st.container(border=True):
-                st.markdown("#### 📂 실험 케이스 선택")
+                st.markdown("#### 🔋 샘플 안정도")
                 available_samples = df_results['Sample_Type'].unique()
                 selected_sample = st.radio("확인할 실험 데이터:", available_samples, index=0, key="t2_radio")
                 
                 st.write("")
                 if "Sample A" in selected_sample:
-                    st.success("✅ **Sample A** (Stable)\n- Binder: CMGG\n- 예측 정확도: 높음")
+                    st.success("✅ **Perfectly Stable** \n - 예측 정확도: 높음")
                 elif "Sample B" in selected_sample:
-                    st.warning("⚠️ **Sample B** (Normal)\n- Binder: PVDF\n- 예측 정확도: 보통")
+                    st.warning("⚠️ **Stable** \n - 예측 정확도: 보통")
                 else:
-                    st.error("🚫 **Sample C** (Unstable)\n- 이슈: 초기 저항 증가")
+                    st.error("🚫 **Unstable** \n - 이슈: 초기 저항 증가")
 
         with col_case_view:
             sample_data = df_results[df_results['Sample_Type'] == selected_sample]
