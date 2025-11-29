@@ -416,9 +416,9 @@ with tab3:
                 
                 with st.expander("1. VOC (휘발성 유기화합물) 산출 근거", expanded=True):
                     if s_solvent == "NMP":
-                        st.write("🔴 **High Risk:** 용매로 **NMP(N-Methyl-2-pyrrolidone)**가 사용되었습니다. NMP는 생식 독성이 있는 유기용매로, 건조 과정에서 VOC가 다량 발생하며 엄격한 배기 장치가 필요합니다.")
+                        st.write("🔴 **High Risk:** 용매로 NMP(N-Methyl-2-pyrrolidone)가 사용되었습니다. NMP는 생식 독성이 있는 유기용매로, 건조 과정에서 VOC가 다량 발생하며 엄격한 배기 장치가 필요합니다.")
                     else:
-                        st.write("🟢 **Safe:** 용매로 **Water(물)**이 사용되었습니다. 건조 시 수증기만 배출되므로 VOC 발생량은 **0**에 수렴합니다.")
+                        st.write("🟢 **Safe:** 용매로 Water가 사용되었습니다. 건조 시 수증기만 배출되므로 VOC 발생량은 **0**에 수렴합니다.")
 
                 with st.expander("2. CO₂ (탄소 배출량) 산출 근거", expanded=True):
                     if "PVDF" in s_binder:
@@ -426,7 +426,7 @@ with tab3:
                         st.latex(r"-(C_2H_2F_2)_n-")
                         st.write("화학 구조 내 **불소(F)** 원소로 인해 합성 및 폐기 과정에서 GWP(지구온난화지수)가 매우 높습니다.")
                     else:
-                        st.write(f"🟢 **Low Emission:** 바인더로 **{s_binder}**가 사용되었습니다. 이는 **천연 유래 고분자(Bio-based)**로, C, H, O 기반의 구조를 가지며 불소를 포함하지 않아 탄소 배출이 적습니다.")
+                        st.write(f"🟢 **Low Emission:** 바인더로 **{s_binder}**가 사용되었습니다. 이는 천연 유래 고분자(Bio-based)로, C, H, O 기반의 구조를 가지며 불소를 포함하지 않아 탄소 배출이 적습니다.")
 
                 with st.expander("3. Energy (에너지 소비) 산출 근거", expanded=True):
                     bp = 204.1 if s_solvent == "NMP" else 100
