@@ -144,7 +144,7 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     return x, np.clip(capacity, 0, None), ce
 
 # ==============================================================================
-# [Engine 2] 핵심 로직: 화학적 근거 기반 환경 영향 산출 (교수님 피드백 반영)
+# [Engine 2] 핵심 로직: 화학적 근거 기반 환경 영향 산출 
 # ==============================================================================
 def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, drying_time):
     """
@@ -246,11 +246,11 @@ with tab1:
         if run_e1:
             with st.spinner("AI Analyzing..."):
                 if "Sample A" in sample_type:
-                    decay = 1.0; label = "Excellent (CMGG)"; color = '#28a745'
+                    decay = 1.0; label = "Excellent"; color = '#28a745'
                 elif "Sample B" in sample_type:
-                    decay = 2.5; label = "Normal (PVDF)"; color = '#fd7e14'
+                    decay = 2.5; label = "Normal"; color = '#fd7e14'
                 else:
-                    decay = 5.0; label = "Poor (Defective)"; color = '#dc3545'
+                    decay = 5.0; label = "Poor"; color = '#dc3545'
                 
                 cycles, capacity, ce = predict_life_and_ce(decay_rate=decay, specific_cap_base=init_cap_input, cycles=cycle_input)
                 
