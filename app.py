@@ -498,8 +498,8 @@ with tab_e2:
     
     with col_input_e2:
         with st.container(border=True): 
-            st.markdown("#### 🛠️ 공정 조건 설정 (음극)")
-            s_binder = st.selectbox("Binder Type", ["SBR", "CMC", "CMGG", "GG", "PVDF"]) 
+            st.markdown("#### 🛠️ 공정 조건 설정 ")
+            s_binder = st.selectbox("Binder Type", ["CMC", "CMGG", "GG", "PVDF"]) 
             s_solvent = st.radio("Solvent Type", ["Water", "NMP"])
             st.divider()
             s_temp = st.slider("Drying Temp (°C)", 60, 200, 110)
