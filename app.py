@@ -83,7 +83,8 @@ tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-rig
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
 # 2. 상단 배경 이미지 (Background.jpeg) 처리
-bg_file = "Background.jpeg"
+bg_file = "Background.HEIC
+"
 bg_base64 = get_base64_image(bg_file)
 
 if bg_base64:
