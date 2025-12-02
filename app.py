@@ -98,19 +98,20 @@ else:
     header_bg_style = "background-color: #2E7D32;" # 이미지 없을 시 진한 초록
 
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링 (Design Upgrade)
+# 3. CSS 스타일링 (수정된 버전)
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
     
     html, body, [class*="css"] {{
         font-family: 'Noto Sans KR', 'Helvetica Neue', sans-serif;
     }}
 
-    /* [요청 2] 전체 배경색 변경: 세련된 Sage Grayish Green (연구소 느낌) */
+    /* [배경 변경] 기존 연두색 -> 차분한 딥 세이지/그레이 톤으로 변경하여 고급스러운 느낌 */
     .stApp {{
-        background-color: #E1E8E6; 
+        background-color: #E3E8E5; 
+        background-image: radial-gradient(#E3E8E5 20%, #D4DBD6 80%);
     }}
     
     /* 상단 로고 바 */
@@ -119,191 +120,153 @@ st.markdown(f"""
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 15px 30px;
-        margin-top: -40px;
+        padding: 15px 25px;
+        margin-top: -50px; /* Streamlit 기본 여백 상쇄 */
         margin-bottom: 20px;
-        border-radius: 0 0 15px 15px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        border-bottom: 4px solid #1B5E20; /* 더 진한 테두리 */
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border-bottom: 4px solid #1B5E20;
+        z-index: 999;
+        position: relative;
+        background-color: white; /* 헤더 배경 확실하게 */
     }}
     
     .logo-group-right {{
         display: flex;
         align-items: center;
         gap: 20px;
-        background-color: rgba(255, 255, 255, 0.9); /* 투명도 줄여서 깔끔하게 */
+        background-color: rgba(255, 255, 255, 0.9);
         padding: 8px 20px;
-        border-radius: 50px;
+        border-radius: 50px; /* 둥근 캡슐 형태 */
         border: 2px solid #1B5E20;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }}
 
-    .top-left-logo {{ height: 100px; width: auto; object-fit: contain; filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.4)); }}
+    .top-left-logo {{ height: 80px; width: auto; object-fit: contain; }} /* 로고 사이즈 조절 */
     .top-right-logo {{ height: 32px; width: auto; object-fit: contain; transition: transform 0.3s; }}
     .top-right-logo:hover {{ transform: scale(1.1); }}
-    .logo-separator {{ width: 2px; height: 18px; background-color: #333; margin: 0 5px; }}
+    .logo-separator {{ width: 1px; height: 18px; background-color: #ccc; margin: 0 5px; }}
 
-    /* 탭바 스타일 */
+    /* [탭바 스타일 강화] */
     .stTabs [data-baseweb="tab-list"] {{
         gap: 10px;
         padding-bottom: 10px;
     }}
-    button[data-baseweb="tab"] {{
-        font-size: 18px !important;
-        font-weight: 700 !important;
-        padding: 12px 30px !important;
-        color: #444 !important;
-        background-color: #F0F4F2 !important; /* 배경과 어울리는 톤 */
-        border-radius: 10px !important;
-        border: 1px solid #B0BEC5 !important;
-        margin: 0 !important;
-        transition: all 0.3s;
+    .stTabs [data-baseweb="tab"] {{
+        height: 50px;
+        border-radius: 8px;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        border: 1px solid #ddd;
+        font-weight: 700;
+        color: #555;
     }}
-    button[data-baseweb="tab"][aria-selected="true"] {{
-        color: #FFFFFF !important;
-        background-color: #1B5E20 !important; /* 선택시 진한 녹색 */
-        border: 1px solid #1B5E20 !important;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2) !important;
+    .stTabs [aria-selected="true"] {{
+        background-color: #1B5E20 !important;
+        color: white !important;
+        border: none !important;
+        box-shadow: 0 4px 6px rgba(27, 94, 32, 0.3) !important;
     }}
 
-    /* [요청 1] 조건 설정 박스 & 모든 컨테이너 디자인 강화 */
-    /* Streamlit의 st.container(border=True)를 타겟팅 */
-    div[data-testid="stVerticalBlockBorderWrapper"] {{
+    /* [요청사항 1 반영] 입력창 컨테이너 (st.container(border=True)) 스타일링 */
+    /* Streamlit의 테두리 컨테이너를 특정해서 디자인 */
+    [data-testid="stVerticalBlockBorderWrapper"] {{
         background-color: #FFFFFF !important; /* 배경 하얀색 통일 */
-        border: 3px solid #1B5E20 !important; /* 테두리 굵고 진하게 */
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0 6px 12px rgba(0,0,0,0.08); /* 부드러운 그림자 추가 */
+        border: 3px solid #1B5E20 !important; /* 테두리 굵게, 진한 녹색 */
+        border-radius: 12px !important;
+        padding: 20px !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important; /* 입체감 그림자 */
     }}
 
-    /* 대제목 배경 애니메이션 (Aurora Effect) */
-    @keyframes gradientAnimation {{
-        0% {{ background-position: 0% 50%; }}
-        50% {{ background-position: 100% 50%; }}
-        100% {{ background-position: 0% 50%; }}
-    }}
-
+    /* 헤더 컨테이너 스타일 */
     .header-container {{
-        background: linear-gradient(-45deg, #E8F5E9, #C8E6C9, #B2DFDB, #FFFFFF);
-        background-size: 400% 400%;
-        animation: gradientAnimation 10s ease infinite;
+        background: white; /* 그라데이션 대신 깔끔한 화이트 추천 (전문성 강조) */
         padding: 40px 30px;
         border-radius: 15px;
         margin-top: 10px;
         margin-bottom: 30px;
         text-align: center;
-        border: 3px solid #1B5E20; 
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        border-left: 10px solid #1B5E20; /* 포인트 컬러 */
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     }}
     
     .main-title {{
-        font-size: 2.8rem;
-        font-weight: 800;
+        font-size: 2.5rem;
+        font-weight: 900;
         color: #1B5E20;
         margin: 0;
-        letter-spacing: -1px;
+        letter-spacing: -0.5px;
     }}
     .sub-title {{
-        font-size: 1.2rem;
-        color: #555;
-        margin-top: 10px;
-        font-weight: 600;
+        font-size: 1.0rem;
+        color: #666;
+        margin-top: 8px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }}
     
     /* Hero Section */
     .hero-container {{
         text-align: center;
-        padding: 120px 20px;
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=2831&auto=format&fit=crop'); 
+        padding: 80px 20px;
+        background: linear-gradient(rgba(0, 30, 10, 0.7), rgba(0, 30, 10, 0.7)), url('https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=2831&auto=format&fit=crop'); 
         background-size: cover;
         background-position: center;
         border-radius: 20px;
         color: white;
         margin-bottom: 40px;
-        border: 3px solid #1B5E20;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }}
-    .hero-title {{
-        font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 20px;
-        text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+    
+    /* 일반 텍스트 및 메트릭 스타일 */
+    h1, h2, h3, h4 {{ color: #1B5E20 !important; }}
+    
+    /* 버튼 스타일링 (Primary Button) */
+    .stButton > button {{
+        background-color: #1B5E20 !important;
+        color: white !important;
+        border-radius: 8px !important;
+        border: none !important;
+        font-weight: bold !important;
+        padding: 0.5rem 1rem !important;
+        transition: all 0.3s ease;
     }}
-    .hero-subtitle {{
-        font-size: 1.5rem;
-        font-weight: 500;
-        text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+    .stButton > button:hover {{
+        background-color: #2E7D32 !important;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4);
+        transform: translateY(-2px);
     }}
 
-    /* 페르소나 카드 스타일 */
+    /* 페르소나 카드 */
     .persona-card {{
-        display: flex;
-        flex-direction: row; 
-        align-items: center;
         background-color: white;
-        border-radius: 20px;
-        padding: 25px;
+        border-radius: 15px;
+        padding: 20px;
         margin-bottom: 20px;
-        border: 1px solid #CFD8DC; /* 카드 테두리는 은은하게 */
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        transition: transform 0.2s;
-        min-height: 160px;
+        border: 1px solid #eaeaea;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        transition: transform 0.2s, box-shadow 0.2s;
+        display: flex; flex-direction: row; align-items: center;
     }}
     .persona-card:hover {{
         transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.08);
         border-color: #1B5E20;
-        box-shadow: 0 10px 20px rgba(27, 94, 32, 0.15);
     }}
     .persona-img {{
-        width: 90px;
-        height: 90px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-right: 25px;
-        border: 3px solid #C8E6C9;
-        background-color: #F1F8E9;
-        flex-shrink: 0;
-    }}
-    .persona-content {{
-        text-align: left;
-        width: 100%;
-    }}
-    .persona-name {{
-        font-size: 1.3rem;
-        font-weight: 800;
-        color: #1B5E20;
-        margin-bottom: 4px;
-    }}
-    .persona-role {{
-        font-size: 0.85rem;
-        color: #546E7A;
-        font-weight: 700;
-        margin-bottom: 8px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        background-color: #E8F5E9;
-        padding: 4px 10px;
-        border-radius: 6px;
-        display: inline-block;
-    }}
-    .persona-desc {{
-        font-size: 0.95rem;
-        color: #37474F;
-        line-height: 1.5;
-        margin-bottom: 12px;
-        font-style: normal;
-        word-break: keep-all; 
+        width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
+        margin-right: 20px; border: 3px solid #E8F5E9;
     }}
     .tag-badge {{
-        background-color: #ECEFF1;
-        color: #455A64;
-        padding: 4px 8px;
-        border-radius: 6px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        margin-right: 5px;
-        display: inline-block;
-        margin-top: 2px;
-        border: 1px solid #CFD8DC;
+        background-color: #F1F8E9;
+        color: #2E7D32;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        margin-right: 4px;
+        border: 1px solid #C8E6C9;
     }}
 </style>
 """, unsafe_allow_html=True)
