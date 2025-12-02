@@ -16,7 +16,7 @@ st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="
 def get_img_tag(file, title, css_class="logo-img"):
     """
     이미지 태그 생성 함수
-    - css_class: 로고별 크기 조절을 위한 클래스 지정 (기본값: logo-img)
+    - css_class: 로고별 크기 조절 및 스타일 클래스 지정
     """
     if not os.path.exists(file):
         return ""
@@ -29,13 +29,13 @@ def get_img_tag(file, title, css_class="logo-img"):
         return ""
 
 # 로고 이미지 로드
-# 1. 상단 고정용 대형 로고 (25logo)
-tag_25_top = get_img_tag("25logo.png", "Team 25", css_class="top-logo-img")
+# 1. 좌측 상단용 (Team 25)
+tag_25 = get_img_tag("25logo.png", "Team 25", css_class="top-left-logo")
 
-# 2. 헤더용 일반 로고들
-tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW")
-tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University")
-tag_google  = get_img_tag("google_logo.png", "Google")
+# 2. 우측 상단용 (Ajou, Google) - 우측 정렬용 클래스 적용
+tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-logo")
+tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
+tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
 
 # CSS 스타일링
@@ -46,17 +46,50 @@ st.markdown("""
         font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
     }
     
-    /* [수정] 최상단 25logo 스타일 (크게 설정) */
-    .top-logo-img {
-        height: 80px;  /* 로고 크기 확대 (기존 35px -> 80px) */
+    /* [레이아웃] 최상단 로고 컨테이너 (Flexbox 사용) */
+    .top-header-bar {
+        display: flex;
+        justify-content: space-between; /* 좌우 끝으로 배치 */
+        align-items: center; /* 수직 중앙 정렬 */
+        padding: 10px 5px;
+        margin-bottom: 10px;
+    }
+    
+    .logo-group-right {
+        display: flex;
+        align-items: center;
+        gap: 20px; /* 로고 사이 간격 */
+    }
+
+    /* 좌측 로고 스타일 (Team 25) */
+    .top-left-logo {
+        height: 70px; 
         width: auto;
         object-fit: contain;
-        margin-bottom: 10px; /* 탭과의 간격 */
+    }
+
+    /* 우측 로고 스타일 (Ajou, Google) */
+    .top-right-logo {
+        height: 35px;
+        width: auto;
+        object-fit: contain;
+        transition: transform 0.3s;
+    }
+    .top-right-logo:hover {
+        transform: scale(1.1);
+    }
+
+    /* 구분선 스타일 */
+    .logo-separator {
+        width: 1px;
+        height: 20px;
+        background-color: #ccc;
+        margin: 0 5px;
     }
 
     /* 탭바(TabBar) 스타일 */
     button[data-baseweb="tab"] {
-        font-size: 20px !important;
+        font-size: 18px !important;
         font-weight: 800 !important;
         padding: 10px 30px !important;
         color: #333 !important;
@@ -66,12 +99,12 @@ st.markdown("""
         background-color: #fce4ec !important;
     }
 
-    /* 초록색 헤더 컨테이너 */
+    /* 초록색 메인 헤더 (로고 제외됨) */
     .header-container {
         background-color: #E8F5E9;
         padding: 30px 20px;
         border-radius: 15px;
-        margin-top: 20px;
+        margin-top: 10px;
         margin-bottom: 30px;
         text-align: center;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -88,24 +121,7 @@ st.markdown("""
         font-size: 1.1rem;
         color: #555;
         margin-top: 10px;
-        margin-bottom: 20px;
         font-weight: 500;
-    }
-    
-    /* 하단 로고 박스 (기존 로고들) */
-    .logo-box {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-    }
-    .logo-img {
-        height: 35px; /* 일반 로고 크기 */
-        width: auto;
-        object-fit: contain;
-    }
-    .separator {
-        width: 1px; height: 25px; background-color: #bbb;
     }
     
     /* Home Hero Section */
@@ -166,36 +182,59 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     return x, np.clip(capacity, 0, None), ce
 
 def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, drying_time):
+    # 1. VOC
     if solvent_type == "NMP":
-        voc_base = 3.0; voc_val = voc_base * (loading_mass / 10.0); voc_desc = "Critical (NMP Toxicity)"
+        voc_base = 3.0 
+        voc_val = voc_base * (loading_mass / 10.0) 
+        voc_desc = "Critical (NMP Toxicity)"
     else:
-        voc_val = 0.0; voc_desc = "Clean (Water Vapor)"
+        voc_val = 0.0
+        voc_desc = "Clean (Water Vapor)"
 
+    # 2. CO2
     if binder_type == "PVDF":
-        co2_factor = 0.45; chem_formula = "-(C₂H₂F₂)ₙ-"
+        co2_factor = 0.45 
+        chem_formula = "-(C₂H₂F₂)ₙ-"
         co2_desc = f"High ({chem_formula})"
     elif binder_type in ["CMGG", "GG", "CMC", "SBR"]:
-        co2_factor = 0.12; chem_formula = "Bio-based"
+        co2_factor = 0.12
+        chem_formula = "Bio-based (C,H,O)"
         co2_desc = f"Low ({chem_formula})"
     else:
-        co2_factor = 0.3; co2_desc = "Medium"
+        co2_factor = 0.3
+        co2_desc = "Medium"
+        
     co2_val = co2_factor * (loading_mass / 20.0)
 
-    bp = 204.1 if solvent_type == "NMP" else 100.0
-    process_penalty = 1.5 if solvent_type == "NMP" else 1.0
+    # 3. Energy
+    if solvent_type == "NMP":
+        boiling_point = 204.1
+        process_penalty = 1.5 
+    else:
+        boiling_point = 100.0
+        process_penalty = 1.0
+
     delta_T = max(drying_temp - 25, 0)
-    efficiency = 1.0 if drying_temp >= bp else 0.6
+    efficiency = 1.0 if drying_temp >= boiling_point else 0.6
     energy_val = (delta_T * drying_time * process_penalty) / (efficiency * 50000.0)
     
     return co2_val, energy_val, voc_val, co2_desc, voc_desc
 
 
 # ==============================================================================
-# [UI 구성] 1. 최상단 로고 배치 (탭 위에 위치)
+# [UI 구성] 1. 상단 로고 바 (좌: Team 25 / 우: 아주대, Google)
 # ==============================================================================
 st.markdown(f"""
-<div style="text-align: left; padding-left: 5px;">
-    {tag_25_top}
+<div class="top-header-bar">
+    <div class="logo-group-left">
+        {tag_25}
+    </div>
+    <div class="logo-group-right">
+        {tag_ajou_sw}
+        {tag_ajou}
+        <div class="logo-separator"></div>
+        {tag_google}
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -209,18 +248,11 @@ tab_home, tab_e1, tab_e2, tab_data = st.tabs([
     "  Our Data  "
 ])
 
-# 공통 헤더 HTML (탭 내부 상단에 삽입되는 초록색 박스)
-# *25logo는 위로 뺐으므로 여기서는 제외했습니다.*
+# 공통 헤더 HTML (탭 내부 상단 초록색 박스 - 로고 제거됨)
 header_html = f"""
 <div class="header-container">
     <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
     <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
-    <div class="logo-box">
-        {tag_ajou_sw}
-        {tag_ajou}
-        <div class="separator"></div>
-        {tag_google}
-    </div>
 </div>
 """
 
@@ -228,7 +260,7 @@ header_html = f"""
 # TAB 1: Home (메인 화면)
 # ------------------------------------------------------------------------------
 with tab_home:
-    st.markdown(header_html, unsafe_allow_html=True) # 헤더 출력
+    st.markdown(header_html, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="hero-container">
@@ -247,7 +279,7 @@ with tab_home:
 # TAB 2: Engine 1 (가상 예측)
 # ------------------------------------------------------------------------------
 with tab_e1:
-    st.markdown(header_html, unsafe_allow_html=True) 
+    st.markdown(header_html, unsafe_allow_html=True)
     
     st.subheader("Engine 1. 배터리 수명 가상 시뮬레이터 (Interactive Mode)")
     st.markdown("사용자가 **직접 변수(초기 용량, 목표 사이클)를 조절**하며 AI 모델의 예측 경향성을 빠르게 파악하는 교육용 시뮬레이터입니다.")
@@ -296,58 +328,130 @@ with tab_e1:
                     st.success(f"✅ **Stable:** {cycle_input} Cycle까지 안정적입니다.")
 
 # ------------------------------------------------------------------------------
-# TAB 3: Engine 2 (공정 최적화)
+# TAB 3: Engine 2 (공정 최적화 - 과거 로직 완벽 복원)
 # ------------------------------------------------------------------------------
 with tab_e2:
-    st.markdown(header_html, unsafe_allow_html=True) 
+    st.markdown(header_html, unsafe_allow_html=True)
     
     st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA Optimization)")
-    st.info("💡 **Update:** 화학적 조성(불소 유무), 용매 독성(VOC), 끓는점(Energy)에 기반한 물리학적 계산 모델입니다.")
+    st.info("💡 **Update:** 본 시뮬레이터는 **화학적 조성(불소 유무)**, **용매의 독성(VOC)**, **끓는점(Boiling Point)**에 기반한 물리학적 계산 모델을 적용했습니다.")
     
-    col_in, col_out = st.columns([1, 2])
-    with col_in:
+    col_input_e2, col_view_e2 = st.columns([1, 2])
+    
+    with col_input_e2:
         with st.container(border=True):
-            st.markdown("#### 🛠️ 공정 조건 설정")
-            binder = st.selectbox("Binder", ["SBR", "CMC", "CMGG", "GG", "PVDF"])
-            solvent = st.radio("Solvent", ["Water", "NMP"])
+            st.markdown("#### 🛠️ 공정 조건 설정 (음극)")
+            s_binder = st.selectbox("Binder Type", ["SBR", "CMC", "CMGG", "GG", "PVDF"]) 
+            s_solvent = st.radio("Solvent Type", ["Water", "NMP"])
             st.divider()
-            temp = st.slider("Temp (°C)", 60, 200, 110)
-            time = st.slider("Time (min)", 10, 720, 60)
-            load = st.number_input("Loading (mg/cm²)", 5.0, 30.0, 10.0)
-            run_e2 = st.button("계산 실행", type="primary", use_container_width=True)
+            s_temp = st.slider("Drying Temp (°C)", 60, 200, 110)
+            s_time = st.slider("Drying Time (min)", 10, 720, 60) 
+            s_loading = st.number_input("Loading mass (mg/cm²)", 5.0, 30.0, 10.0)
+            
+            st.write("")
+            run_e2 = st.button("Engine 2 계산 실행", type="primary", use_container_width=True)
 
-    with col_out:
+    with col_view_e2:
         if run_e2:
-            if binder == "PVDF" and solvent == "Water":
-                st.error("🚫 **PVDF는 물에 녹지 않습니다.** (NMP 필요)")
-            elif binder in ["CMC", "CMGG", "GG", "SBR"] and solvent == "NMP":
-                st.error(f"🚫 **{binder}는 수계 바인더입니다.** (Water 필요)")
+            # 1. 유효성 검사 (Validation Logic)
+            if s_binder == "PVDF" and s_solvent == "Water":
+                st.error("🚫 **Error: 부적절한 소재 조합입니다 (Invalid Combination)**")
+                st.markdown("""
+                **과학적 근거 (Scientific Basis):**
+                * **PVDF**는 소수성(Hydrophobic) 고분자로 물에 용해되지 않습니다.
+                * 따라서 **Water(물)** 용매와는 슬러리(Slurry) 형성이 불가능합니다.
+                * PVDF를 사용하려면 반드시 **NMP**와 같은 유기 용매를 선택해야 합니다.
+                """)
+            
+            elif s_binder in ["CMC", "CMGG", "GG", "SBR"] and s_solvent == "NMP":
+                st.error("🚫 **Error: 부적절한 소재 조합입니다 (Invalid Combination)**")
+                st.markdown(f"""
+                **과학적 근거 (Scientific Basis):**
+                * **{s_binder}**는 수계 바인더(Water-based Binder)로, 주로 **물(Water)**에 용해하여 사용합니다.
+                * **NMP**와 같은 유기 용매에는 녹지 않거나 분산성이 매우 떨어져 전극 제조가 불가능합니다.
+                * {s_binder}를 사용하려면 **Water** 용매를 선택해야 합니다.
+                """)
+
             else:
-                co2, eng, voc, d_co2, d_voc = calculate_lca_impact(binder, solvent, temp, load, time)
+                # 2. 계산 실행
+                co2, energy, voc, co2_desc, voc_desc = calculate_lca_impact(
+                    s_binder, s_solvent, s_temp, s_loading, s_time
+                )
                 
-                c1, c2, c3 = st.columns(3)
-                c1.metric("CO₂ Emission", f"{co2:.3f}", delta=d_co2, delta_color="inverse")
-                c2.metric("Energy", f"{eng:.3f}", help="kWh/m²")
-                c3.metric("VOCs", f"{voc:.3f}", delta=d_voc, delta_color="inverse")
+                # 3. 결과 표시
+                col1, col2, col3 = st.columns(3)
+                col1.metric("CO₂ Emission", f"{co2:.4f} kg/m²", delta=co2_desc, delta_color="inverse")
+                col2.metric("Energy Consumption", f"{energy:.4f} kWh/m²", help="Based on Solvent BP & Drying Temp")
+                col3.metric("VOC Emission", f"{voc:.4f} g/m²", delta=voc_desc, delta_color="inverse")
                 
                 st.divider()
-                st.markdown("#### 📊 Comparative Analysis")
-                ref_vals = calculate_lca_impact("PVDF", "NMP", 130, load, 60)[:3]
-                cur_vals = [co2, eng, voc]
                 
-                fig, ax = plt.subplots(figsize=(8, 4))
-                x = np.arange(3); width = 0.35
-                ax.bar(x - width/2, ref_vals, width, label='Ref (PVDF/NMP)', color='#FF8A80')
-                ax.bar(x + width/2, cur_vals, width, label='Current', color='#69F0AE', edgecolor='k')
-                ax.set_xticks(x); ax.set_xticklabels(['CO₂', 'Energy', 'VOC'])
-                ax.legend(); ax.grid(axis='y', linestyle=':')
+                # 4. 과학적 근거 (Scientific Basis)
+                st.markdown("#### 📋 Scientific Basis for Calculation")
+                
+                with st.expander("1. VOC (휘발성 유기화합물) 산출 근거", expanded=True):
+                    if s_solvent == "NMP":
+                        st.write("🔴 **High Risk:** 용매로 **NMP(N-Methyl-2-pyrrolidone)**가 사용되었습니다. NMP는 생식 독성이 있는 유기용매로, 건조 과정에서 VOC가 다량 발생하며 엄격한 배기 장치가 필요합니다.")
+                    else:
+                        st.write("🟢 **Safe:** 용매로 **Water(물)**이 사용되었습니다. 건조 시 수증기만 배출되므로 VOC 발생량은 **0**에 수렴합니다.")
+
+                with st.expander("2. CO₂ (탄소 배출량) 산출 근거", expanded=True):
+                    if "PVDF" in s_binder:
+                        st.write("🔴 **High Emission:** 바인더로 **PVDF**가 사용되었습니다.")
+                        st.latex(r"-(C_2H_2F_2)_n-")
+                        st.write("화학 구조 내 **불소(F)** 원소로 인해 합성 및 폐기 과정에서 GWP(지구온난화지수)가 매우 높습니다.")
+                    else:
+                        st.write(f"🟢 **Low Emission:** 바인더로 **{s_binder}**가 사용되었습니다. 이는 **천연 유래 고분자(Bio-based)**로, C, H, O 기반의 구조를 가지며 불소를 포함하지 않아 탄소 배출이 적습니다.")
+
+                with st.expander("3. Energy (에너지 소비) 산출 근거", expanded=True):
+                    bp = 204.1 if s_solvent == "NMP" else 100
+                    st.write(f"ℹ️ **Solvent Boiling Point:** {bp}°C")
+                    st.write(f"현재 설정 온도: **{s_temp}°C**")
+                    if s_solvent == "NMP":
+                        st.write("NMP는 끓는점이 204.1°C로 높아, 완전 건조를 위해 높은 열에너지가 지속적으로 필요합니다.")
+                    else:
+                        st.write("물은 끓는점이 100°C로 낮아, 상대적으로 적은 에너지로도 건조가 가능합니다.")
+
+                st.markdown("---")
+                
+                # 5. 비교 그래프 (Comparative Analysis)
+                st.markdown("#### 📊 Comparative Analysis (Organic NMP vs Aqueous Water Process)")
+                
+                ref_co2, ref_energy, ref_voc, _, _ = calculate_lca_impact("PVDF", "NMP", 130, s_loading, 60)
+                
+                labels = ['CO₂ (kg/m²)', 'Energy (kWh/m²)', 'VOC (g/m²)']
+                current_vals = [co2, energy, voc]
+                ref_vals = [ref_co2, ref_energy, ref_voc]
+
+                x = np.arange(len(labels))
+                width = 0.35
+
+                fig, ax = plt.subplots(figsize=(8, 5))
+                rects1 = ax.bar(x - width/2, ref_vals, width, label='Reference (Organic Process: NMP)', color='#FF8A80', alpha=0.8)
+                rects2 = ax.bar(x + width/2, current_vals, width, label='Current Settings (Aqueous)', color='#69F0AE', edgecolor='black')
+
+                ax.set_ylabel('Impact Value')
+                ax.set_title('Environmental Impact Comparison')
+                ax.set_xticks(x); ax.set_xticklabels(labels, fontweight='bold')
+                ax.legend()
+                ax.grid(axis='y', linestyle=':', alpha=0.5)
+                
+                def autolabel(rects):
+                    for rect in rects:
+                        h = rect.get_height()
+                        ax.annotate(f'{h:.2f}', xy=(rect.get_x()+rect.get_width()/2, h), xytext=(0,3), textcoords="offset points", ha='center', fontsize=9)
+                autolabel(rects1); autolabel(rects2)
+                
                 st.pyplot(fig)
+
+        else:
+            st.info("좌측 패널에서 공정 조건을 설정하고 [Engine 2 계산 실행]을 눌러주세요.")
 
 # ------------------------------------------------------------------------------
 # TAB 4: Our Data (실험 검증 - 맨 뒤)
 # ------------------------------------------------------------------------------
 with tab_data:
-    st.markdown(header_html, unsafe_allow_html=True) 
+    st.markdown(header_html, unsafe_allow_html=True)
     
     st.subheader("Our Data. 실제 실험 데이터 검증 (Ground Truth Validation)")
     st.markdown("이 탭에서는 **Team 스물다섯이 직접 수행한 실험 데이터**를 기반으로 Engine 1의 예측 정확도를 검증합니다.")
