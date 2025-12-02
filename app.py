@@ -289,10 +289,9 @@ with tab2:
             with st.container(border=True):
                 st.markdown("#### 📂 실험 케이스 선택")
                 # [중요] 실제 CSV 파일의 Sample_Type 값과 매칭되어야 함 (Sample A, B, C)
-                # 화면 표시는 1-1과 동일하게 "Perfectly Stable" 등으로 보여주되, 내부 로직은 CSV 값 사용
                 
                 # 라디오 버튼 옵션 정의 (표시용)
-                radio_options = ["Perfectly Stable ", "Stable ", "Unstable "]
+                radio_options = ["초고속 충전 ", "고속 충전", "저속 충전"]
                 selected_option = st.radio(
                     "확인할 실험 데이터:",
                     radio_options,
