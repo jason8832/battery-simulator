@@ -6,7 +6,7 @@ import base64
 import os
 from sklearn.ensemble import RandomForestRegressor
 
-# --- [1] 페이지 기본 설정 ---
+# --- [1] 페이지 기본 설정 (반드시 가장 윗줄) ---
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
@@ -14,6 +14,7 @@ st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="
 # ==============================================================================
 
 def get_img_tag(file, title):
+    """이미지 태그 생성 함수"""
     if not os.path.exists(file):
         return ""
     try:
@@ -24,102 +25,101 @@ def get_img_tag(file, title):
     except:
         return ""
 
-# 로고 태그 생성
+# 로고 이미지 로드 (파일이 없으면 빈 문자열 반환)
 tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW")
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University")
 tag_google  = get_img_tag("google_logo.png", "Google")
 
-# CSS 스타일링 (탭 위치 조정 및 디자인)
+# CSS 스타일링
 st.markdown("""
 <style>
+    /* 폰트 설정 */
     html, body, [class*="css"] {
         font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
     }
     
-    /* 메인 화면 상단 여백 줄이기 (탭을 더 위로) */
-    .block-container {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
+    /* 탭바(TabBar) 스타일 개선 */
+    /* 탭 글씨 크기 키우고 진하게 */
+    button[data-baseweb="tab"] {
+        font-size: 20px !important;
+        font-weight: 800 !important;
+        padding: 10px 30px !important;
+        color: #333 !important; /* 글씨 색상 진하게 */
+    }
+    
+    /* 선택된 탭 강조 */
+    button[data-baseweb="tab"][aria-selected="true"] {
+        color: #d32f2f !important; /* 선택시 붉은색 계열 */
+        background-color: #fce4ec !important;
     }
 
-    /* 헤더 컨테이너 스타일 */
+    /* 헤더 컨테이너 (초록색 박스) */
     .header-container {
         background-color: #E8F5E9;
-        padding: 20px 20px;
+        padding: 30px 20px;
         border-radius: 15px;
-        margin-top: 10px;
-        margin-bottom: 20px;
+        margin-top: 20px; /* 탭 아래 여백 */
+        margin-bottom: 30px;
         text-align: center;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        border-bottom: 4px solid #4CAF50;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border-bottom: 5px solid #4CAF50;
     }
     .main-title {
-        font-size: 2.2rem;
-        font-weight: 800;
+        font-size: 2.5rem;
+        font-weight: 900;
         color: #1B5E20;
         margin: 0;
-        letter-spacing: -0.5px;
+        letter-spacing: -1px;
     }
     .sub-title {
-        font-size: 1.0rem;
+        font-size: 1.1rem;
         color: #555;
-        margin-top: 5px;
-        margin-bottom: 15px;
+        margin-top: 10px;
+        margin-bottom: 20px;
         font-weight: 500;
     }
     .logo-box {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 15px;
+        gap: 20px;
     }
     .logo-img {
-        height: 28px;
+        height: 35px;
         width: auto;
         object-fit: contain;
-        transition: transform 0.3s;
-    }
-    .logo-img:hover {
-        transform: scale(1.1);
     }
     .separator {
-        width: 1px; height: 18px; background-color: #bbb;
+        width: 1px; height: 25px; background-color: #bbb;
     }
     
-    /* 탭 버튼 스타일 커스텀 */
-    button[data-baseweb="tab"] {
-        font-size: 16px !important;
-        font-weight: 700 !important;
-        padding: 0px 20px !important;
-    }
-    
-    /* Hero Section (Home) */
+    /* Home Hero Section */
     .hero-container {
         text-align: center;
-        padding: 80px 20px;
+        padding: 100px 20px;
         background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=2831&auto=format&fit=crop'); 
         background-size: cover;
         background-position: center;
-        border-radius: 15px;
+        border-radius: 20px;
         color: white;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
     }
     .hero-title {
-        font-size: 3.0rem;
+        font-size: 3.5rem;
         font-weight: 800;
-        margin-bottom: 15px;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
     }
     .hero-subtitle {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
         font-weight: 400;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     }
 </style>
 """, unsafe_allow_html=True)
 
 # ==============================================================================
-# [함수 정의] Engine 로직
+# [함수 정의] 계산 로직
 # ==============================================================================
 @st.cache_data
 def load_real_case_data():
@@ -145,17 +145,19 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
         base_ce = 99.90; ce_noise_scale = 0.03
     else:
         base_ce = 99.5 - (x * 0.0005); ce_noise_scale = 0.15
-    
+        
     ce_noise = np.random.normal(0, ce_noise_scale, size=len(x))
     ce = np.clip(base_ce + ce_noise, 0, 100.0)
     return x, np.clip(capacity, 0, None), ce
 
 def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, drying_time):
+    # 1. VOC
     if solvent_type == "NMP":
         voc_base = 3.0; voc_val = voc_base * (loading_mass / 10.0); voc_desc = "Critical (NMP Toxicity)"
     else:
         voc_val = 0.0; voc_desc = "Clean (Water Vapor)"
 
+    # 2. CO2
     if binder_type == "PVDF":
         co2_factor = 0.45; chem_formula = "-(C₂H₂F₂)ₙ-"
         co2_desc = f"High ({chem_formula})"
@@ -166,6 +168,7 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
         co2_factor = 0.3; co2_desc = "Medium"
     co2_val = co2_factor * (loading_mass / 20.0)
 
+    # 3. Energy
     bp = 204.1 if solvent_type == "NMP" else 100.0
     process_penalty = 1.5 if solvent_type == "NMP" else 1.0
     delta_T = max(drying_temp - 25, 0)
@@ -176,17 +179,17 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
 
 
 # ==============================================================================
-# [UI 구성] 1. 메인 네비게이션 탭 (최상단 배치)
+# [UI 구성] 메인 탭 (최상단 배치)
 # ==============================================================================
-# [수정됨] 탭을 가장 먼저 선언하여 화면 최상단에 위치시킴
+# 탭을 가장 먼저 선언하여 헤더보다 위에 오게 만듭니다.
 tab_home, tab_e1, tab_e2, tab_data = st.tabs([
-    "🏠 Home", 
-    "🧪 Engine 1: 가상 예측", 
-    "🏭 Engine 2: 공정 최적화",
-    "📂 Our Data: 실험 검증"
+    "  Home  ", 
+    "  Engine 1  ", 
+    "  Engine 2  ", 
+    "  Our Data  "
 ])
 
-# 공통으로 사용할 헤더 HTML (모든 탭 안에 삽입됨)
+# 공통 헤더 HTML (각 탭 내부 상단에 삽입됨)
 header_html = f"""
 <div class="header-container">
     <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
@@ -201,10 +204,10 @@ header_html = f"""
 """
 
 # ------------------------------------------------------------------------------
-# TAB 1: HOME (메인 화면)
+# TAB 1: Home (메인 화면)
 # ------------------------------------------------------------------------------
 with tab_home:
-    st.markdown(header_html, unsafe_allow_html=True) # 헤더 삽입
+    st.markdown(header_html, unsafe_allow_html=True) # 헤더 출력
     
     st.markdown("""
     <div class="hero-container">
@@ -215,15 +218,15 @@ with tab_home:
 
     col1, col2 = st.columns([1, 1])
     with col1:
-        st.info("### 🚀 Project Overview\n\n본 프로젝트는 **Google-아주대학교 AI 융합 캡스톤 디자인**의 일환으로 개발되었습니다. 기존의 고비용/장시간이 소요되는 배터리 소재 개발 및 공정 평가를 **AI 기반 가상 시뮬레이션**으로 대체하여 연구 효율성을 극대화합니다.")
+        st.info("### 🚀 Project Overview\n\n본 프로젝트는 **Google-아주대학교 AI 융합 캡스톤 디자인**의 일환으로 개발되었습니다. 기존의 고비용/장시간이 소요되는 배터리 소재 개발 및 공정 평가를 **AI 기반 가상 시뮬레이션**으로 대체하여 연구 효율성을 극대화하고 환경 영향을 최소화합니다.")
     with col2:
         st.success("### 💡 Key Features\n\n* **Engine 1**: AI 기반 가상 수명 예측 시뮬레이터\n* **Engine 2**: 공정 변수(LCA)에 따른 환경 영향 평가\n* **Our Data**: 실제 실험 데이터 기반 정밀 검증")
 
 # ------------------------------------------------------------------------------
-# TAB 2: Engine 1 (가상 시뮬레이터)
+# TAB 2: Engine 1 (가상 예측)
 # ------------------------------------------------------------------------------
 with tab_e1:
-    st.markdown(header_html, unsafe_allow_html=True) # 헤더 삽입
+    st.markdown(header_html, unsafe_allow_html=True) # 헤더 출력
     
     st.subheader("Engine 1. 배터리 수명 가상 시뮬레이터 (Interactive Mode)")
     st.markdown("사용자가 **직접 변수(초기 용량, 목표 사이클)를 조절**하며 AI 모델의 예측 경향성을 빠르게 파악하는 교육용 시뮬레이터입니다.")
@@ -263,12 +266,19 @@ with tab_e1:
                 ax_ce.grid(True, alpha=0.3)
                 
                 st.pyplot(fig2)
+                
+                eol_limit = init_cap_input * 0.8
+                eol_cycle = np.where(capacity < eol_limit)[0]
+                if len(eol_cycle) > 0:
+                    st.error(f"⚠️ **Warning:** 약 **{eol_cycle[0]} Cycle**에서 수명이 80%({eol_limit:.1f} mAh/g) 이하로 떨어집니다.")
+                else:
+                    st.success(f"✅ **Stable:** {cycle_input} Cycle까지 안정적입니다.")
 
 # ------------------------------------------------------------------------------
-# TAB 3: Engine 2 (친환경 공정 최적화)
+# TAB 3: Engine 2 (공정 최적화)
 # ------------------------------------------------------------------------------
 with tab_e2:
-    st.markdown(header_html, unsafe_allow_html=True) # 헤더 삽입
+    st.markdown(header_html, unsafe_allow_html=True) # 헤더 출력
     
     st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA Optimization)")
     st.info("💡 **Update:** 화학적 조성(불소 유무), 용매 독성(VOC), 끓는점(Energy)에 기반한 물리학적 계산 모델입니다.")
@@ -313,10 +323,10 @@ with tab_e2:
                 st.pyplot(fig)
 
 # ------------------------------------------------------------------------------
-# TAB 4: Our Data (실제 실험 검증 - 맨 뒤)
+# TAB 4: Our Data (실험 검증 - 맨 뒤)
 # ------------------------------------------------------------------------------
 with tab_data:
-    st.markdown(header_html, unsafe_allow_html=True) # 헤더 삽입
+    st.markdown(header_html, unsafe_allow_html=True) # 헤더 출력
     
     st.subheader("Our Data. 실제 실험 데이터 검증 (Ground Truth Validation)")
     st.markdown("이 탭에서는 **Team 스물다섯이 직접 수행한 실험 데이터**를 기반으로 Engine 1의 예측 정확도를 검증합니다.")
