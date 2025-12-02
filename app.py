@@ -6,55 +6,54 @@ import base64
 import os
 from sklearn.ensemble import RandomForestRegressor
 
-# --- [1] 페이지 기본 설정 (반드시 가장 윗줄) ---
+# --- [1] 페이지 기본 설정 ---
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
 # [사용자 설정] 팀원 정보 편집
 # ==============================================================================
-# 사진은 profile1.jpeg ~ profile5.jpeg 파일을 읽어옵니다.
 team_members = [
     {
         "name": "이하영",
         "role": "Team Leader",
-        "desc": "\"배터리 수명 예측 알고리즘 설계 및 프로젝트 총괄\"",
+        "desc": "배터리 수명 예측 알고리즘 설계 및 프로젝트 총괄",
         "tags": ["#PM", "#AI_Modeling"]
     },
     {
         "name": "정회권",
         "role": "Frontend Developer",
-        "desc": "\"사용자 친화적 UI/UX 디자인 및 웹 구현\"",
+        "desc": "사용자 친화적 UI/UX 디자인 및 웹 구현",
         "tags": ["#Streamlit", "#UI/UX"]
     },
     {
         "name": "신동하",
         "role": "Data Analyst",
-        "desc": "\"배터리 실험 데이터 전처리 및 시각화 분석\"",
+        "desc": "배터리 실험 데이터 전처리 및 시각화 분석",
         "tags": ["#Data_Analysis", "#Visualization"]
     },
     {
         "name": "권현정",
         "role": "Chemical Engineer",
-        "desc": "\"친환경 바인더 소재 선정 및 화학적 검증\"",
+        "desc": "친환경 바인더 소재 선정 및 화학적 검증",
         "tags": ["#Battery_Material", "#LCA"]
     },
     {
         "name": "박재찬",
         "role": "Backend Developer",
-        "desc": "\"시뮬레이션 서버 구축 및 알고리즘 최적화\"",
+        "desc": "시뮬레이션 서버 구축 및 알고리즘 최적화",
         "tags": ["#Server", "#Optimization"]
     }
 ]
 
 # ==============================================================================
-# [0] 디자인 & CSS 설정
+# [0] 파일 처리 및 헬퍼 함수
 # ==============================================================================
 
-# 현재 파일(app.py)이 있는 절대 경로 확인 (경로 문제 해결의 핵심!)
+# 현재 파일(app.py)의 절대 경로 (서버 환경 호환성 확보)
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 def get_base64_image(filename):
-    """이미지 파일을 읽어 Base64 문자열로 반환 (CSS/HTML용)"""
+    """이미지를 Base64로 변환 (파일 대소문자 정확해야 함)"""
     file_path = os.path.join(current_dir, filename)
     if not os.path.exists(file_path):
         return None
@@ -62,23 +61,26 @@ def get_base64_image(filename):
         with open(file_path, "rb") as f:
             data = f.read()
         return base64.b64encode(data).decode()
-    except Exception as e:
+    except:
         return None
 
 def get_img_tag(filename, title, css_class="logo-img"):
-    """HTML <img> 태그 생성"""
+    """HTML 이미지 태그 생성"""
     b64 = get_base64_image(filename)
     if b64:
         return f'<img src="data:image/png;base64,{b64}" class="{css_class}" title="{title}">'
-    return ""
+    return "" # 파일 없으면 빈 문자열
 
+# ------------------------------------------------------------------------------
 # 1. 이미지 자원 로드
+# ------------------------------------------------------------------------------
 tag_25 = get_img_tag("25logo.png", "Team 25", css_class="top-left-logo")
 tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-logo")
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
-# 2. 상단 배경 이미지 (Background.jpeg) 처리
+# 2. 상단 배경 이미지 로드
+# 주의: Github에 있는 파일명 'Background.jpeg' (대소문자 정확히)
 bg_filename = "Background.jpeg"
 bg_base64 = get_base64_image(bg_filename)
 
@@ -90,11 +92,11 @@ if bg_base64:
         background-repeat: no-repeat;
     """
 else:
-    # 이미지가 없을 경우 기본색
+    # 이미지가 없거나 로딩 실패 시 기본 배경색
     header_bg_style = "background-color: #BBDEFB;"
 
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링 (NameError 해결: 모든 중괄호를 {{ }}로 변경)
+# 3. CSS 스타일링
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
@@ -155,13 +157,7 @@ st.markdown(f"""
         box-shadow: 0 -2px 5px rgba(0,0,0,0.1) !important;
     }}
 
-    /* 대제목 배경 애니메이션 */
-    @keyframes gradientAnimation {{
-        0% {{ background-position: 0% 50%; }}
-        50% {{ background-position: 100% 50%; }}
-        100% {{ background-position: 0% 50%; }}
-    }}
-
+    /* 헤더 컨테이너 */
     .header-container {{
         background: linear-gradient(-45deg, #E8F5E9, #C8E6C9, #B2DFDB, #E0F2F1, #FFFFFF);
         background-size: 400% 400%;
@@ -173,6 +169,11 @@ st.markdown(f"""
         text-align: center;
         border: 3px solid #2E7D32; 
         box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }}
+    @keyframes gradientAnimation {{
+        0% {{ background-position: 0% 50%; }}
+        50% {{ background-position: 100% 50%; }}
+        100% {{ background-position: 0% 50%; }}
     }}
     
     .main-title {{
@@ -236,7 +237,7 @@ st.markdown(f"""
         border: 1px solid #E0E0E0;
         box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         transition: transform 0.2s;
-        min-height: 160px; /* 카드 높이 고정 */
+        min-height: 140px;
     }}
     .persona-card:hover {{
         transform: translateY(-3px);
@@ -244,8 +245,8 @@ st.markdown(f"""
         box-shadow: 0 8px 16px rgba(46, 125, 50, 0.15);
     }}
     .persona-img {{
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
         object-fit: cover;
         margin-right: 20px;
@@ -261,12 +262,12 @@ st.markdown(f"""
         font-size: 1.2rem;
         font-weight: 800;
         color: #2E7D32;
-        margin-bottom: 2px;
+        margin-bottom: 4px;
     }}
     .persona-role {{
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         color: #777;
-        font-weight: 600;
+        font-weight: 700;
         margin-bottom: 8px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -275,78 +276,21 @@ st.markdown(f"""
         font-size: 0.95rem;
         color: #333;
         line-height: 1.4;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
         font-style: italic;
     }}
     .tag-badge {{
         background-color: #E8F5E9;
         color: #1B5E20;
         padding: 4px 8px;
-        border-radius: 8px;
+        border-radius: 6px;
         font-size: 0.75rem;
         font-weight: 600;
         margin-right: 5px;
         display: inline-block;
-        margin-top: 2px;
     }}
-
 </style>
 """, unsafe_allow_html=True)
-
-# ==============================================================================
-# [함수 정의] 계산 로직
-# ==============================================================================
-@st.cache_data
-def load_real_case_data():
-    try:
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        file_path = os.path.join(current_dir, "engine1_output.csv")
-        df = pd.read_csv(file_path)
-        return df
-    except FileNotFoundError:
-        return None
-
-def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
-    x = np.arange(1, cycles + 1)
-    linear_fade = 0.00015 * x * decay_rate
-    acc_fade = 1e-9 * np.exp(0.015 * x) * decay_rate
-    cap_noise = np.random.normal(0, 0.0015, size=len(x))
-    retention = 1.0 - linear_fade - acc_fade + cap_noise
-    capacity = retention * specific_cap_base
-    
-    if decay_rate < 1.5:
-        base_ce = 99.98; ce_noise_scale = 0.01
-    elif decay_rate < 3.0:
-        base_ce = 99.90; ce_noise_scale = 0.03
-    else:
-        base_ce = 99.5 - (x * 0.0005); ce_noise_scale = 0.15
-        
-    ce_noise = np.random.normal(0, ce_noise_scale, size=len(x))
-    ce = np.clip(base_ce + ce_noise, 0, 100.0)
-    return x, np.clip(capacity, 0, None), ce
-
-def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, drying_time):
-    if solvent_type == "NMP":
-        voc_base = 3.0; voc_val = voc_base * (loading_mass / 10.0); voc_desc = "Critical (NMP Toxicity)"
-    else:
-        voc_val = 0.0; voc_desc = "Clean (Water Vapor)"
-
-    if binder_type == "PVDF":
-        co2_factor = 0.45; chem_formula = "-(C₂H₂F₂)ₙ-"; co2_desc = f"High ({chem_formula})"
-    elif binder_type in ["CMGG", "GG", "CMC"]: # SBR 제거됨
-        co2_factor = 0.12; chem_formula = "Bio-based (C,H,O)"; co2_desc = f"Low ({chem_formula})"
-    else:
-        co2_factor = 0.3; co2_desc = "Medium"
-    co2_val = co2_factor * (loading_mass / 20.0)
-
-    bp = 204.1 if solvent_type == "NMP" else 100.0
-    process_penalty = 1.5 if solvent_type == "NMP" else 1.0
-    delta_T = max(drying_temp - 25, 0)
-    efficiency = 1.0 if drying_temp >= bp else 0.6
-    energy_val = (delta_T * drying_time * process_penalty) / (efficiency * 50000.0)
-    
-    return co2_val, energy_val, voc_val, co2_desc, voc_desc
-
 
 # ==============================================================================
 # [UI 구성] 1. 상단 로고 바
@@ -397,7 +341,6 @@ with tab_home:
     </div>
     """, unsafe_allow_html=True)
 
-    # Project Overview & Key Features
     col1, col2 = st.columns([1, 1])
     with col1:
         st.info("### 🚀 Project Overview\n\n본 프로젝트는 **Google-아주대학교 AI 융합 캡스톤 디자인**의 일환으로 개발되었습니다. 기존의 고비용/장시간이 소요되는 배터리 소재 개발 및 공정 평가를 **AI 기반 가상 시뮬레이션**으로 대체하여 연구 효율성을 극대화합니다.")
@@ -406,7 +349,7 @@ with tab_home:
 
     st.markdown("---")
     
-    # [NEW] Team Member Section
+    # [NEW] Team Member Section (업데이트됨)
     st.markdown("<h3 style='color: #1B5E20; margin-bottom: 20px;'>👥 Meet Team 25</h3>", unsafe_allow_html=True)
     
     # 2열 그리드로 배치
@@ -416,11 +359,16 @@ with tab_home:
         col_idx = i % 2
         tags_html = "".join([f'<span class="tag-badge">{tag}</span>' for tag in member['tags']])
         
-        # 이미지 파일 로드 (profile1.jpeg ~ profile5.jpeg)
-        profile_filename = f"profile{i+1}.jpeg"
-        profile_b64 = get_base64_image(profile_filename)
+        # [수정] 파일명 대문자 'Profile'로 수정 (Github 파일명과 일치)
+        # Github에는 Profile1.jpeg, Profile2.jpeg... 로 되어 있습니다.
+        profile_filename = f"Profile{i+1}.jpeg" 
         
-        # 이미지가 있으면 로컬 사진, 없으면 기본 아바타 (DiceBear)
+        # 만약 파일이 없으면 소문자 profile로도 시도 (안전장치)
+        profile_b64 = get_base64_image(profile_filename)
+        if not profile_b64:
+             profile_b64 = get_base64_image(f"profile{i+1}.jpeg")
+
+        # 이미지가 있으면 로컬 사진, 없으면 기본 아바타
         if profile_b64:
             img_src = f"data:image/jpeg;base64,{profile_b64}"
         else:
@@ -434,11 +382,19 @@ with tab_home:
                     <div class="persona-name">{member['name']}</div>
                     <div class="persona-role">{member['role']}</div>
                     <div class="persona-desc">{member['desc']}</div>
-                    <div class="tag-badge">{member['tags'][0]}</div>
-                    <div class="tag-badge">{member['tags'][1]}</div>
+                    <div class="persona-tags">{tags_html}</div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
+            
+    # [디버깅용] 파일 못 찾는 문제 해결용 (배포 후 삭제 권장)
+    with st.expander("🛠️ 디버깅: 서버 파일 목록 확인 (이미지 안 보일 때 클릭)"):
+        st.write("현재 폴더 위치:", current_dir)
+        st.write("폴더 내 파일 목록:", os.listdir(current_dir))
+        if not bg_base64:
+            st.error(f"❌ '{bg_filename}' 파일을 찾지 못했습니다. 위 목록에 파일이 있는지 확인하세요.")
+        else:
+            st.success(f"✅ '{bg_filename}' 로드 성공!")
 
 # ------------------------------------------------------------------------------
 # TAB 2: Engine 1
@@ -493,7 +449,7 @@ with tab_e1:
                     st.success(f"✅ **Stable:** {cycle_input} Cycle까지 안정적입니다.")
 
 # ------------------------------------------------------------------------------
-# TAB 3: Engine 2 (SBR 제거됨)
+# TAB 3: Engine 2
 # ------------------------------------------------------------------------------
 with tab_e2:
     st.markdown(header_html, unsafe_allow_html=True)
