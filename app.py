@@ -10,11 +10,41 @@ from sklearn.ensemble import RandomForestRegressor
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
+# [사용자 설정] 팀원 정보 수정하는 곳 (여기만 고치면 반영됩니다!)
+# ==============================================================================
+team_members = [
+    {
+        "name": "홍길동", 
+        "role": "Team Leader / AI Modeling", 
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&accessoriesProbability=0&eyebrows=default&eyes=default"
+    },
+    {
+        "name": "김철수", 
+        "role": "Frontend Developer", 
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Jack&accessoriesProbability=0&facialHairProbability=0"
+    },
+    {
+        "name": "이영희", 
+        "role": "Data Analyst", 
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka&accessoriesProbability=0&hair=long"
+    },
+    {
+        "name": "박민수", 
+        "role": "Chemical Engineer", 
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Bob&accessoriesProbability=0"
+    },
+    {
+        "name": "최수진", 
+        "role": "Project Manager", 
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Molly&accessoriesProbability=0&hair=long"
+    }
+]
+
+# ==============================================================================
 # [0] 디자인 & CSS 설정
 # ==============================================================================
 
 def get_img_tag(file, title, css_class="logo-img"):
-    """이미지 태그 생성 함수"""
     if not os.path.exists(file):
         return ""
     try:
@@ -26,7 +56,6 @@ def get_img_tag(file, title, css_class="logo-img"):
         return ""
 
 def get_base64_image(file):
-    """배경 이미지를 위한 Base64 변환 함수"""
     if not os.path.exists(file):
         return None
     try:
@@ -42,7 +71,7 @@ tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-lo
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
-# 2. 상단 배경 이미지 (Background.jpeg) 처리
+# 2. 상단 배경 이미지 (Background.jpeg) 처리 - 복구됨
 bg_file = "Background.jpeg"
 bg_base64 = get_base64_image(bg_file)
 
@@ -54,10 +83,10 @@ if bg_base64:
         background-repeat: no-repeat;
     """
 else:
-    header_bg_style = "background-color: #BBDEFB;"
+    header_bg_style = "background-color: #BBDEFB;" # 이미지 없을 시 기본색
 
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링 (수정됨: 중괄호 이중 처리 {{ }})
+# 3. CSS 스타일링
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
@@ -70,7 +99,7 @@ st.markdown(f"""
         background-color: #F1F8E9; 
     }}
     
-    /* 상단 로고 바 */
+    /* [수정됨] 상단 로고 바 (이미지 배경 적용) */
     .top-header-bar {{
         {header_bg_style}
         display: flex;
@@ -186,7 +215,7 @@ st.markdown(f"""
         box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
     }}
 
-    /* [수정됨] 팀원 소개 카드 스타일 (중괄호 {{ }} 두 번 사용) */
+    /* 팀원 소개 카드 스타일 */
     .team-card {{
         background-color: white;
         border-radius: 20px;
@@ -338,18 +367,10 @@ with tab_home:
 
     st.markdown("---")
     
-    # [NEW] Team Member Introduction Section
+    # [NEW] Team Member Introduction Section (편집 가능)
     st.markdown("<h3 style='text-align: center; color: #1B5E20; margin-bottom: 20px;'>👥 Meet Team 25</h3>", unsafe_allow_html=True)
     
-    # 팀원 데이터 (DiceBear API 사용 - 안경 없는 깔끔한 스타일)
-    team_members = [
-        {"name": "Member 1", "role": "AI Engineer", "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&accessoriesProbability=0&eyebrows=default&eyes=default"}, # 남
-        {"name": "Member 2", "role": "Data Analyst", "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka&accessoriesProbability=0&hair=long"}, # 여
-        {"name": "Member 3", "role": "Chem Engineer", "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Bob&accessoriesProbability=0"}, # 남
-        {"name": "Member 4", "role": "Frontend Dev", "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Jack&accessoriesProbability=0&facialHairProbability=0"}, # 남
-        {"name": "Member 5", "role": "Project Manager", "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Molly&accessoriesProbability=0&hair=long"}  # 여
-    ]
-
+    # 팀원 카드 생성 (위에서 정의한 변수 사용)
     cols = st.columns(5)
     for i, member in enumerate(team_members):
         with cols[i]:
