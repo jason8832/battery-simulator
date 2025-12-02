@@ -10,9 +10,8 @@ from sklearn.ensemble import RandomForestRegressor
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
-# [사용자 설정] 팀원 정보 편집 (수정됨)
+# [사용자 설정] 팀원 정보 편집
 # ==============================================================================
-# 사진 파일명(대소문자 구분)을 정확히 입력해주세요.
 team_members = [
     {
         "name": "이하영",
@@ -55,7 +54,6 @@ team_members = [
 # [0] 디자인 & CSS 설정
 # ==============================================================================
 
-# 현재 파일(app.py)이 있는 절대 경로 확인
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 def get_base64_image(filename):
@@ -84,7 +82,7 @@ tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-lo
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
-# 2. 상단 배경 이미지 (background.jpg) 처리
+# 2. 상단 배경 이미지
 bg_base64 = get_base64_image("background.jpg")
 
 if bg_base64:
@@ -98,7 +96,7 @@ else:
     header_bg_style = "background-color: #BBDEFB;"
 
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링
+# 3. CSS 스타일링 (초강력 수정 버전)
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
@@ -108,10 +106,28 @@ st.markdown(f"""
         font-family: 'Noto Sans KR', 'Helvetica Neue', sans-serif;
     }}
 
+    /* 전체 배경색: 차분한 세이지 그레이 (화면 전체 적용) */
     .stApp {{
-        background-color: #F1F8E9; 
+        background-color: #D8E0D8; 
     }}
     
+    /* [🚨핵심 해결 부분] 좌측 조건 설정 네모칸 강제 스타일링 */
+    /* Streamlit 버전 차이를 고려하여 가능한 모든 선택자를 포함하고 우선순위를 최상(important)으로 높임 */
+    
+    /* 1. 표준 선택자 */
+    [data-testid="stVerticalBlockBorderWrapper"] {{
+        background-color: #FFFFFF !important;  /* 배경: 무조건 흰색 */
+        border: 3px solid #1B5E20 !important;  /* 테두리: 3px 진한 녹색 */
+        border-radius: 15px !important;        
+        padding: 20px !important;              
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+    }}
+    
+    /* 2. 혹시 모를 내부 요소 투명화 처리 */
+    [data-testid="stVerticalBlockBorderWrapper"] > div {{
+        background-color: transparent !important; 
+    }}
+
     /* 상단 로고 바 */
     .top-header-bar {{
         {header_bg_style}
@@ -124,6 +140,7 @@ st.markdown(f"""
         border-radius: 0 0 20px 20px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         border-bottom: 3px solid #2E7D32;
+        background-color: white; 
     }}
     
     .logo-group-right {{
@@ -159,13 +176,12 @@ st.markdown(f"""
         box-shadow: 0 -2px 5px rgba(0,0,0,0.1) !important;
     }}
 
-    /* 대제목 배경 애니메이션 */
+    /* 헤더 컨테이너 */
     @keyframes gradientAnimation {{
         0% {{ background-position: 0% 50%; }}
         50% {{ background-position: 100% 50%; }}
         100% {{ background-position: 0% 50%; }}
     }}
-
     .header-container {{
         background: linear-gradient(-45deg, #E8F5E9, #C8E6C9, #B2DFDB, #E0F2F1, #FFFFFF);
         background-size: 400% 400%;
@@ -178,7 +194,6 @@ st.markdown(f"""
         border: 3px solid #2E7D32; 
         box-shadow: 0 8px 16px rgba(0,0,0,0.15);
     }}
-    
     .main-title {{
         font-size: 2.8rem;
         font-weight: 900;
@@ -218,15 +233,6 @@ st.markdown(f"""
         font-weight: 400;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     }}
-    
-    /* 컨테이너 스타일 */
-    div[data-testid="stVerticalBlock"] > div[style*="flex-direction: column;"] > div[data-testid="stVerticalBlock"] {{
-        background-color: #FFFFFF;
-        padding: 20px;
-        border-radius: 15px;
-        border: 3px solid #2E7D32 !important; 
-        box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
-    }}
 
     /* 페르소나 카드 스타일 */
     .persona-card {{
@@ -257,47 +263,11 @@ st.markdown(f"""
         background-color: #F1F8E9;
         flex-shrink: 0;
     }}
-    .persona-content {{
-        text-align: left;
-        width: 100%;
-    }}
-    .persona-name {{
-        font-size: 1.3rem;
-        font-weight: 800;
-        color: #1B5E20;
-        margin-bottom: 4px;
-    }}
-    .persona-role {{
-        font-size: 0.85rem;
-        color: #555;
-        font-weight: 700;
-        margin-bottom: 8px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        background-color: #E8F5E9;
-        padding: 2px 8px;
-        border-radius: 4px;
-        display: inline-block;
-    }}
-    .persona-desc {{
-        font-size: 0.95rem;
-        color: #333;
-        line-height: 1.5;
-        margin-bottom: 12px;
-        font-style: normal;
-        word-break: keep-all; /* 단어 단위 줄바꿈 */
-    }}
-    .tag-badge {{
-        background-color: #E3F2FD;
-        color: #1565C0;
-        padding: 4px 8px;
-        border-radius: 6px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        margin-right: 5px;
-        display: inline-block;
-        margin-top: 2px;
-    }}
+    .persona-content {{ text-align: left; width: 100%; }}
+    .persona-name {{ font-size: 1.3rem; font-weight: 800; color: #1B5E20; margin-bottom: 4px; }}
+    .persona-role {{ font-size: 0.85rem; color: #555; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; background-color: #E8F5E9; padding: 2px 8px; border-radius: 4px; display: inline-block; }}
+    .persona-desc {{ font-size: 0.95rem; color: #333; line-height: 1.5; margin-bottom: 12px; }}
+    .tag-badge {{ background-color: #E3F2FD; color: #1565C0; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; margin-right: 5px; display: inline-block; margin-top: 2px; }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -457,6 +427,7 @@ with tab_e1:
     
     col_input, col_view = st.columns([1, 2])
     with col_input:
+        # [확인용] CSS에서 data-testid="stVerticalBlockBorderWrapper"를 강제로 스타일링 중입니다.
         with st.container(border=True): 
             st.markdown("#### 🔋 샘플 안정도 설정")
             sample_type = st.radio("패턴 선택", ["Perfectly Stable", "Stable", "Unstable"], label_visibility="collapsed", key="t1_radio")
@@ -511,7 +482,6 @@ with tab_e2:
     with col_input_e2:
         with st.container(border=True): 
             st.markdown("#### 🛠️ 공정 조건 설정 ")
-            # SBR Removed
             s_binder = st.selectbox("Binder Type", ["CMC", "CMGG", "GG", "PVDF"]) 
             s_solvent = st.radio("Solvent Type", ["Water", "NMP"])
             st.divider()
