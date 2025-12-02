@@ -292,7 +292,7 @@ with tab2:
                 # 화면 표시는 1-1과 동일하게 "Perfectly Stable" 등으로 보여주되, 내부 로직은 CSV 값 사용
                 
                 # 라디오 버튼 옵션 정의 (표시용)
-                radio_options = ["Perfectly Stable (Sample A)", "Stable (Sample B)", "Unstable (Sample C)"]
+                radio_options = ["Perfectly Stable ", "Stable ", "Unstable "]
                 selected_option = st.radio(
                     "확인할 실험 데이터:",
                     radio_options,
