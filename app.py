@@ -29,15 +29,12 @@ tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW")
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University")
 tag_google  = get_img_tag("google_logo.png", "Google")
 
-# CSS 스타일링 (탭 폰트 크기 키움 + 헤더 스타일)
+# CSS 스타일링
 st.markdown("""
 <style>
-    /* 전체 폰트 설정 */
     html, body, [class*="css"] {
         font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
     }
-    
-    /* 상단 헤더 컨테이너 */
     .header-container {
         background-color: #E8F5E9;
         padding: 20px 20px;
@@ -79,12 +76,12 @@ st.markdown("""
     .separator {
         width: 1px; height: 18px; background-color: #bbb;
     }
-
-    /* 탭(Tab) 스타일 커스텀 */
+    
+    /* 탭 스타일 */
     button[data-baseweb="tab"] {
         font-size: 18px !important;
         font-weight: 700 !important;
-        padding: 0px 20px !important;
+        padding: 0px 30px !important;
     }
     
     /* Home Hero Section */
@@ -146,13 +143,11 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     return x, np.clip(capacity, 0, None), ce
 
 def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, drying_time):
-    # 1. VOC
     if solvent_type == "NMP":
         voc_base = 3.0; voc_val = voc_base * (loading_mass / 10.0); voc_desc = "Critical (NMP Toxicity)"
     else:
         voc_val = 0.0; voc_desc = "Clean (Water Vapor)"
 
-    # 2. CO2
     if binder_type == "PVDF":
         co2_factor = 0.45; chem_formula = "-(C₂H₂F₂)ₙ-"
         co2_desc = f"High ({chem_formula})"
@@ -163,7 +158,6 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
         co2_factor = 0.3; co2_desc = "Medium"
     co2_val = co2_factor * (loading_mass / 20.0)
 
-    # 3. Energy
     bp = 204.1 if solvent_type == "NMP" else 100.0
     process_penalty = 1.5 if solvent_type == "NMP" else 1.0
     delta_T = max(drying_temp - 25, 0)
@@ -190,21 +184,19 @@ header_html = f"""
 st.markdown(header_html, unsafe_allow_html=True)
 
 # ==============================================================================
-# [UI 구성] 2. 메인 네비게이션 탭 (Home, Engine 1-1, Engine 1-2, Engine 2)
+# [UI 구성] 2. 메인 네비게이션 탭 (순서 변경: Home -> E1 -> E2 -> Our Data)
 # ==============================================================================
-# 탭을 상단 메뉴바처럼 사용
-tab_home, tab_e1_1, tab_e1_2, tab_e2 = st.tabs([
+tab_home, tab_e1, tab_e2, tab_data = st.tabs([
     "🏠 Home", 
-    "🧪 Engine 1-1: 가상 예측", 
-    "📊 Engine 1-2: 실험 검증", 
-    "🏭 Engine 2: 공정 최적화"
+    "🧪 Engine 1: 가상 예측", 
+    "🏭 Engine 2: 공정 최적화",
+    "📂 Our Data: 실험 검증"
 ])
 
 # ------------------------------------------------------------------------------
 # TAB 1: HOME (메인 화면)
 # ------------------------------------------------------------------------------
 with tab_home:
-    # Hero Section
     st.markdown("""
     <div class="hero-container">
         <div class="hero-title">To make the world greener <br>and sustainable</div>
@@ -216,13 +208,13 @@ with tab_home:
     with col1:
         st.info("### 🚀 Project Overview\n\n본 프로젝트는 **Google-아주대학교 AI 융합 캡스톤 디자인**의 일환으로 개발되었습니다. 기존의 고비용/장시간이 소요되는 배터리 소재 개발 및 공정 평가를 **AI 기반 가상 시뮬레이션**으로 대체하여 연구 효율성을 극대화합니다.")
     with col2:
-        st.success("### 💡 Key Features\n\n* **Engine 1-1**: AI 기반 가상 수명 예측 시뮬레이터\n* **Engine 1-2**: 실제 실험 데이터 기반 정밀 검증\n* **Engine 2**: 공정 변수(LCA)에 따른 환경 영향 평가")
+        st.success("### 💡 Key Features\n\n* **Engine 1**: AI 기반 가상 수명 예측 시뮬레이터\n* **Engine 2**: 공정 변수(LCA)에 따른 환경 영향 평가\n* **Our Data**: 실제 실험 데이터 기반 정밀 검증")
 
 # ------------------------------------------------------------------------------
-# TAB 2: Engine 1-1 (가상 시뮬레이터)
+# TAB 2: Engine 1 (가상 시뮬레이터)
 # ------------------------------------------------------------------------------
-with tab_e1_1:
-    st.subheader("Engine 1-1. 배터리 수명 가상 시뮬레이터 (Interactive Mode)")
+with tab_e1:
+    st.subheader("Engine 1. 배터리 수명 가상 시뮬레이터 (Interactive Mode)")
     st.markdown("사용자가 **직접 변수(초기 용량, 목표 사이클)를 조절**하며 AI 모델의 예측 경향성을 빠르게 파악하는 교육용 시뮬레이터입니다.")
     st.divider()
     
@@ -262,11 +254,57 @@ with tab_e1_1:
                 st.pyplot(fig2)
 
 # ------------------------------------------------------------------------------
-# TAB 3: Engine 1-2 (실제 실험 검증)
+# TAB 3: Engine 2 (친환경 공정 최적화)
 # ------------------------------------------------------------------------------
-with tab_e1_2:
-    st.subheader("Engine 1-2. 실제 실험 데이터 검증 (Real-world Validation)")
-    st.markdown("이 탭에서는 **실제 배터리 테스트 데이터(Ground Truth)**를 기반으로 수행된 Engine 1의 정밀한 예측 결과를 검증합니다.")
+with tab_e2:
+    st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA Optimization)")
+    st.info("💡 **Update:** 화학적 조성(불소 유무), 용매 독성(VOC), 끓는점(Energy)에 기반한 물리학적 계산 모델입니다.")
+    
+    col_in, col_out = st.columns([1, 2])
+    with col_in:
+        with st.container(border=True):
+            st.markdown("#### 🛠️ 공정 조건 설정")
+            binder = st.selectbox("Binder", ["SBR", "CMC", "CMGG", "GG", "PVDF"])
+            solvent = st.radio("Solvent", ["Water", "NMP"])
+            st.divider()
+            temp = st.slider("Temp (°C)", 60, 200, 110)
+            time = st.slider("Time (min)", 10, 720, 60)
+            load = st.number_input("Loading (mg/cm²)", 5.0, 30.0, 10.0)
+            run_e2 = st.button("계산 실행", type="primary", use_container_width=True)
+
+    with col_out:
+        if run_e2:
+            if binder == "PVDF" and solvent == "Water":
+                st.error("🚫 **PVDF는 물에 녹지 않습니다.** (NMP 필요)")
+            elif binder in ["CMC", "CMGG", "GG", "SBR"] and solvent == "NMP":
+                st.error(f"🚫 **{binder}는 수계 바인더입니다.** (Water 필요)")
+            else:
+                co2, eng, voc, d_co2, d_voc = calculate_lca_impact(binder, solvent, temp, load, time)
+                
+                c1, c2, c3 = st.columns(3)
+                c1.metric("CO₂ Emission", f"{co2:.3f}", delta=d_co2, delta_color="inverse")
+                c2.metric("Energy", f"{eng:.3f}", help="kWh/m²")
+                c3.metric("VOCs", f"{voc:.3f}", delta=d_voc, delta_color="inverse")
+                
+                st.divider()
+                st.markdown("#### 📊 Comparative Analysis")
+                ref_vals = calculate_lca_impact("PVDF", "NMP", 130, load, 60)[:3]
+                cur_vals = [co2, eng, voc]
+                
+                fig, ax = plt.subplots(figsize=(8, 4))
+                x = np.arange(3); width = 0.35
+                ax.bar(x - width/2, ref_vals, width, label='Ref (PVDF/NMP)', color='#FF8A80')
+                ax.bar(x + width/2, cur_vals, width, label='Current', color='#69F0AE', edgecolor='k')
+                ax.set_xticks(x); ax.set_xticklabels(['CO₂', 'Energy', 'VOC'])
+                ax.legend(); ax.grid(axis='y', linestyle=':')
+                st.pyplot(fig)
+
+# ------------------------------------------------------------------------------
+# TAB 4: Our Data (실제 실험 검증 - 맨 뒤로 이동)
+# ------------------------------------------------------------------------------
+with tab_data:
+    st.subheader("Our Data. 실제 실험 데이터 검증 (Ground Truth Validation)")
+    st.markdown("이 탭에서는 **Team 스물다섯이 직접 수행한 실험 데이터**를 기반으로 Engine 1의 예측 정확도를 검증합니다.")
     st.divider()
 
     df_results = load_real_case_data()
@@ -297,50 +335,3 @@ with tab_e1_2:
                 st.pyplot(fig)
                 
                 st.info(f"📊 **AI Report**: 최종 용량 **{pred['Capacity'].iloc[-1]:.2f} mAh/g** 예측됨.")
-
-# ------------------------------------------------------------------------------
-# TAB 4: Engine 2 (친환경 공정 최적화)
-# ------------------------------------------------------------------------------
-with tab_e2:
-    st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA Optimization)")
-    st.info("💡 **Update:** 화학적 조성(불소 유무), 용매 독성(VOC), 끓는점(Energy)에 기반한 물리학적 계산 모델입니다.")
-    
-    col_in, col_out = st.columns([1, 2])
-    with col_in:
-        with st.container(border=True):
-            st.markdown("#### 🛠️ 공정 조건 설정")
-            binder = st.selectbox("Binder", ["SBR", "CMC", "CMGG", "GG", "PVDF"])
-            solvent = st.radio("Solvent", ["Water", "NMP"])
-            st.divider()
-            temp = st.slider("Temp (°C)", 60, 200, 110)
-            time = st.slider("Time (min)", 10, 720, 60)
-            load = st.number_input("Loading (mg/cm²)", 5.0, 30.0, 10.0)
-            run_e2 = st.button("계산 실행", type="primary", use_container_width=True)
-
-    with col_out:
-        if run_e2:
-            # 유효성 검사
-            if binder == "PVDF" and solvent == "Water":
-                st.error("🚫 **PVDF는 물에 녹지 않습니다.** (NMP 필요)")
-            elif binder in ["CMC", "CMGG", "GG", "SBR"] and solvent == "NMP":
-                st.error(f"🚫 **{binder}는 수계 바인더입니다.** (Water 필요)")
-            else:
-                co2, eng, voc, d_co2, d_voc = calculate_lca_impact(binder, solvent, temp, load, time)
-                
-                c1, c2, c3 = st.columns(3)
-                c1.metric("CO₂ Emission", f"{co2:.3f}", delta=d_co2, delta_color="inverse")
-                c2.metric("Energy", f"{eng:.3f}", help="kWh/m²")
-                c3.metric("VOCs", f"{voc:.3f}", delta=d_voc, delta_color="inverse")
-                
-                st.divider()
-                st.markdown("#### 📊 Comparative Analysis")
-                ref_vals = calculate_lca_impact("PVDF", "NMP", 130, load, 60)[:3]
-                cur_vals = [co2, eng, voc]
-                
-                fig, ax = plt.subplots(figsize=(8, 4))
-                x = np.arange(3); width = 0.35
-                ax.bar(x - width/2, ref_vals, width, label='Ref (PVDF/NMP)', color='#FF8A80')
-                ax.bar(x + width/2, cur_vals, width, label='Current', color='#69F0AE', edgecolor='k')
-                ax.set_xticks(x); ax.set_xticklabels(['CO₂', 'Energy', 'VOC'])
-                ax.legend(); ax.grid(axis='y', linestyle=':')
-                st.pyplot(fig)
