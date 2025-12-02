@@ -273,37 +273,166 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
 # ==============================================================================
 # [UI 구성] 1. 상단 로고 바 (Background.jpeg 적용)
 # ==============================================================================
-st.markdown(f"""
-<div class="top-header-bar">
-    <div class="logo-group-left">
-        {tag_25}
-    </div>
-    <div class="logo-group-right">
-        {tag_ajou_sw}
-        {tag_ajou}
-        <div class="logo-separator"></div>
-        {tag_google}
-    </div>
-</div>
+# CSS 스타일링 (업그레이드 버전)
+st.markdown("""
+<style>
+    /* 폰트 설정 */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+    html, body, [class*="css"] {
+        font-family: 'Noto Sans KR', 'Helvetica Neue', sans-serif;
+    }
+
+    /* [배경색 설정] 전체 페이지: 아주 연한 웜그레이 (눈이 편안함) */
+    .stApp {
+        background-color: #F8F9FA; 
+    }
+    
+    /* [상단 로고 바] 그라데이션 적용 (Eco-Tech 느낌) */
+    .top-header-bar {
+        background: linear-gradient(135deg, #E8F5E9 0%, #E3F2FD 100%); /* 그린에서 블루로 이어지는 은은한 그라데이션 */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        margin-top: -40px; /* 위쪽 여백 제거 */
+        margin-bottom: 20px;
+        border-bottom: 1px solid #dee2e6;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .logo-group-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background-color: rgba(255, 255, 255, 0.8); /* 로고 뒤 흰색 반투명 박스 */
+        padding: 8px 20px;
+        border-radius: 50px; /* 둥근 모서리 */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    /* 좌측 로고 (Team 25) */
+    .top-left-logo {
+        height: 90px; /* 적절한 크기 조절 */
+        width: auto;
+        object-fit: contain;
+        filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.1));
+    }
+
+    /* 우측 로고들 */
+    .top-right-logo {
+        height: 32px;
+        width: auto;
+        object-fit: contain;
+        transition: transform 0.3s;
+    }
+    .top-right-logo:hover {
+        transform: scale(1.1);
+    }
+
+    /* 구분선 */
+    .logo-separator {
+        width: 1px;
+        height: 18px;
+        background-color: #ccc;
+        margin: 0 5px;
+    }
+
+    /* [탭바 스타일] 모던하고 깔끔하게 */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 10px;
+        background-color: transparent;
+        padding-bottom: 10px;
+    }
+    button[data-baseweb="tab"] {
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        padding: 10px 25px !important;
+        color: #555 !important;
+        background-color: #FFFFFF !important;
+        border-radius: 30px !important; /* 캡슐형 버튼 */
+        border: 1px solid #E0E0E0 !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.03) !important;
+        transition: all 0.3s ease;
+    }
+    button[data-baseweb="tab"]:hover {
+        background-color: #F1F8E9 !important;
+        border-color: #AED581 !important;
+    }
+    button[data-baseweb="tab"][aria-selected="true"] {
+        color: #2E7D32 !important; /* 진한 초록색 텍스트 */
+        background-color: #E8F5E9 !important; /* 연한 초록 배경 */
+        border-color: #2E7D32 !important;
+        box-shadow: 0 4px 6px rgba(46, 125, 50, 0.15) !important;
+    }
+
+    /* [메인 타이틀 박스] 카드 형태 디자인 */
+    .header-container {
+        background: white;
+        padding: 40px 30px;
+        border-radius: 20px;
+        margin-top: 10px;
+        margin-bottom: 40px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05); /* 부드러운 그림자 */
+        border: 1px solid #f0f0f0;
+        position: relative;
+        overflow: hidden;
+    }
+    /* 타이틀 박스 상단에 얇은 초록색 라인 포인트 */
+    .header-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: linear-gradient(90deg, #66BB6A, #42A5F5);
+    }
+    
+    .main-title {
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: #2c3e50; /* 진한 남색 계열 회색 */
+        margin-bottom: 10px;
+        letter-spacing: -0.5px;
+    }
+    .sub-title {
+        font-size: 1.2rem;
+        color: #7f8c8d;
+        font-weight: 500;
+    }
+
+    /* Hero Section (이미지) */
+    .hero-container {
+        text-align: center;
+        padding: 120px 20px;
+        /* 배경 이미지는 유지하되 오버레이를 씌워 글씨 가독성 확보 */
+        background: linear-gradient(rgba(0, 0, 50, 0.6), rgba(0, 0, 50, 0.4)), url('https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=2831&auto=format&fit=crop'); 
+        background-size: cover;
+        background-position: center;
+        border-radius: 20px;
+        color: white;
+        margin-bottom: 40px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 900;
+        margin-bottom: 15px;
+        text-shadow: 0 4px 8px rgba(0,0,0,0.6);
+    }
+    
+    /* 각 입력창/결과창 컨테이너 (Streamlit 기본 위젯 박스 스타일링) */
+    div[data-testid="stVerticalBlock"] > div[style*="flex-direction: column;"] > div[data-testid="stVerticalBlock"] {
+        background-color: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        border: 1px solid #f0f0f0;
+    }
+
+</style>
 """, unsafe_allow_html=True)
-
-# ==============================================================================
-# [UI 구성] 2. 메인 네비게이션 탭 (하단 연두색 배경 시작)
-# ==============================================================================
-tab_home, tab_e1, tab_e2, tab_data = st.tabs([
-    "  Home  ", 
-    "  Engine 1  ", 
-    "  Engine 2  ", 
-    "  Our Data  "
-])
-
-# 공통 헤더 HTML (탭 내부 상단 타이틀 박스 - 흰색 배경)
-header_html = f"""
-<div class="header-container">
-    <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
-    <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
-</div>
-"""
 
 # ------------------------------------------------------------------------------
 # TAB 1: Home (메인 화면)
