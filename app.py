@@ -10,10 +10,10 @@ from sklearn.ensemble import RandomForestRegressor
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
-# [사용자 설정] 팀원 정보 (이름, 역할, 소개 수정)
+# [사용자 설정] 팀원 정보 편집
 # ==============================================================================
 # 사진은 profile1.jpeg ~ profile5.jpeg 파일을 읽어옵니다.
-team_info_list = [
+team_members = [
     {
         "name": "이하영",
         "role": "Team Leader",
@@ -47,17 +47,14 @@ team_info_list = [
 ]
 
 # ==============================================================================
-# [0] 파일 처리 및 헬퍼 함수
+# [0] 디자인 & CSS 설정
 # ==============================================================================
 
-# 현재 파일(app.py)이 있는 절대 경로 확인
+# 현재 파일(app.py)이 있는 절대 경로 확인 (경로 문제 해결의 핵심!)
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 def get_base64_image(filename):
-    """
-    이미지 파일을 읽어 Base64 문자열로 반환 (CSS/HTML용)
-    파일이 없으면 None 반환
-    """
+    """이미지 파일을 읽어 Base64 문자열로 반환 (CSS/HTML용)"""
     file_path = os.path.join(current_dir, filename)
     if not os.path.exists(file_path):
         return None
@@ -66,7 +63,6 @@ def get_base64_image(filename):
             data = f.read()
         return base64.b64encode(data).decode()
     except Exception as e:
-        st.error(f"이미지 읽기 오류 ({filename}): {e}")
         return None
 
 def get_img_tag(filename, title, css_class="logo-img"):
@@ -76,16 +72,13 @@ def get_img_tag(filename, title, css_class="logo-img"):
         return f'<img src="data:image/png;base64,{b64}" class="{css_class}" title="{title}">'
     return ""
 
-# ------------------------------------------------------------------------------
 # 1. 이미지 자원 로드
-# ------------------------------------------------------------------------------
-# 로고 로드
 tag_25 = get_img_tag("25logo.png", "Team 25", css_class="top-left-logo")
 tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-logo")
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
-# 배경 이미지 로드 (디버깅 포함)
+# 2. 상단 배경 이미지 (Background.jpeg) 처리
 bg_filename = "Background.jpeg"
 bg_base64 = get_base64_image(bg_filename)
 
@@ -97,12 +90,11 @@ if bg_base64:
         background-repeat: no-repeat;
     """
 else:
-    # 이미지가 없을 경우: 배경색 지정 및 경고 메시지 (배포 후엔 st.warning 주석 처리 권장)
+    # 이미지가 없을 경우 기본색
     header_bg_style = "background-color: #BBDEFB;"
-    # st.warning(f"⚠️ '{bg_filename}' 파일을 찾을 수 없습니다. 파일명을 확인하거나 같은 폴더에 있는지 확인해주세요.")
 
 # ------------------------------------------------------------------------------
-# 2. CSS 스타일링
+# 3. CSS 스타일링 (NameError 해결: 모든 중괄호를 {{ }}로 변경)
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
@@ -244,7 +236,7 @@ st.markdown(f"""
         border: 1px solid #E0E0E0;
         box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         transition: transform 0.2s;
-        min-height: 140px; /* 카드 높이 통일 */
+        min-height: 160px; /* 카드 높이 고정 */
     }}
     .persona-card:hover {{
         transform: translateY(-3px);
@@ -252,8 +244,8 @@ st.markdown(f"""
         box-shadow: 0 8px 16px rgba(46, 125, 50, 0.15);
     }}
     .persona-img {{
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
         object-fit: cover;
         margin-right: 20px;
@@ -266,13 +258,13 @@ st.markdown(f"""
         width: 100%;
     }}
     .persona-name {{
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         font-weight: 800;
         color: #2E7D32;
         margin-bottom: 2px;
     }}
     .persona-role {{
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         color: #777;
         font-weight: 600;
         margin-bottom: 8px;
@@ -280,7 +272,7 @@ st.markdown(f"""
         letter-spacing: 0.5px;
     }}
     .persona-desc {{
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         color: #333;
         line-height: 1.4;
         margin-bottom: 10px;
@@ -294,6 +286,8 @@ st.markdown(f"""
         font-size: 0.75rem;
         font-weight: 600;
         margin-right: 5px;
+        display: inline-block;
+        margin-top: 2px;
     }}
 
 </style>
@@ -339,7 +333,7 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
 
     if binder_type == "PVDF":
         co2_factor = 0.45; chem_formula = "-(C₂H₂F₂)ₙ-"; co2_desc = f"High ({chem_formula})"
-    elif binder_type in ["CMGG", "GG", "CMC"]: # [수정] SBR 제거됨
+    elif binder_type in ["CMGG", "GG", "CMC"]: # SBR 제거됨
         co2_factor = 0.12; chem_formula = "Bio-based (C,H,O)"; co2_desc = f"Low ({chem_formula})"
     else:
         co2_factor = 0.3; co2_desc = "Medium"
@@ -403,7 +397,7 @@ with tab_home:
     </div>
     """, unsafe_allow_html=True)
 
-    # Project Overview
+    # Project Overview & Key Features
     col1, col2 = st.columns([1, 1])
     with col1:
         st.info("### 🚀 Project Overview\n\n본 프로젝트는 **Google-아주대학교 AI 융합 캡스톤 디자인**의 일환으로 개발되었습니다. 기존의 고비용/장시간이 소요되는 배터리 소재 개발 및 공정 평가를 **AI 기반 가상 시뮬레이션**으로 대체하여 연구 효율성을 극대화합니다.")
@@ -412,13 +406,13 @@ with tab_home:
 
     st.markdown("---")
     
-    # [NEW] Team Member Section (사진 파일 사용)
+    # [NEW] Team Member Section
     st.markdown("<h3 style='color: #1B5E20; margin-bottom: 20px;'>👥 Meet Team 25</h3>", unsafe_allow_html=True)
     
     # 2열 그리드로 배치
     cols = st.columns(2) 
     
-    for i, member in enumerate(team_info_list):
+    for i, member in enumerate(team_members):
         col_idx = i % 2
         tags_html = "".join([f'<span class="tag-badge">{tag}</span>' for tag in member['tags']])
         
@@ -426,11 +420,11 @@ with tab_home:
         profile_filename = f"profile{i+1}.jpeg"
         profile_b64 = get_base64_image(profile_filename)
         
+        # 이미지가 있으면 로컬 사진, 없으면 기본 아바타 (DiceBear)
         if profile_b64:
             img_src = f"data:image/jpeg;base64,{profile_b64}"
         else:
-            # 파일이 없을 경우 기본 아바타 (오류 방지)
-            img_src = "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+            img_src = "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" # 기본 이미지
 
         with cols[col_idx]:
             st.markdown(f"""
@@ -440,7 +434,8 @@ with tab_home:
                     <div class="persona-name">{member['name']}</div>
                     <div class="persona-role">{member['role']}</div>
                     <div class="persona-desc">{member['desc']}</div>
-                    <div class="persona-tags">{tags_html}</div>
+                    <div class="tag-badge">{member['tags'][0]}</div>
+                    <div class="tag-badge">{member['tags'][1]}</div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -511,7 +506,7 @@ with tab_e2:
     with col_input_e2:
         with st.container(border=True): 
             st.markdown("#### 🛠️ 공정 조건 설정 (음극)")
-            # [수정] SBR 제거됨
+            # SBR 제거됨
             s_binder = st.selectbox("Binder Type", ["CMC", "CMGG", "GG", "PVDF"]) 
             s_solvent = st.radio("Solvent Type", ["Water", "NMP"])
             st.divider()
