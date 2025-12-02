@@ -15,35 +15,35 @@ st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="
 # 팁: 소개(desc)는 짧은 한마디, 태그(tags)는 주요 담당 업무를 적으세요.
 team_members = [
     {
-        "name": "홍길동",
+        "name": "이하영",
         "role": "Team Leader",
         "desc": "\"배터리 수명 예측의 정확도를 높이는 알고리즘을 설계합니다.\"",
         "tags": ["#AI_Modeling", "#Project_Manager"],
         "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" 
     },
     {
-        "name": "김철수",
+        "name": "정회권",
         "role": "Frontend Developer",
         "desc": "\"사용자가 직관적으로 데이터를 이해할 수 있는 UI를 개발합니다.\"",
         "tags": ["#Streamlit", "#Dashboard_Design"],
         "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Jack"
     },
     {
-        "name": "이영희",
+        "name": "신동하",
         "role": "Data Analyst",
         "desc": "\"실험 데이터를 분석하여 의미 있는 인사이트를 도출합니다.\"",
         "tags": ["#Data_Analysis", "#Visualization"],
         "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"
     },
     {
-        "name": "박민수",
+        "name": "권현정",
         "role": "Chemical Engineer",
         "desc": "\"친환경 바인더 소재의 화학적 특성을 검증합니다.\"",
         "tags": ["#Battery_Material", "#LCA"],
         "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Bob"
     },
     {
-        "name": "최수진",
+        "name": "박재찬",
         "role": "Backend Developer",
         "desc": "\"안정적인 시뮬레이션 환경을 위한 서버 로직을 구축합니다.\"",
         "tags": ["#Server", "#Optimization"],
