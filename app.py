@@ -29,6 +29,7 @@ def get_img_tag(file, title):
 tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW")
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University")
 tag_google  = get_img_tag("google_logo.png", "Google")
+tag_25  = get_img_tag("25logo.png", "25logo")
 
 # CSS 스타일링
 st.markdown("""
