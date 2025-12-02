@@ -96,7 +96,7 @@ else:
     header_bg_style = "background-color: #BBDEFB;"
 
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링 (초강력 수정 버전)
+# 3. CSS 스타일링 (완전 수정: 흰색 박스 + 밝은 배경 대비 강조)
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
@@ -106,26 +106,24 @@ st.markdown(f"""
         font-family: 'Noto Sans KR', 'Helvetica Neue', sans-serif;
     }}
 
-    /* 전체 배경색: 차분한 세이지 그레이 (화면 전체 적용) */
+    /* [Back] 전체 배경색: 사진처럼 깨끗하고 밝은 민트 그레이 톤 */
     .stApp {{
-        background-color: #D8E0D8; 
+        background-color: #E9EFEC !important; 
     }}
     
-    /* [🚨핵심 해결 부분] 좌측 조건 설정 네모칸 강제 스타일링 */
-    /* Streamlit 버전 차이를 고려하여 가능한 모든 선택자를 포함하고 우선순위를 최상(important)으로 높임 */
-    
-    /* 1. 표준 선택자 */
-    [data-testid="stVerticalBlockBorderWrapper"] {{
-        background-color: #FFFFFF !important;  /* 배경: 무조건 흰색 */
-        border: 3px solid #1B5E20 !important;  /* 테두리: 3px 진한 녹색 */
-        border-radius: 15px !important;        
+    /* [Front] 좌측 조건 설정 네모칸: 무조건 흰색 배경 + 진한 테두리 */
+    /* Streamlit의 Border Container 강제 스타일링 */
+    div[data-testid="stVerticalBlockBorderWrapper"] {{
+        background-color: #FFFFFF !important;  /* 배경: 완전한 흰색 */
+        border: 2px solid #1B5E20 !important;  /* 테두리: 2px 진한 녹색 (깔끔하게) */
+        border-radius: 12px !important;        
         padding: 20px !important;              
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important; /* 살짝 그림자 줘서 입체감 */
     }}
     
-    /* 2. 혹시 모를 내부 요소 투명화 처리 */
-    [data-testid="stVerticalBlockBorderWrapper"] > div {{
-        background-color: transparent !important; 
+    /* 내부 요소 투명도 문제 해결 */
+    div[data-testid="stVerticalBlockBorderWrapper"] > div {{
+        background-color: #FFFFFF !important; 
     }}
 
     /* 상단 로고 바 */
@@ -427,7 +425,7 @@ with tab_e1:
     
     col_input, col_view = st.columns([1, 2])
     with col_input:
-        # [확인용] CSS에서 data-testid="stVerticalBlockBorderWrapper"를 강제로 스타일링 중입니다.
+        # [확인] 이 컨테이너는 이제 무조건 흰색 배경이 됩니다.
         with st.container(border=True): 
             st.markdown("#### 🔋 샘플 안정도 설정")
             sample_type = st.radio("패턴 선택", ["Perfectly Stable", "Stable", "Unstable"], label_visibility="collapsed", key="t1_radio")
