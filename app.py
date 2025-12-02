@@ -10,52 +10,11 @@ from sklearn.ensemble import RandomForestRegressor
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
-# [사용자 설정] 팀원 정보 편집 (여기 내용을 바꾸면 홈페이지에 반영됩니다!)
-# ==============================================================================
-# 팁: 소개(desc)는 짧은 한마디, 태그(tags)는 주요 담당 업무를 적으세요.
-team_members = [
-    {
-        "name": "이하영",
-        "role": "Team Leader",
-        "desc": "\"배터리 수명 예측의 정확도를 높이는 알고리즘을 설계합니다.\"",
-        "tags": ["#AI_Modeling", "#Project_Manager"],
-        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" 
-    },
-    {
-        "name": "정회권",
-        "role": "Frontend Developer",
-        "desc": "\"사용자가 직관적으로 데이터를 이해할 수 있는 UI를 개발합니다.\"",
-        "tags": ["#Streamlit", "#Dashboard_Design"],
-        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Jack"
-    },
-    {
-        "name": "신동하",
-        "role": "Data Analyst",
-        "desc": "\"실험 데이터를 분석하여 의미 있는 인사이트를 도출합니다.\"",
-        "tags": ["#Data_Analysis", "#Visualization"],
-        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"
-    },
-    {
-        "name": "권현정",
-        "role": "Chemical Engineer",
-        "desc": "\"친환경 바인더 소재의 화학적 특성을 검증합니다.\"",
-        "tags": ["#Battery_Material", "#LCA"],
-        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Bob"
-    },
-    {
-        "name": "박재찬",
-        "role": "Backend Developer",
-        "desc": "\"안정적인 시뮬레이션 환경을 위한 서버 로직을 구축합니다.\"",
-        "tags": ["#Server", "#Optimization"],
-        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Molly"
-    }
-]
-
-# ==============================================================================
 # [0] 디자인 & CSS 설정
 # ==============================================================================
 
 def get_img_tag(file, title, css_class="logo-img"):
+    """이미지 태그 생성 함수"""
     if not os.path.exists(file):
         return ""
     try:
@@ -67,6 +26,7 @@ def get_img_tag(file, title, css_class="logo-img"):
         return ""
 
 def get_base64_image(file):
+    """배경 이미지를 위한 Base64 변환 함수"""
     if not os.path.exists(file):
         return None
     try:
@@ -97,7 +57,7 @@ else:
     header_bg_style = "background-color: #BBDEFB;"
 
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링 (중요: f-string 내부 CSS 중괄호는 {{ }} 두 번 써야 함)
+# 3. CSS 스타일링 (NameError 해결: 모든 중괄호를 {{ }}로 변경)
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
@@ -107,7 +67,7 @@ st.markdown(f"""
     }}
 
     .stApp {{
-        background-color: #F8F9FA; 
+        background-color: #F1F8E9; 
     }}
     
     /* 상단 로고 바 */
@@ -226,10 +186,11 @@ st.markdown(f"""
         box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
     }}
 
-    /* [NEW] 페르소나 카드 스타일 (가로형) */
+    /* [수정] 페르소나(팀원) 카드 스타일 (가로형 배치) */
+    /* NameError 해결을 위해 {{ }} 사용 및 클래스명 통일 */
     .persona-card {{
         display: flex;
-        flex-direction: row; /* 가로 배치 */
+        flex-direction: row; 
         align-items: center;
         background-color: white;
         border-radius: 20px;
@@ -409,18 +370,26 @@ with tab_home:
 
     st.markdown("---")
     
-    # [NEW] Team Member Section (페르소나 카드 스타일 적용)
+    # [NEW] Team Member Section (클래스명을 persona-card로 수정하여 디자인 적용)
     st.markdown("<h3 style='color: #1B5E20; margin-bottom: 20px;'>👥 Meet Team 25</h3>", unsafe_allow_html=True)
     
-    # 2열 그리드로 배치 (5명이므로 2, 2, 1 형태가 됨)
+    # 팀원 데이터 (남3, 여2 구성)
+    team_members = [
+        {"name": "이하영", "role": "Team Leader", "desc": "AI 모델링 및 프로젝트 총괄", "tags": ["#PM", "#AI"], "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&accessoriesProbability=0&eyebrows=default&eyes=default"},
+        {"name": "정회권", "role": "Frontend Dev", "desc": "Streamlit UI/UX 디자인 및 구현", "tags": ["#Frontend", "#Design"], "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Jack&accessoriesProbability=0&facialHairProbability=0"},
+        {"name": "신동하", "role": "Data Analyst", "desc": "배터리 실험 데이터 분석 및 시각화", "tags": ["#Data", "#Analysis"], "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka&accessoriesProbability=0&hair=long"},
+        {"name": "권현정", "role": "Chem Engineer", "desc": "배터리 소재 실험 및 검증", "tags": ["#Chemistry", "#Experiment"], "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Bob&accessoriesProbability=0"},
+        {"name": "박재찬", "role": "Backend Dev", "desc": "서버 구축 및 알고리즘 최적화", "tags": ["#Backend", "#Server"], "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Molly&accessoriesProbability=0&hair=long"}
+    ]
+
     cols = st.columns(2) 
     
     for i, member in enumerate(team_members):
         col_idx = i % 2
-        # 태그 HTML 생성
         tags_html = "".join([f'<span class="tag-badge">{tag}</span>' for tag in member['tags']])
         
         with cols[col_idx]:
+            # 여기서 class="persona-card"를 사용하여 CSS와 일치시킴
             st.markdown(f"""
             <div class="persona-card">
                 <img src="{member['img']}" class="persona-img">
@@ -498,8 +467,8 @@ with tab_e2:
     
     with col_input_e2:
         with st.container(border=True): 
-            st.markdown("#### 🛠️ 공정 조건 설정 ")
-            s_binder = st.selectbox("Binder Type", ["CMC", "CMGG", "GG", "PVDF"]) 
+            st.markdown("#### 🛠️ 공정 조건 설정 (음극)")
+            s_binder = st.selectbox("Binder Type", ["SBR", "CMC", "CMGG", "GG", "PVDF"]) 
             s_solvent = st.radio("Solvent Type", ["Water", "NMP"])
             st.divider()
             s_temp = st.slider("Drying Temp (°C)", 60, 200, 110)
