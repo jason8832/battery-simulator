@@ -15,8 +15,7 @@ st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="
 
 def get_img_tag(file, title, css_class="logo-img"):
     """
-    이미지 태그 생성 함수
-    - css_class: 로고별 크기 조절 및 스타일 클래스 지정
+    이미지 태그 생성 함수 (HTML <img> 태그 반환)
     """
     if not os.path.exists(file):
         return ""
@@ -28,120 +27,153 @@ def get_img_tag(file, title, css_class="logo-img"):
     except:
         return ""
 
-# 로고 이미지 로드
-# 1. 좌측 상단용 (Team 25)
-tag_25 = get_img_tag("25logo.png", "Team 25", css_class="top-left-logo")
+def get_base64_image(file):
+    """
+    배경 이미지를 위한 Base64 문자열 반환 함수 (CSS url() 용)
+    """
+    if not os.path.exists(file):
+        return None
+    try:
+        with open(file, "rb") as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
+    except:
+        return None
 
-# 2. 우측 상단용 (Ajou, Google)
+# ------------------------------------------------------------------------------
+# 1. 이미지 자원 로드
+# ------------------------------------------------------------------------------
+# (1) 로고 이미지
+tag_25 = get_img_tag("25logo.png", "Team 25", css_class="top-left-logo")
 tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-logo")
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
+# (2) 배경 이미지 (Background.jpeg) 처리
+bg_file = "Background.jpeg"
+bg_base64 = get_base64_image(bg_file)
 
-# CSS 스타일링
-st.markdown("""
+# 배경 이미지 유무에 따른 CSS 스타일 결정
+if bg_base64:
+    # 이미지가 있으면 배경 이미지 적용 (cover: 꽉 채우기)
+    header_bg_style = f"""
+        background-image: url("data:image/jpeg;base64,{bg_base64}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    """
+else:
+    # 이미지가 없으면 기존 하늘색 배경 사용 (Fallback)
+    header_bg_style = "background-color: #BBDEFB;"
+
+# ------------------------------------------------------------------------------
+# 2. CSS 스타일링 적용
+# ------------------------------------------------------------------------------
+st.markdown(f"""
 <style>
     /* 기본 폰트 설정 */
-    html, body, [class*="css"] {
+    html, body, [class*="css"] {{
         font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
-    }
+    }}
 
-    /* [배경색 설정] */
-    /* 1. 전체 페이지 하단 배경 (연두색) */
-    .stApp {
+    /* [배경색 설정] 전체 페이지 하단 배경 (연두색) */
+    .stApp {{
         background-color: #F1F8E9; 
-    }
+    }}
     
-    /* [상단 로고 바 설정] */
-    .top-header-bar {
-        /* 2. 상단 배경 (하늘색) */
-        background-color: #BBDEFB; 
+    /* [상단 로고 바 설정] 배경 이미지 적용됨 */
+    .top-header-bar {{
+        {header_bg_style} /* 위에서 결정된 배경 스타일 주입 */
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 15px 25px; /* 패딩 약간 증가 */
-        margin-top: -30px; /* Streamlit 상단 여백 줄이기 */
+        padding: 15px 25px;
+        margin-top: -30px;
         margin-bottom: 20px;
-        border-radius: 0 0 20px 20px; /* 하단 모서리 둥글게 */
-        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    }
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }}
     
-    .logo-group-right {
+    .logo-group-right {{
         display: flex;
         align-items: center;
         gap: 20px;
-    }
+        /* 배경 이미지가 어두울 경우를 대비해 로고 가독성을 위한 흰색 반투명 박스 (선택 사항) */
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 5px 15px;
+        border-radius: 10px;
+    }}
 
-    /* [수정] 좌측 로고 스타일 (Team 25) - 크기 확대 */
-    .top-left-logo {
-        height: 120px; /* 기존 70px에서 120px로 확대 (약 1.7배) */
+    /* 좌측 로고 스타일 (Team 25) - 크기 1.7배 유지 */
+    .top-left-logo {{
+        height: 120px;
         width: auto;
         object-fit: contain;
-        filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1)); /* 약간의 그림자 추가 */
-    }
+        filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+    }}
 
-    /* 우측 로고 스타일 (Ajou, Google) */
-    .top-right-logo {
+    /* 우측 로고 스타일 */
+    .top-right-logo {{
         height: 35px;
         width: auto;
         object-fit: contain;
         transition: transform 0.3s;
-    }
-    .top-right-logo:hover {
+    }}
+    .top-right-logo:hover {{
         transform: scale(1.1);
-    }
+    }}
 
     /* 구분선 스타일 */
-    .logo-separator {
+    .logo-separator {{
         width: 1px;
         height: 20px;
-        background-color: #666; /* 배경색 변경에 따라 구분선 색 조정 */
+        background-color: #666;
         margin: 0 5px;
-    }
+    }}
 
     /* 탭바(TabBar) 스타일 */
-    button[data-baseweb="tab"] {
+    button[data-baseweb="tab"] {{
         font-size: 18px !important;
         font-weight: 800 !important;
         padding: 10px 30px !important;
         color: #333 !important;
-        background-color: rgba(255,255,255,0.5) !important; /* 탭 배경 반투명 흰색 */
+        background-color: rgba(255,255,255,0.5) !important;
         margin: 0 5px !important;
         border-radius: 10px 10px 0 0 !important;
-    }
-    button[data-baseweb="tab"][aria-selected="true"] {
+    }}
+    button[data-baseweb="tab"][aria-selected="true"] {{
         color: #d32f2f !important;
-        background-color: #ffffff !important; /* 선택된 탭 흰색 */
+        background-color: #ffffff !important;
         box-shadow: 0 -2px 5px rgba(0,0,0,0.1) !important;
-    }
+    }}
 
-    /* [수정] 메인 타이틀 박스 (흰색으로 변경) */
-    .header-container {
-        background-color: #FFFFFF; /* 흰색 배경 */
+    /* 메인 타이틀 박스 (흰색) */
+    .header-container {{
+        background-color: #FFFFFF;
         padding: 30px 20px;
         border-radius: 15px;
         margin-top: 10px;
         margin-bottom: 30px;
         text-align: center;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* 그림자 약간 진하게 */
-        border-bottom: 5px solid #4CAF50; /* 초록색 하단 테두리 유지 */
-    }
-    .main-title {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        border-bottom: 5px solid #4CAF50;
+    }}
+    .main-title {{
         font-size: 2.5rem;
         font-weight: 900;
         color: #1B5E20;
         margin: 0;
         letter-spacing: -1px;
-    }
-    .sub-title {
+    }}
+    .sub-title {{
         font-size: 1.1rem;
         color: #555;
         margin-top: 10px;
         font-weight: 500;
-    }
+    }}
     
     /* Home Hero Section */
-    .hero-container {
+    .hero-container {{
         text-align: center;
         padding: 100px 20px;
         background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=2831&auto=format&fit=crop'); 
@@ -151,18 +183,18 @@ st.markdown("""
         color: white;
         margin-bottom: 40px;
         box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    }
-    .hero-title {
+    }}
+    .hero-title {{
         font-size: 3.5rem;
         font-weight: 800;
         margin-bottom: 20px;
         text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
-    }
-    .hero-subtitle {
+    }}
+    .hero-subtitle {{
         font-size: 1.5rem;
         font-weight: 400;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-    }
+    }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -239,7 +271,7 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
 
 
 # ==============================================================================
-# [UI 구성] 1. 상단 로고 바 (하늘색 배경)
+# [UI 구성] 1. 상단 로고 바 (Background.jpeg 적용)
 # ==============================================================================
 st.markdown(f"""
 <div class="top-header-bar">
