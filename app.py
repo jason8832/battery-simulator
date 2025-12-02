@@ -14,6 +14,7 @@ st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="
 # ==============================================================================
 
 def get_img_tag(file, title, css_class="logo-img"):
+    """이미지 태그 생성 함수"""
     if not os.path.exists(file):
         return ""
     try:
@@ -25,6 +26,7 @@ def get_img_tag(file, title, css_class="logo-img"):
         return ""
 
 def get_base64_image(file):
+    """배경 이미지를 위한 Base64 변환 함수"""
     if not os.path.exists(file):
         return None
     try:
@@ -55,22 +57,20 @@ else:
     header_bg_style = "background-color: #BBDEFB;"
 
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링
+# 3. CSS 스타일링 (수정됨: 중괄호 이중 처리 {{ }})
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
-    /* 기본 폰트 설정 */
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
     html, body, [class*="css"] {{
         font-family: 'Noto Sans KR', 'Helvetica Neue', sans-serif;
     }}
 
-    /* 전체 배경색 */
     .stApp {{
         background-color: #F1F8E9; 
     }}
     
-    /* 1. 상단 로고 바 */
+    /* 상단 로고 바 */
     .top-header-bar {{
         {header_bg_style}
         display: flex;
@@ -99,7 +99,7 @@ st.markdown(f"""
     .top-right-logo:hover {{ transform: scale(1.1); }}
     .logo-separator {{ width: 2px; height: 20px; background-color: #333; margin: 0 5px; }}
 
-    /* 2. 탭바 스타일 */
+    /* 탭바 스타일 */
     button[data-baseweb="tab"] {{
         font-size: 18px !important;
         font-weight: 800 !important;
@@ -117,7 +117,7 @@ st.markdown(f"""
         box-shadow: 0 -2px 5px rgba(0,0,0,0.1) !important;
     }}
 
-    /* 3. 대제목 배경 3D 모션 애니메이션 */
+    /* 대제목 배경 애니메이션 */
     @keyframes gradientAnimation {{
         0% {{ background-position: 0% 50%; }}
         50% {{ background-position: 100% 50%; }}
@@ -186,8 +186,8 @@ st.markdown(f"""
         box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
     }}
 
-    /* [NEW] 팀원 소개 카드 스타일 */
-    .team-card {
+    /* [수정됨] 팀원 소개 카드 스타일 (중괄호 {{ }} 두 번 사용) */
+    .team-card {{
         background-color: white;
         border-radius: 20px;
         padding: 20px;
@@ -196,31 +196,31 @@ st.markdown(f"""
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         transition: transform 0.3s;
         height: 100%;
-    }
-    .team-card:hover {
+    }}
+    .team-card:hover {{
         transform: translateY(-5px);
         border-color: #2E7D32;
         box-shadow: 0 8px 20px rgba(46, 125, 50, 0.2);
-    }
-    .member-img {
+    }}
+    .member-img {{
         width: 100px;
         height: 100px;
         border-radius: 50%;
         object-fit: cover;
         margin-bottom: 15px;
         border: 3px solid #E8F5E9;
-    }
-    .member-name {
+    }}
+    .member-name {{
         font-size: 1.2rem;
         font-weight: 800;
         color: #2E7D32;
         margin-bottom: 5px;
-    }
-    .member-role {
+    }}
+    .member-role {{
         font-size: 0.9rem;
         color: #555;
         font-weight: 500;
-    }
+    }}
 
 </style>
 """, unsafe_allow_html=True)
@@ -342,7 +342,6 @@ with tab_home:
     st.markdown("<h3 style='text-align: center; color: #1B5E20; margin-bottom: 20px;'>👥 Meet Team 25</h3>", unsafe_allow_html=True)
     
     # 팀원 데이터 (DiceBear API 사용 - 안경 없는 깔끔한 스타일)
-    # 남3, 여2 구성
     team_members = [
         {"name": "Member 1", "role": "AI Engineer", "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&accessoriesProbability=0&eyebrows=default&eyes=default"}, # 남
         {"name": "Member 2", "role": "Data Analyst", "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka&accessoriesProbability=0&hair=long"}, # 여
