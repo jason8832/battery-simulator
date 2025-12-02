@@ -96,7 +96,7 @@ else:
     header_bg_style = "background-color: #BBDEFB;"
 
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링 (강력 수정됨)
+# 3. CSS 스타일링 (최종 수정: 컨테이너 강제 적용)
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
@@ -106,26 +106,24 @@ st.markdown(f"""
         font-family: 'Noto Sans KR', 'Helvetica Neue', sans-serif;
     }}
 
-    /* 전체 배경색: 차분한 세이지 그레이 */
+    /* 전체 배경색: 차분한 세이지 그레이 (화면 전체 적용) */
     .stApp {{
         background-color: #D8E0D8; 
     }}
     
-    /* [핵심 수정] 좌측 조건 설정 네모칸 (st.container(border=True)) */
-    /* Streamlit의 Border Container를 타겟팅하는 모든 선택자를 동원하여 강제 적용 */
-    [data-testid="stVerticalBlockBorderWrapper"],
-    div[data-testid="stVerticalBlockBorderWrapper"],
-    div[class*="stVerticalBlockBorderWrapper"] {{
-        background-color: #FFFFFF !important;  /* 무조건 흰색 배경 */
-        border: 3px solid #1B5E20 !important;  /* 굵기 3px, 진한 녹색 */
-        border-radius: 15px !important;
-        padding: 20px !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+    /* [🚨핵심 해결 부분] 좌측 조건 설정 네모칸 강제 스타일링 */
+    /* st.container(border=True)는 data-testid="stVerticalBlockBorderWrapper" 속성을 가집니다. */
+    div[data-testid="stVerticalBlockBorderWrapper"] {{
+        background-color: #FFFFFF !important;  /* 배경: 무조건 흰색 */
+        border: 3px solid #1B5E20 !important;  /* 테두리: 3px 진한 녹색 */
+        border-radius: 15px !important;        /* 모서리 둥글게 */
+        padding: 20px !important;              /* 내부 여백 */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important; /* 그림자 추가 */
     }}
     
-    /* 혹시 내부 div 때문에 색이 안 먹힐 경우를 대비한 2차 강제 */
-    [data-testid="stVerticalBlockBorderWrapper"] > div {{
-        background-color: #FFFFFF !important;
+    /* 혹시 내부 요소가 투명해서 배경색이 묻히는 것을 방지 */
+    div[data-testid="stVerticalBlockBorderWrapper"] > div {{
+        background-color: transparent !important; 
     }}
 
     /* 상단 로고 바 */
@@ -427,7 +425,7 @@ with tab_e1:
     
     col_input, col_view = st.columns([1, 2])
     with col_input:
-        # [수정 확인] 아래 st.container(border=True) 부분이 CSS에 의해 하얀 배경+진한 테두리로 변경됩니다.
+        # [확인용] CSS에서 data-testid="stVerticalBlockBorderWrapper"를 강제로 스타일링 중입니다.
         with st.container(border=True): 
             st.markdown("#### 🔋 샘플 안정도 설정")
             sample_type = st.radio("패턴 선택", ["Perfectly Stable", "Stable", "Unstable"], label_visibility="collapsed", key="t1_radio")
