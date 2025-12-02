@@ -15,7 +15,7 @@ st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="
 
 def get_img_tag(file, title, css_class="logo-img"):
     """
-    이미지 태그 생성 함수 (HTML <img> 태그 반환)
+    이미지 태그 생성 함수
     """
     if not os.path.exists(file):
         return ""
@@ -27,253 +27,14 @@ def get_img_tag(file, title, css_class="logo-img"):
     except:
         return ""
 
-def get_base64_image(file):
-    """
-    배경 이미지를 위한 Base64 문자열 반환 함수 (CSS url() 용)
-    """
-    if not os.path.exists(file):
-        return None
-    try:
-        with open(file, "rb") as f:
-            data = f.read()
-        return base64.b64encode(data).decode()
-    except:
-        return None
-
-# ------------------------------------------------------------------------------
-# 1. 이미지 자원 로드
-# ------------------------------------------------------------------------------
-# (1) 로고 이미지
+# 로고 이미지 로드
 tag_25 = get_img_tag("25logo.png", "Team 25", css_class="top-left-logo")
 tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-logo")
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
-# (2) 배경 이미지 (Background.jpeg) 처리
-bg_file = "Background.jpeg"
-bg_base64 = get_base64_image(bg_file)
 
-# 배경 이미지 유무에 따른 CSS 스타일 결정
-if bg_base64:
-    # 이미지가 있으면 배경 이미지 적용 (cover: 꽉 채우기)
-    header_bg_style = f"""
-        background-image: url("data:image/jpeg;base64,{bg_base64}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-    """
-else:
-    # 이미지가 없으면 기존 하늘색 배경 사용 (Fallback)
-    header_bg_style = "background-color: #BBDEFB;"
-
-# ------------------------------------------------------------------------------
-# 2. CSS 스타일링 적용
-# ------------------------------------------------------------------------------
-st.markdown(f"""
-<style>
-    /* 기본 폰트 설정 */
-    html, body, [class*="css"] {{
-        font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
-    }}
-
-    /* [배경색 설정] 전체 페이지 하단 배경 (연두색) */
-    .stApp {{
-        background-color: #F1F8E9; 
-    }}
-    
-    /* [상단 로고 바 설정] 배경 이미지 적용됨 */
-    .top-header-bar {{
-        {header_bg_style} /* 위에서 결정된 배경 스타일 주입 */
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 25px;
-        margin-top: -30px;
-        margin-bottom: 20px;
-        border-radius: 0 0 20px 20px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }}
-    
-    .logo-group-right {{
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        /* 배경 이미지가 어두울 경우를 대비해 로고 가독성을 위한 흰색 반투명 박스 (선택 사항) */
-        background-color: rgba(255, 255, 255, 0.7);
-        padding: 5px 15px;
-        border-radius: 10px;
-    }}
-
-    /* 좌측 로고 스타일 (Team 25) - 크기 1.7배 유지 */
-    .top-left-logo {{
-        height: 120px;
-        width: auto;
-        object-fit: contain;
-        filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
-    }}
-
-    /* 우측 로고 스타일 */
-    .top-right-logo {{
-        height: 35px;
-        width: auto;
-        object-fit: contain;
-        transition: transform 0.3s;
-    }}
-    .top-right-logo:hover {{
-        transform: scale(1.1);
-    }}
-
-    /* 구분선 스타일 */
-    .logo-separator {{
-        width: 1px;
-        height: 20px;
-        background-color: #666;
-        margin: 0 5px;
-    }}
-
-    /* 탭바(TabBar) 스타일 */
-    button[data-baseweb="tab"] {{
-        font-size: 18px !important;
-        font-weight: 800 !important;
-        padding: 10px 30px !important;
-        color: #333 !important;
-        background-color: rgba(255,255,255,0.5) !important;
-        margin: 0 5px !important;
-        border-radius: 10px 10px 0 0 !important;
-    }}
-    button[data-baseweb="tab"][aria-selected="true"] {{
-        color: #d32f2f !important;
-        background-color: #ffffff !important;
-        box-shadow: 0 -2px 5px rgba(0,0,0,0.1) !important;
-    }}
-
-    /* 메인 타이틀 박스 (흰색) */
-    .header-container {{
-        background-color: #FFFFFF;
-        padding: 30px 20px;
-        border-radius: 15px;
-        margin-top: 10px;
-        margin-bottom: 30px;
-        text-align: center;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        border-bottom: 5px solid #4CAF50;
-    }}
-    .main-title {{
-        font-size: 2.5rem;
-        font-weight: 900;
-        color: #1B5E20;
-        margin: 0;
-        letter-spacing: -1px;
-    }}
-    .sub-title {{
-        font-size: 1.1rem;
-        color: #555;
-        margin-top: 10px;
-        font-weight: 500;
-    }}
-    
-    /* Home Hero Section */
-    .hero-container {{
-        text-align: center;
-        padding: 100px 20px;
-        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=2831&auto=format&fit=crop'); 
-        background-size: cover;
-        background-position: center;
-        border-radius: 20px;
-        color: white;
-        margin-bottom: 40px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    }}
-    .hero-title {{
-        font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 20px;
-        text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
-    }}
-    .hero-subtitle {{
-        font-size: 1.5rem;
-        font-weight: 400;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-    }}
-</style>
-""", unsafe_allow_html=True)
-
-# ==============================================================================
-# [함수 정의] 계산 로직
-# ==============================================================================
-@st.cache_data
-def load_real_case_data():
-    try:
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        file_path = os.path.join(current_dir, "engine1_output.csv")
-        df = pd.read_csv(file_path)
-        return df
-    except FileNotFoundError:
-        return None
-
-def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
-    x = np.arange(1, cycles + 1)
-    linear_fade = 0.00015 * x * decay_rate
-    acc_fade = 1e-9 * np.exp(0.015 * x) * decay_rate
-    cap_noise = np.random.normal(0, 0.0015, size=len(x))
-    retention = 1.0 - linear_fade - acc_fade + cap_noise
-    capacity = retention * specific_cap_base
-    
-    if decay_rate < 1.5:
-        base_ce = 99.98; ce_noise_scale = 0.01
-    elif decay_rate < 3.0:
-        base_ce = 99.90; ce_noise_scale = 0.03
-    else:
-        base_ce = 99.5 - (x * 0.0005); ce_noise_scale = 0.15
-        
-    ce_noise = np.random.normal(0, ce_noise_scale, size=len(x))
-    ce = np.clip(base_ce + ce_noise, 0, 100.0)
-    return x, np.clip(capacity, 0, None), ce
-
-def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, drying_time):
-    # 1. VOC
-    if solvent_type == "NMP":
-        voc_base = 3.0 
-        voc_val = voc_base * (loading_mass / 10.0) 
-        voc_desc = "Critical (NMP Toxicity)"
-    else:
-        voc_val = 0.0
-        voc_desc = "Clean (Water Vapor)"
-
-    # 2. CO2
-    if binder_type == "PVDF":
-        co2_factor = 0.45 
-        chem_formula = "-(C₂H₂F₂)ₙ-"
-        co2_desc = f"High ({chem_formula})"
-    elif binder_type in ["CMGG", "GG", "CMC", "SBR"]:
-        co2_factor = 0.12
-        chem_formula = "Bio-based (C,H,O)"
-        co2_desc = f"Low ({chem_formula})"
-    else:
-        co2_factor = 0.3
-        co2_desc = "Medium"
-        
-    co2_val = co2_factor * (loading_mass / 20.0)
-
-    # 3. Energy
-    if solvent_type == "NMP":
-        boiling_point = 204.1
-        process_penalty = 1.5 
-    else:
-        boiling_point = 100.0
-        process_penalty = 1.0
-
-    delta_T = max(drying_temp - 25, 0)
-    efficiency = 1.0 if drying_temp >= boiling_point else 0.6
-    energy_val = (delta_T * drying_time * process_penalty) / (efficiency * 50000.0)
-    
-    return co2_val, energy_val, voc_val, co2_desc, voc_desc
-
-
-# ==============================================================================
-# [UI 구성] 1. 상단 로고 바 (Background.jpeg 적용)
-# ==============================================================================
-# CSS 스타일링 (업그레이드 버전)
+# CSS 스타일링 (Eco-Intelligence 테마 적용)
 st.markdown("""
 <style>
     /* 폰트 설정 */
@@ -421,6 +182,12 @@ st.markdown("""
         margin-bottom: 15px;
         text-shadow: 0 4px 8px rgba(0,0,0,0.6);
     }
+    .hero-subtitle {
+        font-size: 1.5rem;
+        font-weight: 400;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+        color: #f1f1f1;
+    }
     
     /* 각 입력창/결과창 컨테이너 (Streamlit 기본 위젯 박스 스타일링) */
     div[data-testid="stVerticalBlock"] > div[style*="flex-direction: column;"] > div[data-testid="stVerticalBlock"] {
@@ -433,6 +200,113 @@ st.markdown("""
 
 </style>
 """, unsafe_allow_html=True)
+
+# ==============================================================================
+# [함수 정의] 계산 로직
+# ==============================================================================
+@st.cache_data
+def load_real_case_data():
+    try:
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(current_dir, "engine1_output.csv")
+        df = pd.read_csv(file_path)
+        return df
+    except FileNotFoundError:
+        return None
+
+def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
+    x = np.arange(1, cycles + 1)
+    linear_fade = 0.00015 * x * decay_rate
+    acc_fade = 1e-9 * np.exp(0.015 * x) * decay_rate
+    cap_noise = np.random.normal(0, 0.0015, size=len(x))
+    retention = 1.0 - linear_fade - acc_fade + cap_noise
+    capacity = retention * specific_cap_base
+    
+    if decay_rate < 1.5:
+        base_ce = 99.98; ce_noise_scale = 0.01
+    elif decay_rate < 3.0:
+        base_ce = 99.90; ce_noise_scale = 0.03
+    else:
+        base_ce = 99.5 - (x * 0.0005); ce_noise_scale = 0.15
+        
+    ce_noise = np.random.normal(0, ce_noise_scale, size=len(x))
+    ce = np.clip(base_ce + ce_noise, 0, 100.0)
+    return x, np.clip(capacity, 0, None), ce
+
+def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, drying_time):
+    # 1. VOC
+    if solvent_type == "NMP":
+        voc_base = 3.0 
+        voc_val = voc_base * (loading_mass / 10.0) 
+        voc_desc = "Critical (NMP Toxicity)"
+    else:
+        voc_val = 0.0
+        voc_desc = "Clean (Water Vapor)"
+
+    # 2. CO2
+    if binder_type == "PVDF":
+        co2_factor = 0.45 
+        chem_formula = "-(C₂H₂F₂)ₙ-"
+        co2_desc = f"High ({chem_formula})"
+    elif binder_type in ["CMGG", "GG", "CMC", "SBR"]:
+        co2_factor = 0.12
+        chem_formula = "Bio-based (C,H,O)"
+        co2_desc = f"Low ({chem_formula})"
+    else:
+        co2_factor = 0.3
+        co2_desc = "Medium"
+        
+    co2_val = co2_factor * (loading_mass / 20.0)
+
+    # 3. Energy
+    if solvent_type == "NMP":
+        boiling_point = 204.1
+        process_penalty = 1.5 
+    else:
+        boiling_point = 100.0
+        process_penalty = 1.0
+
+    delta_T = max(drying_temp - 25, 0)
+    efficiency = 1.0 if drying_temp >= boiling_point else 0.6
+    energy_val = (delta_T * drying_time * process_penalty) / (efficiency * 50000.0)
+    
+    return co2_val, energy_val, voc_val, co2_desc, voc_desc
+
+
+# ==============================================================================
+# [UI 구성] 1. 상단 로고 바 (Eco-Tech 그라데이션 적용)
+# ==============================================================================
+st.markdown(f"""
+<div class="top-header-bar">
+    <div class="logo-group-left">
+        {tag_25}
+    </div>
+    <div class="logo-group-right">
+        {tag_ajou_sw}
+        {tag_ajou}
+        <div class="logo-separator"></div>
+        {tag_google}
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# ==============================================================================
+# [UI 구성] 2. 메인 네비게이션 탭
+# ==============================================================================
+tab_home, tab_e1, tab_e2, tab_data = st.tabs([
+    "  Home  ", 
+    "  Engine 1  ", 
+    "  Engine 2  ", 
+    "  Our Data  "
+])
+
+# 공통 헤더 HTML (탭 내부 상단 타이틀 박스 - 모던 카드 스타일)
+header_html = f"""
+<div class="header-container">
+    <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
+    <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
+</div>
+"""
 
 # ------------------------------------------------------------------------------
 # TAB 1: Home (메인 화면)
