@@ -10,33 +10,44 @@ from sklearn.ensemble import RandomForestRegressor
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
-# [사용자 설정] 팀원 정보 수정하는 곳 (여기만 고치면 반영됩니다!)
+# [사용자 설정] 팀원 정보 편집 (여기 내용을 바꾸면 홈페이지에 반영됩니다!)
 # ==============================================================================
+# 팁: 소개(desc)는 짧은 한마디, 태그(tags)는 주요 담당 업무를 적으세요.
 team_members = [
     {
-        "name": "홍길동", 
-        "role": "Team Leader / AI Modeling", 
-        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&accessoriesProbability=0&eyebrows=default&eyes=default"
+        "name": "홍길동",
+        "role": "Team Leader",
+        "desc": "\"배터리 수명 예측의 정확도를 높이는 알고리즘을 설계합니다.\"",
+        "tags": ["#AI_Modeling", "#Project_Manager"],
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" 
     },
     {
-        "name": "김철수", 
-        "role": "Frontend Developer", 
-        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Jack&accessoriesProbability=0&facialHairProbability=0"
+        "name": "김철수",
+        "role": "Frontend Developer",
+        "desc": "\"사용자가 직관적으로 데이터를 이해할 수 있는 UI를 개발합니다.\"",
+        "tags": ["#Streamlit", "#Dashboard_Design"],
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Jack"
     },
     {
-        "name": "이영희", 
-        "role": "Data Analyst", 
-        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka&accessoriesProbability=0&hair=long"
+        "name": "이영희",
+        "role": "Data Analyst",
+        "desc": "\"실험 데이터를 분석하여 의미 있는 인사이트를 도출합니다.\"",
+        "tags": ["#Data_Analysis", "#Visualization"],
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"
     },
     {
-        "name": "박민수", 
-        "role": "Chemical Engineer", 
-        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Bob&accessoriesProbability=0"
+        "name": "박민수",
+        "role": "Chemical Engineer",
+        "desc": "\"친환경 바인더 소재의 화학적 특성을 검증합니다.\"",
+        "tags": ["#Battery_Material", "#LCA"],
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Bob"
     },
     {
-        "name": "최수진", 
-        "role": "Project Manager", 
-        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Molly&accessoriesProbability=0&hair=long"
+        "name": "최수진",
+        "role": "Backend Developer",
+        "desc": "\"안정적인 시뮬레이션 환경을 위한 서버 로직을 구축합니다.\"",
+        "tags": ["#Server", "#Optimization"],
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Molly"
     }
 ]
 
@@ -71,7 +82,7 @@ tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-lo
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
-# 2. 상단 배경 이미지 (Background.jpeg) 처리 - 복구됨
+# 2. 상단 배경 이미지 (Background.jpeg) 처리
 bg_file = "Background.jpeg"
 bg_base64 = get_base64_image(bg_file)
 
@@ -83,10 +94,10 @@ if bg_base64:
         background-repeat: no-repeat;
     """
 else:
-    header_bg_style = "background-color: #BBDEFB;" # 이미지 없을 시 기본색
+    header_bg_style = "background-color: #BBDEFB;"
 
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링
+# 3. CSS 스타일링 (중요: f-string 내부 CSS 중괄호는 {{ }} 두 번 써야 함)
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
@@ -96,10 +107,10 @@ st.markdown(f"""
     }}
 
     .stApp {{
-        background-color: #F1F8E9; 
+        background-color: #F8F9FA; 
     }}
     
-    /* [수정됨] 상단 로고 바 (이미지 배경 적용) */
+    /* 상단 로고 바 */
     .top-header-bar {{
         {header_bg_style}
         display: flex;
@@ -215,40 +226,71 @@ st.markdown(f"""
         box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
     }}
 
-    /* 팀원 소개 카드 스타일 */
-    .team-card {{
+    /* [NEW] 페르소나 카드 스타일 (가로형) */
+    .persona-card {{
+        display: flex;
+        flex-direction: row; /* 가로 배치 */
+        align-items: center;
         background-color: white;
         border-radius: 20px;
         padding: 20px;
-        text-align: center;
-        border: 2px solid #E0E0E0;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        transition: transform 0.3s;
-        height: 100%;
+        margin-bottom: 20px;
+        border: 1px solid #E0E0E0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        transition: transform 0.2s;
     }}
-    .team-card:hover {{
-        transform: translateY(-5px);
+    .persona-card:hover {{
+        transform: translateY(-3px);
         border-color: #2E7D32;
-        box-shadow: 0 8px 20px rgba(46, 125, 50, 0.2);
+        box-shadow: 0 8px 16px rgba(46, 125, 50, 0.15);
     }}
-    .member-img {{
-        width: 100px;
-        height: 100px;
+    .persona-img {{
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
         object-fit: cover;
-        margin-bottom: 15px;
-        border: 3px solid #E8F5E9;
+        margin-right: 20px;
+        border: 2px solid #E8F5E9;
+        background-color: #F1F8E9;
+        flex-shrink: 0;
     }}
-    .member-name {{
-        font-size: 1.2rem;
+    .persona-content {{
+        text-align: left;
+        width: 100%;
+    }}
+    .persona-name {{
+        font-size: 1.1rem;
         font-weight: 800;
         color: #2E7D32;
-        margin-bottom: 5px;
+        margin-bottom: 2px;
     }}
-    .member-role {{
+    .persona-role {{
+        font-size: 0.8rem;
+        color: #777;
+        font-weight: 600;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }}
+    .persona-desc {{
         font-size: 0.9rem;
-        color: #555;
-        font-weight: 500;
+        color: #333;
+        line-height: 1.4;
+        margin-bottom: 10px;
+        font-style: italic;
+    }}
+    .persona-tags {{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }}
+    .tag-badge {{
+        background-color: #E8F5E9;
+        color: #1B5E20;
+        padding: 4px 8px;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 600;
     }}
 
 </style>
@@ -367,18 +409,27 @@ with tab_home:
 
     st.markdown("---")
     
-    # [NEW] Team Member Introduction Section (편집 가능)
-    st.markdown("<h3 style='text-align: center; color: #1B5E20; margin-bottom: 20px;'>👥 Meet Team 25</h3>", unsafe_allow_html=True)
+    # [NEW] Team Member Section (페르소나 카드 스타일 적용)
+    st.markdown("<h3 style='color: #1B5E20; margin-bottom: 20px;'>👥 Meet Team 25</h3>", unsafe_allow_html=True)
     
-    # 팀원 카드 생성 (위에서 정의한 변수 사용)
-    cols = st.columns(5)
+    # 2열 그리드로 배치 (5명이므로 2, 2, 1 형태가 됨)
+    cols = st.columns(2) 
+    
     for i, member in enumerate(team_members):
-        with cols[i]:
+        col_idx = i % 2
+        # 태그 HTML 생성
+        tags_html = "".join([f'<span class="tag-badge">{tag}</span>' for tag in member['tags']])
+        
+        with cols[col_idx]:
             st.markdown(f"""
-            <div class="team-card">
-                <img src="{member['img']}" class="member-img">
-                <div class="member-name">{member['name']}</div>
-                <div class="member-role">{member['role']}</div>
+            <div class="persona-card">
+                <img src="{member['img']}" class="persona-img">
+                <div class="persona-content">
+                    <div class="persona-name">{member['name']}</div>
+                    <div class="persona-role">{member['role']}</div>
+                    <div class="persona-desc">{member['desc']}</div>
+                    <div class="persona-tags">{tags_html}</div>
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
