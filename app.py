@@ -10,7 +10,7 @@ from sklearn.ensemble import RandomForestRegressor
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
-# [0] 디자인 & 헤더 설정 (HTML/CSS)
+# [0] 디자인 & CSS 설정
 # ==============================================================================
 
 def get_img_tag(file, title):
@@ -29,17 +29,26 @@ tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW")
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University")
 tag_google  = get_img_tag("google_logo.png", "Google")
 
-# CSS 스타일링
+# CSS 스타일링 (탭 위치 조정 및 디자인)
 st.markdown("""
 <style>
     html, body, [class*="css"] {
         font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
     }
+    
+    /* 메인 화면 상단 여백 줄이기 (탭을 더 위로) */
+    .block-container {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    /* 헤더 컨테이너 스타일 */
     .header-container {
         background-color: #E8F5E9;
         padding: 20px 20px;
         border-radius: 15px;
-        margin-bottom: 10px;
+        margin-top: 10px;
+        margin-bottom: 20px;
         text-align: center;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         border-bottom: 4px solid #4CAF50;
@@ -77,14 +86,14 @@ st.markdown("""
         width: 1px; height: 18px; background-color: #bbb;
     }
     
-    /* 탭 스타일 */
+    /* 탭 버튼 스타일 커스텀 */
     button[data-baseweb="tab"] {
-        font-size: 18px !important;
+        font-size: 16px !important;
         font-weight: 700 !important;
-        padding: 0px 30px !important;
+        padding: 0px 20px !important;
     }
     
-    /* Home Hero Section */
+    /* Hero Section (Home) */
     .hero-container {
         text-align: center;
         padding: 80px 20px;
@@ -93,7 +102,6 @@ st.markdown("""
         background-position: center;
         border-radius: 15px;
         color: white;
-        margin-top: 10px;
         margin-bottom: 30px;
     }
     .hero-title {
@@ -166,9 +174,19 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
     
     return co2_val, energy_val, voc_val, co2_desc, voc_desc
 
+
 # ==============================================================================
-# [UI 구성] 1. 상단 고정 헤더
+# [UI 구성] 1. 메인 네비게이션 탭 (최상단 배치)
 # ==============================================================================
+# [수정됨] 탭을 가장 먼저 선언하여 화면 최상단에 위치시킴
+tab_home, tab_e1, tab_e2, tab_data = st.tabs([
+    "🏠 Home", 
+    "🧪 Engine 1: 가상 예측", 
+    "🏭 Engine 2: 공정 최적화",
+    "📂 Our Data: 실험 검증"
+])
+
+# 공통으로 사용할 헤더 HTML (모든 탭 안에 삽입됨)
 header_html = f"""
 <div class="header-container">
     <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
@@ -181,22 +199,13 @@ header_html = f"""
     </div>
 </div>
 """
-st.markdown(header_html, unsafe_allow_html=True)
-
-# ==============================================================================
-# [UI 구성] 2. 메인 네비게이션 탭 (순서 변경: Home -> E1 -> E2 -> Our Data)
-# ==============================================================================
-tab_home, tab_e1, tab_e2, tab_data = st.tabs([
-    "🏠 Home", 
-    "🧪 Engine 1: 가상 예측", 
-    "🏭 Engine 2: 공정 최적화",
-    "📂 Our Data: 실험 검증"
-])
 
 # ------------------------------------------------------------------------------
 # TAB 1: HOME (메인 화면)
 # ------------------------------------------------------------------------------
 with tab_home:
+    st.markdown(header_html, unsafe_allow_html=True) # 헤더 삽입
+    
     st.markdown("""
     <div class="hero-container">
         <div class="hero-title">To make the world greener <br>and sustainable</div>
@@ -214,6 +223,8 @@ with tab_home:
 # TAB 2: Engine 1 (가상 시뮬레이터)
 # ------------------------------------------------------------------------------
 with tab_e1:
+    st.markdown(header_html, unsafe_allow_html=True) # 헤더 삽입
+    
     st.subheader("Engine 1. 배터리 수명 가상 시뮬레이터 (Interactive Mode)")
     st.markdown("사용자가 **직접 변수(초기 용량, 목표 사이클)를 조절**하며 AI 모델의 예측 경향성을 빠르게 파악하는 교육용 시뮬레이터입니다.")
     st.divider()
@@ -257,6 +268,8 @@ with tab_e1:
 # TAB 3: Engine 2 (친환경 공정 최적화)
 # ------------------------------------------------------------------------------
 with tab_e2:
+    st.markdown(header_html, unsafe_allow_html=True) # 헤더 삽입
+    
     st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA Optimization)")
     st.info("💡 **Update:** 화학적 조성(불소 유무), 용매 독성(VOC), 끓는점(Energy)에 기반한 물리학적 계산 모델입니다.")
     
@@ -300,9 +313,11 @@ with tab_e2:
                 st.pyplot(fig)
 
 # ------------------------------------------------------------------------------
-# TAB 4: Our Data (실제 실험 검증 - 맨 뒤로 이동)
+# TAB 4: Our Data (실제 실험 검증 - 맨 뒤)
 # ------------------------------------------------------------------------------
 with tab_data:
+    st.markdown(header_html, unsafe_allow_html=True) # 헤더 삽입
+    
     st.subheader("Our Data. 실제 실험 데이터 검증 (Ground Truth Validation)")
     st.markdown("이 탭에서는 **Team 스물다섯이 직접 수행한 실험 데이터**를 기반으로 Engine 1의 예측 정확도를 검증합니다.")
     st.divider()
