@@ -40,7 +40,7 @@ team_members = [
         "role": "CHEMICAL RESEARCHER",
         "desc": "친환경 소재 바인더 화학적 검증 및 배터리 성능 실험",
         "tags": ["#Chemistry", "#Experiment"],
-        "photo_file": "Profile4.jpeg"
+        "photo_file": "Profile6.jpeg"
     },
     {
         "name": "박재찬",
