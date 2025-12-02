@@ -1,415 +1,415 @@
 ﻿Sample_Type,Cycle,Capacity,Data_Type
-Sample A ,1,197.26,History
-Sample A ,2,197.8,History
-Sample A ,3,195.14,History
-Sample A ,4,190.55,History
-Sample A ,5,185.49,History
-Sample A ,6,179.76,History
-Sample A ,7,173.44,History
-Sample A ,8,167.83,History
-Sample A ,9,162.4,History
-Sample A ,10,157.01,History
-Sample A ,11,151.99,History
-Sample A ,12,146.73,History
-Sample A ,13,141.9,History
-Sample A ,14,137.36,History
-Sample A ,15,132.63,History
-Sample A ,16,124.24,History
-Sample A ,17,124.51,History
-Sample A ,18,121.15,History
-Sample A ,19,118.53,History
-Sample A ,20,115.37,History
-Sample A ,21,113.37,History
-Sample A ,22,111.4,History
-Sample A ,23,109.7,History
-Sample A ,24,108.51,History
-Sample A ,25,107.61,History
-Sample A ,26,107.02,History
-Sample A ,27,106.82,History
-Sample A ,28,106.7,History
-Sample A ,29,106.62,History
-Sample A ,30,107.75,History
-Sample A ,31,109.16,History
-Sample A ,32,110.5,History
-Sample A ,33,111.96,History
-Sample A ,34,114.13,History
-Sample A ,35,118.06,History
-Sample A ,36,121.41,History
-Sample A ,37,122.08,History
-Sample A ,38,124.01,History
-Sample A ,39,126.91,History
-Sample A ,40,129.14,History
-Sample A ,41,132.57,History
-Sample A ,42,134.71,History
-Sample A ,43,135.93,History
-Sample A ,44,138.86,History
-Sample A ,45,138.91,History
-Sample A ,46,142.83,History
-Sample A ,47,143.82,History
-Sample A ,48,143.66,History
-Sample A ,49,145.26,History
-Sample A ,50,148.9,History
-Sample A ,51,150.07,History
-Sample A ,52,138.31,History
-Sample A ,53,152.26,History
-Sample A ,54,155.44,History
-Sample A ,55,156.31,History
-Sample A ,56,157.83,History
-Sample A ,57,158.84,History
-Sample A ,58,160.32,History
-Sample A ,59,161.14,History
-Sample A ,60,163.39,History
-Sample A ,61,164.24,History
-Sample A ,62,165.22,History
-Sample A ,63,167.56,History
-Sample A ,64,168.51,History
-Sample A ,65,169.5,History
-Sample A ,66,170.58,History
-Sample A ,67,171.91,History
-Sample A ,68,173.14,History
-Sample A ,69,174.46,History
-Sample A ,70,175.66,History
-Sample A ,71,176.77,History
-Sample A ,72,177.81,History
-Sample A ,73,179.15,History
-Sample A ,74,180.52,History
-Sample A ,75,181.86,History
-Sample A ,76,182.16,History
-Sample A ,77,183.1,History
-Sample A ,78,183.79,History
-Sample A ,79,185.29,History
-Sample A ,80,186.4,History
-Sample A ,81,186.5,History
-Sample A ,82,187.07,History
-Sample A ,83,187.65,History
-Sample A ,84,188.49,History
-Sample A ,85,189.05,History
-Sample A ,86,189.62,History
-Sample A ,87,190.31,History
-Sample A ,88,191.33,History
-Sample A ,89,192.25,History
-Sample A ,90,193.04,History
-Sample A ,91,194.03,History
-Sample A ,92,195.03,History
-Sample A ,93,196.3,History
-Sample A ,94,197.43,History
-Sample A ,95,198.36,History
-Sample A ,96,199.57,History
-Sample A ,97,200.49,History
-Sample A ,98,201.09,History
-Sample A ,99,202.43,History
-Sample A ,100,203.41,History
-Sample A ,101,120.01880345202794,Prediction
-Sample A ,102,119.93577739871807,Prediction
-Sample A ,103,119.93868101518197,Prediction
-Sample A ,104,119.96581390170299,Prediction
-Sample A ,105,119.89444672845758,Prediction
-Sample A ,106,119.95031510070207,Prediction
-Sample A ,107,120.13098738004837,Prediction
-Sample A ,108,119.97888289727665,Prediction
-Sample A ,109,119.63994200841175,Prediction
-Sample A ,110,119.71966721829367,Prediction
-Sample A ,111,119.98708804268354,Prediction
-Sample A ,112,120.08155618488635,Prediction
-Sample A ,113,120.081470279628,Prediction
-Sample A ,114,120.2719311925788,Prediction
-Sample A ,115,120.27403350821761,Prediction
-Sample A ,116,120.51910733468398,Prediction
-Sample A ,117,120.56745573997624,Prediction
-Sample A ,118,120.64899309474599,Prediction
-Sample A ,119,120.65629544816262,Prediction
-Sample A ,120,120.7046466711708,Prediction
-Sample A ,121,120.92366149769784,Prediction
-Sample A ,122,121.05955490978509,Prediction
-Sample A ,123,121.05709618984405,Prediction
-Sample A ,124,121.0341231620147,Prediction
-Sample A ,125,121.03321127828336,Prediction
-Sample A ,126,121.00503651845355,Prediction
-Sample A ,127,121.12317127690494,Prediction
-Sample A ,128,121.04059946420465,Prediction
-Sample A ,129,121.05513139991264,Prediction
-Sample A ,130,121.12473981203239,Prediction
-Sample A ,131,120.82373954731344,Prediction
-Sample A ,132,120.82366274620267,Prediction
-Sample A ,133,121.16822213460581,Prediction
-Sample A ,134,121.15398665743287,Prediction
-Sample A ,135,121.12655095197584,Prediction
-Sample A ,136,121.13663074473551,Prediction
-Sample A ,137,121.15165655056882,Prediction
-Sample A ,138,121.18357606887024,Prediction
-Sample B ,1,205.5,History
-Sample B ,2,205.27,History
-Sample B ,3,200.67,History
-Sample B ,4,193.25,History
-Sample B ,5,185.63,History
-Sample B ,6,177.16,History
-Sample B ,7,169.09,History
-Sample B ,8,161.06,History
-Sample B ,9,153.36,History
-Sample B ,10,146.14,History
-Sample B ,11,138.26,History
-Sample B ,12,130.77,History
-Sample B ,13,123.62,History
-Sample B ,14,117.11,History
-Sample B ,15,110.9,History
-Sample B ,16,105.17,History
-Sample B ,17,99.67,History
-Sample B ,18,94.87,History
-Sample B ,19,90.36,History
-Sample B ,20,86.72,History
-Sample B ,21,84.46,History
-Sample B ,22,82.21,History
-Sample B ,23,80.35,History
-Sample B ,24,79.16,History
-Sample B ,25,78.16,History
-Sample B ,26,77.44,History
-Sample B ,27,76.7,History
-Sample B ,28,76.62,History
-Sample B ,29,76.77,History
-Sample B ,30,76.78,History
-Sample B ,31,76.9,History
-Sample B ,32,77.69,History
-Sample B ,33,78.09,History
-Sample B ,34,78.82,History
-Sample B ,35,79.68,History
-Sample B ,36,80.56,History
-Sample B ,37,81.29,History
-Sample B ,38,82.81,History
-Sample B ,39,84.52,History
-Sample B ,40,85.75,History
-Sample B ,41,87.08,History
-Sample B ,42,88.08,History
-Sample B ,43,91.48,History
-Sample B ,44,92.98,History
-Sample B ,45,94.67,History
-Sample B ,46,96.49,History
-Sample B ,47,98.82,History
-Sample B ,48,99.32,History
-Sample B ,49,100.74,History
-Sample B ,50,102.22,History
-Sample B ,51,104.24,History
-Sample B ,52,106.6,History
-Sample B ,53,107.37,History
-Sample B ,54,109.32,History
-Sample B ,55,110.04,History
-Sample B ,56,113.08,History
-Sample B ,57,115.07,History
-Sample B ,58,116.65,History
-Sample B ,59,118.22,History
-Sample B ,60,120.28,History
-Sample B ,61,122.6,History
-Sample B ,62,123.78,History
-Sample B ,63,124.59,History
-Sample B ,64,127.06,History
-Sample B ,65,128.47,History
-Sample B ,66,129.75,History
-Sample B ,67,132.29,History
-Sample B ,68,133.71,History
-Sample B ,69,135.5,History
-Sample B ,70,136.74,History
-Sample B ,71,138.06,History
-Sample B ,72,139.56,History
-Sample B ,73,138.57,History
-Sample B ,74,140.39,History
-Sample B ,75,141.44,History
-Sample B ,76,143.18,History
-Sample B ,77,144.69,History
-Sample B ,78,145.93,History
-Sample B ,79,147.01,History
-Sample B ,80,148.11,History
-Sample B ,81,149.26,History
-Sample B ,82,150.17,History
-Sample B ,83,151.6,History
-Sample B ,84,152.34,History
-Sample B ,85,152.85,History
-Sample B ,86,154.06,History
-Sample B ,87,154.68,History
-Sample B ,88,156.12,History
-Sample B ,89,156.77,History
-Sample B ,90,157.73,History
-Sample B ,91,158.56,History
-Sample B ,92,159.49,History
-Sample B ,93,160.32,History
-Sample B ,94,161.28,History
-Sample B ,95,162.24,History
-Sample B ,96,163.09,History
-Sample B ,97,163.48,History
-Sample B ,98,164.1,History
-Sample B ,99,164.71,History
-Sample B ,100,165.46,History
-Sample B ,101,123.52958828232768,Prediction
-Sample B ,102,123.49058889406443,Prediction
-Sample B ,103,123.49743717520242,Prediction
-Sample B ,104,123.44458775131724,Prediction
-Sample B ,105,123.67852202857912,Prediction
-Sample B ,106,123.70725218087114,Prediction
-Sample B ,107,123.95540529667187,Prediction
-Sample B ,108,124.04633519025252,Prediction
-Sample B ,109,123.73453017654406,Prediction
-Sample B ,110,123.64707284031734,Prediction
-Sample B ,111,123.74849280270064,Prediction
-Sample B ,112,123.85600041969673,Prediction
-Sample B ,113,123.84997862788842,Prediction
-Sample B ,114,123.96718858732983,Prediction
-Sample B ,115,123.99355796440524,Prediction
-Sample B ,116,124.02680589415014,Prediction
-Sample B ,117,124.05641771087207,Prediction
-Sample B ,118,124.08390535062755,Prediction
-Sample B ,119,124.10163607796012,Prediction
-Sample B ,120,124.18484109643485,Prediction
-Sample B ,121,124.30203111491564,Prediction
-Sample B ,122,124.3016903966794,Prediction
-Sample B ,123,124.35951470474734,Prediction
-Sample B ,124,124.38860167469947,Prediction
-Sample B ,125,124.39184022619257,Prediction
-Sample B ,126,124.42239368868103,Prediction
-Sample B ,127,124.5020916472863,Prediction
-Sample B ,128,124.5831399468419,Prediction
-Sample B ,129,124.60032068621739,Prediction
-Sample B ,130,124.62914530482298,Prediction
-Sample B ,131,124.37026787815586,Prediction
-Sample B ,132,124.36906048455722,Prediction
-Sample B ,133,124.43941531258365,Prediction
-Sample B ,134,124.43658285487903,Prediction
-Sample B ,135,124.42214378406312,Prediction
-Sample B ,136,124.42672836279642,Prediction
-Sample B ,137,124.43465197656842,Prediction
-Sample B ,138,124.48292524534558,Prediction
-Sample C ,1,59.55,History
-Sample C ,2,61.4,History
-Sample C ,3,61.0,History
-Sample C ,4,59.8,History
-Sample C ,5,58.42,History
-Sample C ,6,56.79,History
-Sample C ,7,54.71,History
-Sample C ,8,52.49,History
-Sample C ,9,50.44,History
-Sample C ,10,48.17,History
-Sample C ,11,45.99,History
-Sample C ,12,43.71,History
-Sample C ,13,41.36,History
-Sample C ,14,39.01,History
-Sample C ,15,36.93,History
-Sample C ,16,34.85,History
-Sample C ,17,32.83,History
-Sample C ,18,30.81,History
-Sample C ,19,29.0,History
-Sample C ,20,27.36,History
-Sample C ,21,26.02,History
-Sample C ,22,24.8,History
-Sample C ,23,23.93,History
-Sample C ,24,23.08,History
-Sample C ,25,22.5,History
-Sample C ,26,21.73,History
-Sample C ,27,21.46,History
-Sample C ,28,21.39,History
-Sample C ,29,21.5,History
-Sample C ,30,21.6,History
-Sample C ,31,21.95,History
-Sample C ,32,22.08,History
-Sample C ,33,22.6,History
-Sample C ,34,23.37,History
-Sample C ,35,24.07,History
-Sample C ,36,24.83,History
-Sample C ,37,25.77,History
-Sample C ,38,26.77,History
-Sample C ,39,27.75,History
-Sample C ,40,28.8,History
-Sample C ,41,29.88,History
-Sample C ,42,31.1,History
-Sample C ,43,32.16,History
-Sample C ,44,33.2,History
-Sample C ,45,34.28,History
-Sample C ,46,35.25,History
-Sample C ,47,36.24,History
-Sample C ,48,37.35,History
-Sample C ,49,38.44,History
-Sample C ,50,39.38,History
-Sample C ,51,40.41,History
-Sample C ,52,41.6,History
-Sample C ,53,42.56,History
-Sample C ,54,43.39,History
-Sample C ,55,44.42,History
-Sample C ,56,45.49,History
-Sample C ,57,46.44,History
-Sample C ,58,47.54,History
-Sample C ,59,48.44,History
-Sample C ,60,49.51,History
-Sample C ,61,50.57,History
-Sample C ,62,51.61,History
-Sample C ,63,52.63,History
-Sample C ,64,53.47,History
-Sample C ,65,54.56,History
-Sample C ,66,55.29,History
-Sample C ,67,56.32,History
-Sample C ,68,57.16,History
-Sample C ,69,58.1,History
-Sample C ,70,59.21,History
-Sample C ,71,60.28,History
-Sample C ,72,61.32,History
-Sample C ,73,62.2,History
-Sample C ,74,63.04,History
-Sample C ,75,63.96,History
-Sample C ,76,64.95,History
-Sample C ,77,66.0,History
-Sample C ,78,66.95,History
-Sample C ,79,67.7,History
-Sample C ,80,68.65,History
-Sample C ,81,69.51,History
-Sample C ,82,70.4,History
-Sample C ,83,71.38,History
-Sample C ,84,72.34,History
-Sample C ,85,73.22,History
-Sample C ,86,74.16,History
-Sample C ,87,75.16,History
-Sample C ,88,76.11,History
-Sample C ,89,76.89,History
-Sample C ,90,77.79,History
-Sample C ,91,78.62,History
-Sample C ,92,79.24,History
-Sample C ,93,80.08,History
-Sample C ,94,80.76,History
-Sample C ,95,81.55,History
-Sample C ,96,82.4,History
-Sample C ,97,83.35,History
-Sample C ,98,83.95,History
-Sample C ,99,84.75,History
-Sample C ,100,85.48,History
-Sample C ,101,131.03469709916118,Prediction
-Sample C ,102,130.71539961378295,Prediction
-Sample C ,103,130.7411500267249,Prediction
-Sample C ,104,130.72041349875,Prediction
-Sample C ,105,130.80999710745306,Prediction
-Sample C ,106,130.8234911034087,Prediction
-Sample C ,107,130.8327186942217,Prediction
-Sample C ,108,130.9999650979439,Prediction
-Sample C ,109,130.68158047297504,Prediction
-Sample C ,110,130.69698665363651,Prediction
-Sample C ,111,130.7984342007989,Prediction
-Sample C ,112,131.05840519828274,Prediction
-Sample C ,113,131.05809263759645,Prediction
-Sample C ,114,131.3295420000792,Prediction
-Sample C ,115,131.32049444324923,Prediction
-Sample C ,116,131.5372843036522,Prediction
-Sample C ,117,131.51904139931614,Prediction
-Sample C ,118,131.54803073425134,Prediction
-Sample C ,119,131.5540249179271,Prediction
-Sample C ,120,131.6284220299186,Prediction
-Sample C ,121,131.72142300296272,Prediction
-Sample C ,122,131.7563942528537,Prediction
-Sample C ,123,131.82605706739267,Prediction
-Sample C ,124,131.86758535751218,Prediction
-Sample C ,125,131.87918774069067,Prediction
-Sample C ,126,131.91864245332553,Prediction
-Sample C ,127,131.93424583570763,Prediction
-Sample C ,128,131.98338678583403,Prediction
-Sample C ,129,131.99427235005294,Prediction
-Sample C ,130,132.03300044464825,Prediction
-Sample C ,131,131.9227100865887,Prediction
-Sample C ,132,131.79750742088186,Prediction
-Sample C ,133,131.9251695423247,Prediction
-Sample C ,134,131.92243284681297,Prediction
-Sample C ,135,131.9057459723965,Prediction
-Sample C ,136,131.90344978419864,Prediction
-Sample C ,137,132.05648509572114,Prediction
-Sample C ,138,132.21792391781736,Prediction
+고속 충전,1,197.26,History
+고속 충전,2,197.8,History
+고속 충전,3,195.14,History
+고속 충전,4,190.55,History
+고속 충전,5,185.49,History
+고속 충전,6,179.76,History
+고속 충전,7,173.44,History
+고속 충전,8,167.83,History
+고속 충전,9,162.4,History
+고속 충전,10,157.01,History
+고속 충전,11,151.99,History
+고속 충전,12,146.73,History
+고속 충전,13,141.9,History
+고속 충전,14,137.36,History
+고속 충전,15,132.63,History
+고속 충전,16,124.24,History
+고속 충전,17,124.51,History
+고속 충전,18,121.15,History
+고속 충전,19,118.53,History
+고속 충전,20,115.37,History
+고속 충전,21,113.37,History
+고속 충전,22,111.4,History
+고속 충전,23,109.7,History
+고속 충전,24,108.51,History
+고속 충전,25,107.61,History
+고속 충전,26,107.02,History
+고속 충전,27,106.82,History
+고속 충전,28,106.7,History
+고속 충전,29,106.62,History
+고속 충전,30,107.75,History
+고속 충전,31,109.16,History
+고속 충전,32,110.5,History
+고속 충전,33,111.96,History
+고속 충전,34,114.13,History
+고속 충전,35,118.06,History
+고속 충전,36,121.41,History
+고속 충전,37,122.08,History
+고속 충전,38,124.01,History
+고속 충전,39,126.91,History
+고속 충전,40,129.14,History
+고속 충전,41,132.57,History
+고속 충전,42,134.71,History
+고속 충전,43,135.93,History
+고속 충전,44,138.86,History
+고속 충전,45,138.91,History
+고속 충전,46,142.83,History
+고속 충전,47,143.82,History
+고속 충전,48,143.66,History
+고속 충전,49,145.26,History
+고속 충전,50,148.9,History
+고속 충전,51,150.07,History
+고속 충전,52,138.31,History
+고속 충전,53,152.26,History
+고속 충전,54,155.44,History
+고속 충전,55,156.31,History
+고속 충전,56,157.83,History
+고속 충전,57,158.84,History
+고속 충전,58,160.32,History
+고속 충전,59,161.14,History
+고속 충전,60,163.39,History
+고속 충전,61,164.24,History
+고속 충전,62,165.22,History
+고속 충전,63,167.56,History
+고속 충전,64,168.51,History
+고속 충전,65,169.5,History
+고속 충전,66,170.58,History
+고속 충전,67,171.91,History
+고속 충전,68,173.14,History
+고속 충전,69,174.46,History
+고속 충전,70,175.66,History
+고속 충전,71,176.77,History
+고속 충전,72,177.81,History
+고속 충전,73,179.15,History
+고속 충전,74,180.52,History
+고속 충전,75,181.86,History
+고속 충전,76,182.16,History
+고속 충전,77,183.1,History
+고속 충전,78,183.79,History
+고속 충전,79,185.29,History
+고속 충전,80,186.4,History
+고속 충전,81,186.5,History
+고속 충전,82,187.07,History
+고속 충전,83,187.65,History
+고속 충전,84,188.49,History
+고속 충전,85,189.05,History
+고속 충전,86,189.62,History
+고속 충전,87,190.31,History
+고속 충전,88,191.33,History
+고속 충전,89,192.25,History
+고속 충전,90,193.04,History
+고속 충전,91,194.03,History
+고속 충전,92,195.03,History
+고속 충전,93,196.3,History
+고속 충전,94,197.43,History
+고속 충전,95,198.36,History
+고속 충전,96,199.57,History
+고속 충전,97,200.49,History
+고속 충전,98,201.09,History
+고속 충전,99,202.43,History
+고속 충전,100,203.41,History
+고속 충전,101,120.28987847289014,Prediction
+고속 충전,102,120.10663222909115,Prediction
+고속 충전,103,120.10374643389865,Prediction
+고속 충전,104,120.29979884623563,Prediction
+고속 충전,105,120.23091042707297,Prediction
+고속 충전,106,120.26579403584604,Prediction
+고속 충전,107,120.26191850770766,Prediction
+고속 충전,108,120.24644275923102,Prediction
+고속 충전,109,119.97507279912374,Prediction
+고속 충전,110,119.98596007948571,Prediction
+고속 충전,111,120.07430171507191,Prediction
+고속 충전,112,120.13944641456219,Prediction
+고속 충전,113,120.13126197169399,Prediction
+고속 충전,114,120.29551077763664,Prediction
+고속 충전,115,120.42431578949537,Prediction
+고속 충전,116,120.35206852710367,Prediction
+고속 충전,117,120.33462815301847,Prediction
+고속 충전,118,120.43374225316248,Prediction
+고속 충전,119,120.47959413327571,Prediction
+고속 충전,120,120.55273404541722,Prediction
+고속 충전,121,120.655357025052,Prediction
+고속 충전,122,120.77699538378691,Prediction
+고속 충전,123,120.7876431327145,Prediction
+고속 충전,124,120.78827460592714,Prediction
+고속 충전,125,120.79938217443187,Prediction
+고속 충전,126,120.77172707054125,Prediction
+고속 충전,127,120.78728458277187,Prediction
+고속 충전,128,120.79892964995756,Prediction
+고속 충전,129,120.80774345308801,Prediction
+고속 충전,130,120.95245000123796,Prediction
+고속 충전,131,120.71095594025611,Prediction
+고속 충전,132,120.69293600644481,Prediction
+고속 충전,133,121.07842335174192,Prediction
+고속 충전,134,121.07765260859004,Prediction
+고속 충전,135,121.05622780368493,Prediction
+고속 충전,136,121.05624184750015,Prediction
+고속 충전,137,121.07051918365264,Prediction
+고속 충전,138,121.12484912737794,Prediction
+초고속 충전,1,59.55,History
+초고속 충전,2,61.4,History
+초고속 충전,3,61.0,History
+초고속 충전,4,59.8,History
+초고속 충전,5,58.42,History
+초고속 충전,6,56.79,History
+초고속 충전,7,54.71,History
+초고속 충전,8,52.49,History
+초고속 충전,9,50.44,History
+초고속 충전,10,48.17,History
+초고속 충전,11,45.99,History
+초고속 충전,12,43.71,History
+초고속 충전,13,41.36,History
+초고속 충전,14,39.01,History
+초고속 충전,15,36.93,History
+초고속 충전,16,34.85,History
+초고속 충전,17,32.83,History
+초고속 충전,18,30.81,History
+초고속 충전,19,29.0,History
+초고속 충전,20,27.36,History
+초고속 충전,21,26.02,History
+초고속 충전,22,24.8,History
+초고속 충전,23,23.93,History
+초고속 충전,24,23.08,History
+초고속 충전,25,22.5,History
+초고속 충전,26,21.73,History
+초고속 충전,27,21.46,History
+초고속 충전,28,21.39,History
+초고속 충전,29,21.5,History
+초고속 충전,30,21.6,History
+초고속 충전,31,21.95,History
+초고속 충전,32,22.08,History
+초고속 충전,33,22.6,History
+초고속 충전,34,23.37,History
+초고속 충전,35,24.07,History
+초고속 충전,36,24.83,History
+초고속 충전,37,25.77,History
+초고속 충전,38,26.77,History
+초고속 충전,39,27.75,History
+초고속 충전,40,28.8,History
+초고속 충전,41,29.88,History
+초고속 충전,42,31.1,History
+초고속 충전,43,32.16,History
+초고속 충전,44,33.2,History
+초고속 충전,45,34.28,History
+초고속 충전,46,35.25,History
+초고속 충전,47,36.24,History
+초고속 충전,48,37.35,History
+초고속 충전,49,38.44,History
+초고속 충전,50,39.38,History
+초고속 충전,51,40.41,History
+초고속 충전,52,41.6,History
+초고속 충전,53,42.56,History
+초고속 충전,54,43.39,History
+초고속 충전,55,44.42,History
+초고속 충전,56,45.49,History
+초고속 충전,57,46.44,History
+초고속 충전,58,47.54,History
+초고속 충전,59,48.44,History
+초고속 충전,60,49.51,History
+초고속 충전,61,50.57,History
+초고속 충전,62,51.61,History
+초고속 충전,63,52.63,History
+초고속 충전,64,53.47,History
+초고속 충전,65,54.56,History
+초고속 충전,66,55.29,History
+초고속 충전,67,56.32,History
+초고속 충전,68,57.16,History
+초고속 충전,69,58.1,History
+초고속 충전,70,59.21,History
+초고속 충전,71,60.28,History
+초고속 충전,72,61.32,History
+초고속 충전,73,62.2,History
+초고속 충전,74,63.04,History
+초고속 충전,75,63.96,History
+초고속 충전,76,64.95,History
+초고속 충전,77,66.0,History
+초고속 충전,78,66.95,History
+초고속 충전,79,67.7,History
+초고속 충전,80,68.65,History
+초고속 충전,81,69.51,History
+초고속 충전,82,70.4,History
+초고속 충전,83,71.38,History
+초고속 충전,84,72.34,History
+초고속 충전,85,73.22,History
+초고속 충전,86,74.16,History
+초고속 충전,87,75.16,History
+초고속 충전,88,76.11,History
+초고속 충전,89,76.89,History
+초고속 충전,90,77.79,History
+초고속 충전,91,78.62,History
+초고속 충전,92,79.24,History
+초고속 충전,93,80.08,History
+초고속 충전,94,80.76,History
+초고속 충전,95,81.55,History
+초고속 충전,96,82.4,History
+초고속 충전,97,83.35,History
+초고속 충전,98,83.95,History
+초고속 충전,99,84.75,History
+초고속 충전,100,85.48,History
+초고속 충전,101,130.5433840999453,Prediction
+초고속 충전,102,130.35713537192825,Prediction
+초고속 충전,103,130.36375270658783,Prediction
+초고속 충전,104,130.38255643274098,Prediction
+초고속 충전,105,130.6866539699222,Prediction
+초고속 충전,106,130.78841219126264,Prediction
+초고속 충전,107,130.95276322059564,Prediction
+초고속 충전,108,130.9062720995515,Prediction
+초고속 충전,109,130.6252479000175,Prediction
+초고속 충전,110,130.5675315947144,Prediction
+초고속 충전,111,130.62728742809458,Prediction
+초고속 충전,112,130.93593018272838,Prediction
+초고속 충전,113,130.9354972458918,Prediction
+초고속 충전,114,130.97621818156176,Prediction
+초고속 충전,115,130.99094801623306,Prediction
+초고속 충전,116,130.91142952518373,Prediction
+초고속 충전,117,130.9913318796367,Prediction
+초고속 충전,118,131.02181102932843,Prediction
+초고속 충전,119,131.02566313532222,Prediction
+초고속 충전,120,131.07083943333146,Prediction
+초고속 충전,121,131.23930716471386,Prediction
+초고속 충전,122,131.33953508535066,Prediction
+초고속 충전,123,131.43520466252522,Prediction
+초고속 충전,124,131.43593648884416,Prediction
+초고속 충전,125,131.4424247398239,Prediction
+초고속 충전,126,131.43224582164655,Prediction
+초고속 충전,127,131.554544058094,Prediction
+초고속 충전,128,131.5839641896662,Prediction
+초고속 충전,129,131.61867990767496,Prediction
+초고속 충전,130,131.69392366856158,Prediction
+초고속 충전,131,131.58842043686133,Prediction
+초고속 충전,132,131.5784575945721,Prediction
+초고속 충전,133,132.06150448006838,Prediction
+초고속 충전,134,132.06250625763786,Prediction
+초고속 충전,135,132.05533520430123,Prediction
+초고속 충전,136,132.06076430113114,Prediction
+초고속 충전,137,132.07599616594192,Prediction
+초고속 충전,138,132.0503835699531,Prediction
+저속 충전,1,205.5,History
+저속 충전,2,205.27,History
+저속 충전,3,200.67,History
+저속 충전,4,193.25,History
+저속 충전,5,185.63,History
+저속 충전,6,177.16,History
+저속 충전,7,169.09,History
+저속 충전,8,161.06,History
+저속 충전,9,153.36,History
+저속 충전,10,146.14,History
+저속 충전,11,138.26,History
+저속 충전,12,130.77,History
+저속 충전,13,123.62,History
+저속 충전,14,117.11,History
+저속 충전,15,110.9,History
+저속 충전,16,105.17,History
+저속 충전,17,99.67,History
+저속 충전,18,94.87,History
+저속 충전,19,90.36,History
+저속 충전,20,86.72,History
+저속 충전,21,84.46,History
+저속 충전,22,82.21,History
+저속 충전,23,80.35,History
+저속 충전,24,79.16,History
+저속 충전,25,78.16,History
+저속 충전,26,77.44,History
+저속 충전,27,76.7,History
+저속 충전,28,76.62,History
+저속 충전,29,76.77,History
+저속 충전,30,76.78,History
+저속 충전,31,76.9,History
+저속 충전,32,77.69,History
+저속 충전,33,78.09,History
+저속 충전,34,78.82,History
+저속 충전,35,79.68,History
+저속 충전,36,80.56,History
+저속 충전,37,81.29,History
+저속 충전,38,82.81,History
+저속 충전,39,84.52,History
+저속 충전,40,85.75,History
+저속 충전,41,87.08,History
+저속 충전,42,88.08,History
+저속 충전,43,91.48,History
+저속 충전,44,92.98,History
+저속 충전,45,94.67,History
+저속 충전,46,96.49,History
+저속 충전,47,98.82,History
+저속 충전,48,99.32,History
+저속 충전,49,100.74,History
+저속 충전,50,102.22,History
+저속 충전,51,104.24,History
+저속 충전,52,106.6,History
+저속 충전,53,107.37,History
+저속 충전,54,109.32,History
+저속 충전,55,110.04,History
+저속 충전,56,113.08,History
+저속 충전,57,115.07,History
+저속 충전,58,116.65,History
+저속 충전,59,118.22,History
+저속 충전,60,120.28,History
+저속 충전,61,122.6,History
+저속 충전,62,123.78,History
+저속 충전,63,124.59,History
+저속 충전,64,127.06,History
+저속 충전,65,128.47,History
+저속 충전,66,129.75,History
+저속 충전,67,132.29,History
+저속 충전,68,133.71,History
+저속 충전,69,135.5,History
+저속 충전,70,136.74,History
+저속 충전,71,138.06,History
+저속 충전,72,139.56,History
+저속 충전,73,138.57,History
+저속 충전,74,140.39,History
+저속 충전,75,141.44,History
+저속 충전,76,143.18,History
+저속 충전,77,144.69,History
+저속 충전,78,145.93,History
+저속 충전,79,147.01,History
+저속 충전,80,148.11,History
+저속 충전,81,149.26,History
+저속 충전,82,150.17,History
+저속 충전,83,151.6,History
+저속 충전,84,152.34,History
+저속 충전,85,152.85,History
+저속 충전,86,154.06,History
+저속 충전,87,154.68,History
+저속 충전,88,156.12,History
+저속 충전,89,156.77,History
+저속 충전,90,157.73,History
+저속 충전,91,158.56,History
+저속 충전,92,159.49,History
+저속 충전,93,160.32,History
+저속 충전,94,161.28,History
+저속 충전,95,162.24,History
+저속 충전,96,163.09,History
+저속 충전,97,163.48,History
+저속 충전,98,164.1,History
+저속 충전,99,164.71,History
+저속 충전,100,165.46,History
+저속 충전,101,123.61212886280963,Prediction
+저속 충전,102,123.58793155780508,Prediction
+저속 충전,103,123.5904994148987,Prediction
+저속 충전,104,123.61784594540617,Prediction
+저속 충전,105,123.82871627757473,Prediction
+저속 충전,106,123.85371449671878,Prediction
+저속 충전,107,124.09160135180792,Prediction
+저속 충전,108,124.14984732223978,Prediction
+저속 충전,109,123.8329436477216,Prediction
+저속 충전,110,123.86701528808476,Prediction
+저속 충전,111,124.0046213755042,Prediction
+저속 충전,112,124.02678115972854,Prediction
+저속 충전,113,124.01044281022168,Prediction
+저속 충전,114,124.07323431998772,Prediction
+저속 충전,115,124.09684141605125,Prediction
+저속 충전,116,124.13663993423171,Prediction
+저속 충전,117,124.16451105939991,Prediction
+저속 충전,118,124.23326701196957,Prediction
+저속 충전,119,124.24887851510124,Prediction
+저속 충전,120,124.29466484304139,Prediction
+저속 충전,121,124.53193335472311,Prediction
+저속 충전,122,124.55926050059075,Prediction
+저속 충전,123,124.55482553254788,Prediction
+저속 충전,124,124.57298942094462,Prediction
+저속 충전,125,124.58504979256682,Prediction
+저속 충전,126,124.5417392522989,Prediction
+저속 충전,127,124.52790863665719,Prediction
+저속 충전,128,124.56894981879755,Prediction
+저속 충전,129,124.57651366779652,Prediction
+저속 충전,130,124.70262232417382,Prediction
+저속 충전,131,124.66273066953104,Prediction
+저속 충전,132,124.62270898917076,Prediction
+저속 충전,133,124.7606409951015,Prediction
+저속 충전,134,124.74918612706051,Prediction
+저속 충전,135,124.7998176602965,Prediction
+저속 충전,136,124.80483219491556,Prediction
+저속 충전,137,124.81005021456399,Prediction
+저속 충전,138,124.94454880296593,Prediction
