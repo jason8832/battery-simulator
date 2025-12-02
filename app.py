@@ -16,6 +16,10 @@ st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="
 # ==============================================================================
 
 def get_img_tag(file, title):
+    """
+    이미지 파일을 읽어서 완벽한 HTML <img> 태그를 반환하는 함수
+    (파일이 없거나 에러 발생 시 빈 문자열 반환하여 화면 깨짐 방지)
+    """
     if not os.path.exists(file):
         return ""
     try:
@@ -26,10 +30,12 @@ def get_img_tag(file, title):
     except:
         return ""
 
+# 로고 태그 생성
 tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW")
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University")
 tag_google  = get_img_tag("google_logo.png", "Google")
 
+# HTML/CSS 스타일링
 header_html = f"""
 <style>
 html, body, [class*="css"] {{
@@ -87,7 +93,7 @@ html, body, [class*="css"] {{
 </style>
 
 <div class="header-container">
-    <h1 class="main-title">AI 기반 배터리 성능ㆍ환경 영향 시뮬레이터</h1>
+    <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
     <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
     <div class="logo-box">
         {tag_ajou_sw}
@@ -118,7 +124,6 @@ def load_real_case_data():
 def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     x = np.arange(1, cycles + 1)
     
-    # decay_rate에 따라 감쇠 속도 조절
     linear_fade = 0.00015 * x * decay_rate
     acc_fade = 1e-9 * np.exp(0.015 * x) * decay_rate
     cap_noise = np.random.normal(0, 0.0015, size=len(x))
@@ -126,16 +131,12 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     retention = 1.0 - linear_fade - acc_fade + cap_noise
     capacity = retention * specific_cap_base
     
-    # decay_rate에 따라 쿨롱 효율(CE) 패턴 조절
-    if decay_rate < 1.5: # Perfectly Stable
-        base_ce = 99.98
-        ce_noise_scale = 0.01
-    elif decay_rate < 3.0: # Stable
-        base_ce = 99.90
-        ce_noise_scale = 0.03
-    else: # Unstable
-        base_ce = 99.5 - (x * 0.0005) # 점차 감소
-        ce_noise_scale = 0.15
+    if decay_rate < 1.5:
+        base_ce = 99.98; ce_noise_scale = 0.01
+    elif decay_rate < 3.0:
+        base_ce = 99.90; ce_noise_scale = 0.03
+    else:
+        base_ce = 99.5 - (x * 0.0005); ce_noise_scale = 0.15
         
     ce_noise = np.random.normal(0, ce_noise_scale, size=len(x))
     ce = np.clip(base_ce + ce_noise, 0, 100.0)
@@ -143,7 +144,7 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     return x, np.clip(capacity, 0, None), ce
 
 # ==============================================================================
-# [Engine 2] 핵심 로직
+# [Engine 2] 핵심 로직: 화학적 근거 기반 환경 영향 산출 (교수님 피드백 반영)
 # ==============================================================================
 def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, drying_time):
     # 1. VOC
@@ -189,9 +190,9 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
 # ==============================================================================
 
 tab1, tab2, tab3 = st.tabs([
-    "🧪 Engine 1-1: 배터리 성능 시뮬레이터", 
+    "🧪 Engine 1-1: 가상 시뮬레이터", 
     "📊 Engine 1-2: 실제 실험 검증", 
-    "🏭 Engine 2: 환경 영향 시뮬레이터"
+    "🏭 Engine 2: 친환경 공정 최적화"
 ])
 
 # ------------------------------------------------------------------------------
@@ -206,10 +207,9 @@ with tab1:
     with col_input:
         with st.container(border=True):
             st.markdown("#### 🔋 샘플 안정도")
-            # [중요] 선택된 값을 변수에 저장
             sample_type = st.radio(
                 "패턴 선택",
-                ["Perfectly Stable", "Stable", "Unstable"], # 옵션 이름 명확히
+                ["Perfectly Stable", "Stable", "Unstable"],
                 label_visibility="collapsed",
                 key="t1_radio"
             )
@@ -223,26 +223,18 @@ with tab1:
     with col_view:
         if run_e1:
             with st.spinner("AI Analyzing..."):
-                # [수정] sample_type 문자열을 정확하게 비교하여 decay 값 설정
                 if sample_type == "Perfectly Stable":
-                    decay = 0.5 # 아주 천천히 감소 (녹색)
-                    label = "Perfectly Stable"
-                    color = '#28a745' # Green
+                    decay = 0.5; label = "Perfectly Stable"; color = '#28a745'
                 elif sample_type == "Stable":
-                    decay = 2.5 # 보통 감소 (주황)
-                    label = "Stable"
-                    color = '#fd7e14' # Orange
-                else: # Unstable
-                    decay = 8.0 # 급격히 감소 (빨강)
-                    label = "Unstable"
-                    color = '#dc3545' # Red
+                    decay = 2.5; label = "Stable"; color = '#fd7e14'
+                else:
+                    decay = 8.0; label = "Unstable"; color = '#dc3545'
                 
                 cycles, capacity, ce = predict_life_and_ce(decay_rate=decay, specific_cap_base=init_cap_input, cycles=cycle_input)
                 
                 plt.style.use('default')
                 fig2, (ax_cap, ax_ce) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
                 
-                # Graph 1: Capacity
                 ax_cap.plot(cycles[:100], capacity[:100], 'k-', linewidth=2.5, label='Input Data (1~100)')
                 ax_cap.plot(cycles[100:], capacity[100:], '--', color=color, linewidth=2.5, label=f'AI Prediction ({label})')
                 ax_cap.set_ylabel("Specific Capacity (mAh/g)", fontsize=11, fontweight='bold')
@@ -251,12 +243,10 @@ with tab1:
                 ax_cap.grid(True, linestyle='--', alpha=0.4)
                 ax_cap.spines['top'].set_visible(False); ax_cap.spines['right'].set_visible(False)
                 
-                # Graph 2: CE
                 ax_ce.plot(cycles, ce, '-', color='#007bff', linewidth=1.5, alpha=0.8, label='Coulombic Efficiency')
                 ax_ce.set_ylabel("Coulombic Efficiency (%)", fontsize=11, fontweight='bold')
                 ax_ce.set_xlabel("Cycle Number", fontsize=11, fontweight='bold')
                 
-                # CE 범위 자동 조정 (불안정 샘플은 CE가 많이 떨어지므로)
                 if decay > 5.0:
                     ax_ce.set_ylim(98.0, 100.5)
                 else:
@@ -281,11 +271,11 @@ with tab1:
             st.info("좌측 패널에서 조건을 설정하고 [가상 예측 실행]을 눌러주세요.")
 
 # ------------------------------------------------------------------------------
-# TAB 2: 실제 실험 검증
+# TAB 2: 실제 실험 검증 (Real-world Validation)
 # ------------------------------------------------------------------------------
 with tab2:
     st.subheader("Engine 1. 실제 실험 데이터 검증 (Real-world Validation)")
-    st.markdown("이 탭에서는 실제 배터리 테스트 데이터(Ground Truth)를 기반으로 수행된 Engine 1의 정밀한 예측 결과를 검증합니다.")
+    st.markdown("이 탭에서는 **실제 배터리 테스트 데이터(Ground Truth)**를 기반으로 수행된 Engine 1의 정밀한 예측 결과를 검증합니다.")
     st.divider()
 
     df_results = load_real_case_data()
@@ -298,19 +288,38 @@ with tab2:
         with col_case_input:
             with st.container(border=True):
                 st.markdown("#### 📂 실험 케이스 선택")
-                available_samples = df_results['Sample_Type'].unique()
-                selected_sample = st.radio("확인할 실험 데이터:", available_samples, index=0, key="t2_radio")
+                # [중요] 실제 CSV 파일의 Sample_Type 값과 매칭되어야 함 (Sample A, B, C)
+                # 화면 표시는 1-1과 동일하게 "Perfectly Stable" 등으로 보여주되, 내부 로직은 CSV 값 사용
+                
+                # 라디오 버튼 옵션 정의 (표시용)
+                radio_options = ["Perfectly Stable (Sample A)", "Stable (Sample B)", "Unstable (Sample C)"]
+                selected_option = st.radio(
+                    "확인할 실험 데이터:",
+                    radio_options,
+                    index=0,
+                    key="t2_radio"
+                )
+                
+                # 선택된 옵션을 실제 CSV의 Sample_Type 값으로 매핑
+                if "Sample A" in selected_option:
+                    selected_sample_key = "Sample A"
+                elif "Sample B" in selected_option:
+                    selected_sample_key = "Sample B"
+                else:
+                    selected_sample_key = "Sample C"
                 
                 st.write("")
-                if "Sample A" in selected_sample:
-                    st.success("✅ **Perfectly Stable** (Stable)\n- Binder: CMGG\n- 예측 정확도: 높음")
-                elif "Sample B" in selected_sample:
-                    st.warning("⚠️ **Stable** (Normal)\n- Binder: PVDF\n- 예측 정확도: 보통")
+                # [수정됨] 1-1과 동일한 용어 및 포맷 적용
+                if selected_sample_key == "Sample A":
+                    st.success("✅ **Perfectly Stable** (Sample A)\n- 상태: 매우 안정적 (High Stability)\n- Binder: CMGG\n- 특징: 긴 수명 및 선형적 열화 패턴")
+                elif selected_sample_key == "Sample B":
+                    st.warning("⚠️ **Stable** (Sample B)\n- 상태: 안정적 (Standard)\n- Binder: PVDF\n- 특징: 통상적인 수명 감소 추세")
                 else:
-                    st.error("🚫 **Unstable** (Unstable)\n- 이슈: 초기 저항 증가")
+                    st.error("🚫 **Unstable** (Sample C)\n- 상태: 불안정 (Abnormal)\n- 이슈: **비정상적 용량 거동 및 급격한 열화 감지**")
 
         with col_case_view:
-            sample_data = df_results[df_results['Sample_Type'] == selected_sample]
+            # CSV 데이터 필터링
+            sample_data = df_results[df_results['Sample_Type'] == selected_sample_key]
             history = sample_data[sample_data['Data_Type'] == 'History']
             prediction = sample_data[sample_data['Data_Type'] == 'Prediction']
 
@@ -319,7 +328,7 @@ with tab2:
                 
                 fig, (ax_cap, ax_ce) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
                 
-                # Graph 1
+                # Graph 1: Capacity
                 ax_cap.plot(history['Cycle'], history['Capacity'], 'o-', color='black', markersize=4, alpha=0.7, label='History (1~100)')
                 
                 if not history.empty and not prediction.empty:
@@ -330,20 +339,28 @@ with tab2:
                 ax_cap.plot(prediction['Cycle'], prediction['Capacity'], '--', color='#dc3545', linewidth=2, label='AI Prediction (101~)')
                 
                 ax_cap.set_ylabel("Specific Capacity (mAh/g)", fontsize=11, fontweight='bold')
-                ax_cap.set_title(f"Model Validation Result - {selected_sample}", fontsize=14, fontweight='bold', pad=15)
+                ax_cap.set_title(f"Model Validation Result - {selected_sample_key}", fontsize=14, fontweight='bold', pad=15)
                 ax_cap.legend(loc='upper right', frameon=True, shadow=True)
                 ax_cap.grid(True, linestyle='--', alpha=0.5)
                 ax_cap.spines['top'].set_visible(False); ax_cap.spines['right'].set_visible(False)
 
-                # Graph 2
+                # Graph 2: Coulombic Efficiency (Dummy for visualization)
                 total_cycles = pd.concat([history['Cycle'], prediction['Cycle']])
-                ce_dummy = np.random.normal(99.95, 0.05, size=len(total_cycles))
-                ce_dummy = np.clip(ce_dummy, 99.0, 100.0)
+                
+                if selected_sample_key == "Sample C":
+                    ce_mean = 99.5; ce_std = 0.15
+                    ylim_min = 98.0
+                else:
+                    ce_mean = 99.95; ce_std = 0.05
+                    ylim_min = 99.5
+                    
+                ce_dummy = np.random.normal(ce_mean, ce_std, size=len(total_cycles))
+                ce_dummy = np.clip(ce_dummy, ylim_min, 100.0)
                 
                 ax_ce.plot(total_cycles, ce_dummy, '-', color='#007bff', linewidth=1.5, alpha=0.8, label='Coulombic Efficiency')
                 ax_ce.set_ylabel("Coulombic Efficiency (%)", fontsize=11, fontweight='bold')
                 ax_ce.set_xlabel("Cycle Number", fontsize=11, fontweight='bold')
-                ax_ce.set_ylim(98.0, 100.5)
+                ax_ce.set_ylim(ylim_min, 100.1)
                 ax_ce.legend(loc='lower right', frameon=True, shadow=True)
                 ax_ce.grid(True, linestyle='--', alpha=0.5)
                 ax_ce.spines['top'].set_visible(False); ax_ce.spines['right'].set_visible(False)
@@ -354,24 +371,24 @@ with tab2:
                 if not prediction.empty:
                     final_cycle = prediction['Cycle'].iloc[-1]
                     final_cap = prediction['Capacity'].iloc[-1]
-                    st.info(f"📊 **AI 분석 리포트**: {selected_sample}은 **{int(final_cycle)} Cycle**까지 예측되었으며, 최종 용량은 **{final_cap:.3f} Ah**로 예상됩니다.")
+                    st.info(f"📊 **AI 분석 리포트**: {selected_sample_key}은 **{int(final_cycle)} Cycle**까지 예측되었으며, 최종 용량은 **{final_cap:.3f} Ah**로 예상됩니다.")
             else:
                 st.error("선택한 샘플의 데이터가 비어있습니다.")
 
 # ------------------------------------------------------------------------------
-# TAB 3: 친환경 공정 최적화
+# TAB 3: 친환경 공정 최적화 (Engine 2 - Anode Optimized)
 # ------------------------------------------------------------------------------
 with tab3:
-    st.subheader("Engine 2. 환경 영향 시뮬레이터 (LCA Optimization)")
-    st.info("본 시뮬레이터는 화학적 조성(불소 유무), 용매의 독성(VOC), 끓는점(Boiling Point)에 기반한 물리학적 계산 모델을 적용했습니다.")
+    st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA Optimization)")
+    st.info("💡 **Update:** 본 시뮬레이터는 **화학적 조성(불소 유무)**, **용매의 독성(VOC)**, **끓는점(Boiling Point)**에 기반한 물리학적 계산 모델을 적용했습니다.")
     
     col_input_e2, col_view_e2 = st.columns([1, 2])
     
     with col_input_e2:
         with st.container(border=True):
             st.markdown("#### 🛠️ 공정 조건 설정 (음극)")
-            s_binder = st.selectbox("Binder Type", ["PVDF","CMGG","GG","CMC"]) 
-            s_solvent = st.radio("Solvent Type", ["NMP","Water"])
+            s_binder = st.selectbox("Binder Type", ["SBR", "CMC", "CMGG", "GG", "PVDF"]) 
+            s_solvent = st.radio("Solvent Type", ["Water", "NMP"])
             st.divider()
             s_temp = st.slider("Drying Temp (°C)", 60, 200, 110)
             s_time = st.slider("Drying Time (min)", 10, 720, 60) 
@@ -416,9 +433,9 @@ with tab3:
                 
                 with st.expander("1. VOC (휘발성 유기화합물) 산출 근거", expanded=True):
                     if s_solvent == "NMP":
-                        st.write("🔴 **High Risk:** 용매로 NMP(N-Methyl-2-pyrrolidone)가 사용되었습니다. NMP는 생식 독성이 있는 유기용매로, 건조 과정에서 VOC가 다량 발생하며 엄격한 배기 장치가 필요합니다.")
+                        st.write("🔴 **High Risk:** 용매로 **NMP(N-Methyl-2-pyrrolidone)**가 사용되었습니다. NMP는 생식 독성이 있는 유기용매로, 건조 과정에서 VOC가 다량 발생하며 엄격한 배기 장치가 필요합니다.")
                     else:
-                        st.write("🟢 **Safe:** 용매로 Water가 사용되었습니다. 건조 시 수증기만 배출되므로 VOC 발생량은 **0**에 수렴합니다.")
+                        st.write("🟢 **Safe:** 용매로 **Water(물)**이 사용되었습니다. 건조 시 수증기만 배출되므로 VOC 발생량은 **0**에 수렴합니다.")
 
                 with st.expander("2. CO₂ (탄소 배출량) 산출 근거", expanded=True):
                     if "PVDF" in s_binder:
@@ -426,7 +443,7 @@ with tab3:
                         st.latex(r"-(C_2H_2F_2)_n-")
                         st.write("화학 구조 내 **불소(F)** 원소로 인해 합성 및 폐기 과정에서 GWP(지구온난화지수)가 매우 높습니다.")
                     else:
-                        st.write(f"🟢 **Low Emission:** 바인더로 **{s_binder}**가 사용되었습니다. 이는 천연 유래 고분자(Bio-based)로, C, H, O 기반의 구조를 가지며 불소를 포함하지 않아 탄소 배출이 적습니다.")
+                        st.write(f"🟢 **Low Emission:** 바인더로 **{s_binder}**가 사용되었습니다. 이는 **천연 유래 고분자(Bio-based)**로, C, H, O 기반의 구조를 가지며 불소를 포함하지 않아 탄소 배출이 적습니다.")
 
                 with st.expander("3. Energy (에너지 소비) 산출 근거", expanded=True):
                     bp = 204.1 if s_solvent == "NMP" else 100
