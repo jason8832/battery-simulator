@@ -10,43 +10,89 @@ from sklearn.ensemble import RandomForestRegressor
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
-# [0] 디자인 & CSS 설정
+# [사용자 설정] 팀원 정보 편집
+# ==============================================================================
+team_members = [
+    {
+        "name": "이하영",
+        "role": "Team Leader",
+        "desc": "\"배터리 수명 예측 알고리즘 설계 및 프로젝트 총괄\"",
+        "tags": ["#PM", "#AI_Modeling"],
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&accessoriesProbability=0&eyebrows=default&eyes=default"
+    },
+    {
+        "name": "정회권",
+        "role": "Frontend Developer",
+        "desc": "\"사용자 친화적 UI/UX 디자인 및 웹 구현\"",
+        "tags": ["#Streamlit", "#UI/UX"],
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Jack&accessoriesProbability=0&facialHairProbability=0"
+    },
+    {
+        "name": "신동하",
+        "role": "Data Analyst",
+        "desc": "\"배터리 실험 데이터 전처리 및 시각화 분석\"",
+        "tags": ["#Data_Analysis", "#Visualization"],
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka&accessoriesProbability=0&hair=long"
+    },
+    {
+        "name": "권현정",
+        "role": "Chemical Engineer",
+        "desc": "\"친환경 바인더 소재 선정 및 화학적 검증\"",
+        "tags": ["#Battery_Material", "#LCA"],
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Bob&accessoriesProbability=0"
+    },
+    {
+        "name": "박재찬",
+        "role": "Backend Developer",
+        "desc": "\"시뮬레이션 서버 구축 및 알고리즘 최적화\"",
+        "tags": ["#Server", "#Optimization"],
+        "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Molly&accessoriesProbability=0&hair=long"
+    }
+]
+
+# ==============================================================================
+# [0] 디자인 & CSS 설정 (경로 문제 해결 버전)
 # ==============================================================================
 
-def get_img_tag(file, title, css_class="logo-img"):
+# [중요] 현재 파일(app.py)의 절대 경로를 구해서 이미지를 찾습니다.
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+def get_img_tag(filename, title, css_class="logo-img"):
     """이미지 태그 생성 함수"""
-    if not os.path.exists(file):
+    file_path = os.path.join(current_dir, filename) # 절대 경로로 결합
+    if not os.path.exists(file_path):
         return ""
     try:
-        with open(file, "rb") as f:
+        with open(file_path, "rb") as f:
             data = f.read()
         b64_data = base64.b64encode(data).decode()
         return f'<img src="data:image/png;base64,{b64_data}" class="{css_class}" title="{title}">'
     except:
         return ""
 
-def get_base64_image(file):
+def get_base64_image(filename):
     """배경 이미지를 위한 Base64 변환 함수"""
-    if not os.path.exists(file):
+    file_path = os.path.join(current_dir, filename) # 절대 경로로 결합
+    if not os.path.exists(file_path):
         return None
     try:
-        with open(file, "rb") as f:
+        with open(file_path, "rb") as f:
             data = f.read()
         return base64.b64encode(data).decode()
     except:
         return None
 
-# 1. 이미지 자원 로드
+# 1. 이미지 자원 로드 (절대 경로 적용됨)
 tag_25 = get_img_tag("25logo.png", "Team 25", css_class="top-left-logo")
 tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-logo")
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
 # 2. 상단 배경 이미지 (Background.jpeg) 처리
-bg_file = "Background.jpeg"
-bg_base64 = get_base64_image(bg_file)
+bg_base64 = get_base64_image("Background.jpeg")
 
 if bg_base64:
+    # 이미지가 있으면 적용
     header_bg_style = f"""
         background-image: url("data:image/jpeg;base64,{bg_base64}");
         background-size: cover;
@@ -54,14 +100,16 @@ if bg_base64:
         background-repeat: no-repeat;
     """
 else:
+    # 이미지가 없으면 기본 하늘색 배경 (디버깅용: 이미지가 안 보이면 이 색이 뜹니다)
     header_bg_style = "background-color: #BBDEFB;"
 
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링 (NameError 해결: 모든 중괄호를 {{ }}로 변경)
+# 3. CSS 스타일링
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+    
     html, body, [class*="css"] {{
         font-family: 'Noto Sans KR', 'Helvetica Neue', sans-serif;
     }}
@@ -186,8 +234,7 @@ st.markdown(f"""
         box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
     }}
 
-    /* [수정] 페르소나(팀원) 카드 스타일 (가로형 배치) */
-    /* NameError 해결을 위해 {{ }} 사용 및 클래스명 통일 */
+    /* [NEW] 페르소나 카드 스타일 (가로형) */
     .persona-card {{
         display: flex;
         flex-direction: row; 
@@ -263,6 +310,7 @@ st.markdown(f"""
 @st.cache_data
 def load_real_case_data():
     try:
+        # 절대 경로 사용
         current_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(current_dir, "engine1_output.csv")
         df = pd.read_csv(file_path)
@@ -370,18 +418,10 @@ with tab_home:
 
     st.markdown("---")
     
-    # [NEW] Team Member Section (클래스명을 persona-card로 수정하여 디자인 적용)
+    # [NEW] Team Member Section (페르소나 카드 스타일 적용)
     st.markdown("<h3 style='color: #1B5E20; margin-bottom: 20px;'>👥 Meet Team 25</h3>", unsafe_allow_html=True)
     
-    # 팀원 데이터 (남3, 여2 구성)
-    team_members = [
-        {"name": "이하영", "role": "Team Leader", "desc": "AI 모델링 및 프로젝트 총괄", "tags": ["#PM", "#AI"], "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&accessoriesProbability=0&eyebrows=default&eyes=default"},
-        {"name": "정회권", "role": "Frontend Dev", "desc": "Streamlit UI/UX 디자인 및 구현", "tags": ["#Frontend", "#Design"], "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Jack&accessoriesProbability=0&facialHairProbability=0"},
-        {"name": "신동하", "role": "Data Analyst", "desc": "배터리 실험 데이터 분석 및 시각화", "tags": ["#Data", "#Analysis"], "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka&accessoriesProbability=0&hair=long"},
-        {"name": "권현정", "role": "Chem Engineer", "desc": "배터리 소재 실험 및 검증", "tags": ["#Chemistry", "#Experiment"], "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Bob&accessoriesProbability=0"},
-        {"name": "박재찬", "role": "Backend Dev", "desc": "서버 구축 및 알고리즘 최적화", "tags": ["#Backend", "#Server"], "img": "https://api.dicebear.com/7.x/avataaars/svg?seed=Molly&accessoriesProbability=0&hair=long"}
-    ]
-
+    # 2열 그리드로 배치
     cols = st.columns(2) 
     
     for i, member in enumerate(team_members):
@@ -389,7 +429,7 @@ with tab_home:
         tags_html = "".join([f'<span class="tag-badge">{tag}</span>' for tag in member['tags']])
         
         with cols[col_idx]:
-            # 여기서 class="persona-card"를 사용하여 CSS와 일치시킴
+            # HTML 구조를 CSS 클래스명(.persona-card)과 일치시킴
             st.markdown(f"""
             <div class="persona-card">
                 <img src="{member['img']}" class="persona-img">
