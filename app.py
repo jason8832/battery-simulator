@@ -96,7 +96,7 @@ else:
     header_bg_style = "background-color: #BBDEFB;"
 
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링 (최종 수정: 컨테이너 강제 적용)
+# 3. CSS 스타일링 (초강력 수정 버전)
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
@@ -112,17 +112,19 @@ st.markdown(f"""
     }}
     
     /* [🚨핵심 해결 부분] 좌측 조건 설정 네모칸 강제 스타일링 */
-    /* st.container(border=True)는 data-testid="stVerticalBlockBorderWrapper" 속성을 가집니다. */
-    div[data-testid="stVerticalBlockBorderWrapper"] {{
+    /* Streamlit 버전 차이를 고려하여 가능한 모든 선택자를 포함하고 우선순위를 최상(important)으로 높임 */
+    
+    /* 1. 표준 선택자 */
+    [data-testid="stVerticalBlockBorderWrapper"] {{
         background-color: #FFFFFF !important;  /* 배경: 무조건 흰색 */
         border: 3px solid #1B5E20 !important;  /* 테두리: 3px 진한 녹색 */
-        border-radius: 15px !important;        /* 모서리 둥글게 */
-        padding: 20px !important;              /* 내부 여백 */
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important; /* 그림자 추가 */
+        border-radius: 15px !important;        
+        padding: 20px !important;              
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
     }}
     
-    /* 혹시 내부 요소가 투명해서 배경색이 묻히는 것을 방지 */
-    div[data-testid="stVerticalBlockBorderWrapper"] > div {{
+    /* 2. 혹시 모를 내부 요소 투명화 처리 */
+    [data-testid="stVerticalBlockBorderWrapper"] > div {{
         background-color: transparent !important; 
     }}
 
