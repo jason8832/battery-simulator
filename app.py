@@ -13,53 +13,65 @@ st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="
 # [0] 디자인 & CSS 설정
 # ==============================================================================
 
-def get_img_tag(file, title):
-    """이미지 태그 생성 함수"""
+def get_img_tag(file, title, css_class="logo-img"):
+    """
+    이미지 태그 생성 함수
+    - css_class: 로고별 크기 조절을 위한 클래스 지정 (기본값: logo-img)
+    """
     if not os.path.exists(file):
         return ""
     try:
         with open(file, "rb") as f:
             data = f.read()
         b64_data = base64.b64encode(data).decode()
-        return f'<img src="data:image/png;base64,{b64_data}" class="logo-img" title="{title}">'
+        return f'<img src="data:image/png;base64,{b64_data}" class="{css_class}" title="{title}">'
     except:
         return ""
 
-# 로고 이미지 로드 (파일이 없으면 빈 문자열 반환)
+# 로고 이미지 로드
+# 1. 상단 고정용 대형 로고 (25logo)
+tag_25_top = get_img_tag("25logo.png", "Team 25", css_class="top-logo-img")
+
+# 2. 헤더용 일반 로고들
 tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW")
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University")
 tag_google  = get_img_tag("google_logo.png", "Google")
-tag_25  = get_img_tag("25logo.png", "25logo")
+
 
 # CSS 스타일링
 st.markdown("""
 <style>
-    /* 폰트 설정 */
+    /* 기본 폰트 설정 */
     html, body, [class*="css"] {
         font-family: 'Helvetica Neue', 'Apple SD Gothic Neo', sans-serif;
     }
     
-    /* 탭바(TabBar) 스타일 개선 */
-    /* 탭 글씨 크기 키우고 진하게 */
+    /* [수정] 최상단 25logo 스타일 (크게 설정) */
+    .top-logo-img {
+        height: 80px;  /* 로고 크기 확대 (기존 35px -> 80px) */
+        width: auto;
+        object-fit: contain;
+        margin-bottom: 10px; /* 탭과의 간격 */
+    }
+
+    /* 탭바(TabBar) 스타일 */
     button[data-baseweb="tab"] {
         font-size: 20px !important;
         font-weight: 800 !important;
         padding: 10px 30px !important;
-        color: #333 !important; /* 글씨 색상 진하게 */
+        color: #333 !important;
     }
-    
-    /* 선택된 탭 강조 */
     button[data-baseweb="tab"][aria-selected="true"] {
-        color: #d32f2f !important; /* 선택시 붉은색 계열 */
+        color: #d32f2f !important;
         background-color: #fce4ec !important;
     }
 
-    /* 헤더 컨테이너 (초록색 박스) */
+    /* 초록색 헤더 컨테이너 */
     .header-container {
         background-color: #E8F5E9;
         padding: 30px 20px;
         border-radius: 15px;
-        margin-top: 20px; /* 탭 아래 여백 */
+        margin-top: 20px;
         margin-bottom: 30px;
         text-align: center;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -79,6 +91,8 @@ st.markdown("""
         margin-bottom: 20px;
         font-weight: 500;
     }
+    
+    /* 하단 로고 박스 (기존 로고들) */
     .logo-box {
         display: flex;
         justify-content: center;
@@ -86,7 +100,7 @@ st.markdown("""
         gap: 20px;
     }
     .logo-img {
-        height: 35px;
+        height: 35px; /* 일반 로고 크기 */
         width: auto;
         object-fit: contain;
     }
@@ -152,13 +166,11 @@ def predict_life_and_ce(decay_rate, specific_cap_base=185.0, cycles=1000):
     return x, np.clip(capacity, 0, None), ce
 
 def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, drying_time):
-    # 1. VOC
     if solvent_type == "NMP":
         voc_base = 3.0; voc_val = voc_base * (loading_mass / 10.0); voc_desc = "Critical (NMP Toxicity)"
     else:
         voc_val = 0.0; voc_desc = "Clean (Water Vapor)"
 
-    # 2. CO2
     if binder_type == "PVDF":
         co2_factor = 0.45; chem_formula = "-(C₂H₂F₂)ₙ-"
         co2_desc = f"High ({chem_formula})"
@@ -169,7 +181,6 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
         co2_factor = 0.3; co2_desc = "Medium"
     co2_val = co2_factor * (loading_mass / 20.0)
 
-    # 3. Energy
     bp = 204.1 if solvent_type == "NMP" else 100.0
     process_penalty = 1.5 if solvent_type == "NMP" else 1.0
     delta_T = max(drying_temp - 25, 0)
@@ -180,9 +191,17 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
 
 
 # ==============================================================================
-# [UI 구성] 메인 탭 (최상단 배치)
+# [UI 구성] 1. 최상단 로고 배치 (탭 위에 위치)
 # ==============================================================================
-# 탭을 가장 먼저 선언하여 헤더보다 위에 오게 만듭니다.
+st.markdown(f"""
+<div style="text-align: left; padding-left: 5px;">
+    {tag_25_top}
+</div>
+""", unsafe_allow_html=True)
+
+# ==============================================================================
+# [UI 구성] 2. 메인 네비게이션 탭
+# ==============================================================================
 tab_home, tab_e1, tab_e2, tab_data = st.tabs([
     "  Home  ", 
     "  Engine 1  ", 
@@ -190,7 +209,8 @@ tab_home, tab_e1, tab_e2, tab_data = st.tabs([
     "  Our Data  "
 ])
 
-# 공통 헤더 HTML (각 탭 내부 상단에 삽입됨)
+# 공통 헤더 HTML (탭 내부 상단에 삽입되는 초록색 박스)
+# *25logo는 위로 뺐으므로 여기서는 제외했습니다.*
 header_html = f"""
 <div class="header-container">
     <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
@@ -200,7 +220,6 @@ header_html = f"""
         {tag_ajou}
         <div class="separator"></div>
         {tag_google}
-        {tag_25}
     </div>
 </div>
 """
@@ -228,7 +247,7 @@ with tab_home:
 # TAB 2: Engine 1 (가상 예측)
 # ------------------------------------------------------------------------------
 with tab_e1:
-    st.markdown(header_html, unsafe_allow_html=True) # 헤더 출력
+    st.markdown(header_html, unsafe_allow_html=True) 
     
     st.subheader("Engine 1. 배터리 수명 가상 시뮬레이터 (Interactive Mode)")
     st.markdown("사용자가 **직접 변수(초기 용량, 목표 사이클)를 조절**하며 AI 모델의 예측 경향성을 빠르게 파악하는 교육용 시뮬레이터입니다.")
@@ -280,7 +299,7 @@ with tab_e1:
 # TAB 3: Engine 2 (공정 최적화)
 # ------------------------------------------------------------------------------
 with tab_e2:
-    st.markdown(header_html, unsafe_allow_html=True) # 헤더 출력
+    st.markdown(header_html, unsafe_allow_html=True) 
     
     st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA Optimization)")
     st.info("💡 **Update:** 화학적 조성(불소 유무), 용매 독성(VOC), 끓는점(Energy)에 기반한 물리학적 계산 모델입니다.")
@@ -328,7 +347,7 @@ with tab_e2:
 # TAB 4: Our Data (실험 검증 - 맨 뒤)
 # ------------------------------------------------------------------------------
 with tab_data:
-    st.markdown(header_html, unsafe_allow_html=True) # 헤더 출력
+    st.markdown(header_html, unsafe_allow_html=True) 
     
     st.subheader("Our Data. 실제 실험 데이터 검증 (Ground Truth Validation)")
     st.markdown("이 탭에서는 **Team 스물다섯이 직접 수행한 실험 데이터**를 기반으로 Engine 1의 예측 정확도를 검증합니다.")
