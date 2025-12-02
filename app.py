@@ -87,7 +87,7 @@ html, body, [class*="css"] {{
 </style>
 
 <div class="header-container">
-    <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
+    <h1 class="main-title">AI 기반 배터리 성능ㆍ환경 영향 시뮬레이터</h1>
     <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
     <div class="logo-box">
         {tag_ajou_sw}
@@ -189,9 +189,9 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
 # ==============================================================================
 
 tab1, tab2, tab3 = st.tabs([
-    "🧪 Engine 1-1: 가상 시뮬레이터", 
+    "🧪 Engine 1-1: 배터리 성능 시뮬레이터", 
     "📊 Engine 1-2: 실제 실험 검증", 
-    "🏭 Engine 2: 친환경 공정 최적화"
+    "🏭 Engine 2: 환경 영향 시뮬레이터"
 ])
 
 # ------------------------------------------------------------------------------
@@ -285,7 +285,7 @@ with tab1:
 # ------------------------------------------------------------------------------
 with tab2:
     st.subheader("Engine 1. 실제 실험 데이터 검증 (Real-world Validation)")
-    st.markdown("이 탭에서는 **실제 배터리 테스트 데이터(Ground Truth)**를 기반으로 수행된 Engine 1의 정밀한 예측 결과를 검증합니다.")
+    st.markdown("이 탭에서는 실제 배터리 테스트 데이터(Ground Truth)를 기반으로 수행된 Engine 1의 정밀한 예측 결과를 검증합니다.")
     st.divider()
 
     df_results = load_real_case_data()
@@ -303,11 +303,11 @@ with tab2:
                 
                 st.write("")
                 if "Sample A" in selected_sample:
-                    st.success("✅ **Sample A** (Stable)\n- Binder: CMGG\n- 예측 정확도: 높음")
+                    st.success("✅ **Perfectly Stable** (Stable)\n- Binder: CMGG\n- 예측 정확도: 높음")
                 elif "Sample B" in selected_sample:
-                    st.warning("⚠️ **Sample B** (Normal)\n- Binder: PVDF\n- 예측 정확도: 보통")
+                    st.warning("⚠️ **Stable** (Normal)\n- Binder: PVDF\n- 예측 정확도: 보통")
                 else:
-                    st.error("🚫 **Sample C** (Unstable)\n- 이슈: 초기 저항 증가")
+                    st.error("🚫 **Unstable** (Unstable)\n- 이슈: 초기 저항 증가")
 
         with col_case_view:
             sample_data = df_results[df_results['Sample_Type'] == selected_sample]
@@ -362,8 +362,8 @@ with tab2:
 # TAB 3: 친환경 공정 최적화
 # ------------------------------------------------------------------------------
 with tab3:
-    st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA Optimization)")
-    st.info("💡 **Update:** 본 시뮬레이터는 **화학적 조성(불소 유무)**, **용매의 독성(VOC)**, **끓는점(Boiling Point)**에 기반한 물리학적 계산 모델을 적용했습니다.")
+    st.subheader("Engine 2. 환경 영향 시뮬레이터 (LCA Optimization)")
+    st.info("본 시뮬레이터는 화학적 조성(불소 유무), 용매의 독성(VOC), 끓는점(Boiling Point)에 기반한 물리학적 계산 모델을 적용했습니다.")
     
     col_input_e2, col_view_e2 = st.columns([1, 2])
     
