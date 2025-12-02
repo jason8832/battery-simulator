@@ -10,7 +10,7 @@ from sklearn.ensemble import RandomForestRegressor
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
-# [사용자 설정] 팀원 정보 편집
+# [사용자 설정] 팀원 정보 편집 (수정됨)
 # ==============================================================================
 # 사진 파일명(대소문자 구분)을 정확히 입력해주세요.
 team_members = [
@@ -23,7 +23,7 @@ team_members = [
     },
     {
         "name": "정회권",
-        "role": "SIMULATION DEVELOPER",
+        "role": "DEVELOPER",
         "desc": "시뮬레이션 알고리즘 설계·코딩 및 웹사이트 구현",
         "tags": ["#Algorithm", "#Web_Dev"],
         "photo_file": "Profile3.jpeg"
@@ -45,8 +45,8 @@ team_members = [
     {
         "name": "박재찬",
         "role": "RESEARCHER & ANALYST",
-        "desc": "배터리 실험 수행 및 시뮬레이션 데이터 교차 분석",
-        "tags": ["#Experiment", "#Optimization"],
+        "desc": "배터리 실험 수행 및 시뮬레이션 데이터 분석",
+        "tags": ["#Experiment", "#Data_Analysis"],
         "photo_file": "Profile2.jpeg"
     }
 ]
@@ -84,8 +84,8 @@ tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-lo
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
-# 2. 상단 배경 이미지 (Background.jpeg) 처리
-bg_base64 = get_base64_image("background.jpeg")
+# 2. 상단 배경 이미지 (background.jpg) 처리
+bg_base64 = get_base64_image("background.jpg")
 
 if bg_base64:
     header_bg_style = f"""
@@ -95,23 +95,21 @@ if bg_base64:
         background-repeat: no-repeat;
     """
 else:
-    header_bg_style = "background-color: #2E7D32;" # 이미지 없을 시 진한 초록
+    header_bg_style = "background-color: #BBDEFB;"
 
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링 (수정된 버전)
+# 3. CSS 스타일링
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
     
     html, body, [class*="css"] {{
         font-family: 'Noto Sans KR', 'Helvetica Neue', sans-serif;
     }}
 
-    /* [배경 변경] 기존 연두색 -> 차분한 딥 세이지/그레이 톤으로 변경하여 고급스러운 느낌 */
     .stApp {{
-        background-color: #E3E8E5; 
-        background-image: radial-gradient(#E3E8E5 20%, #D4DBD6 80%);
+        background-color: #F1F8E9; 
     }}
     
     /* 상단 로고 바 */
@@ -121,152 +119,184 @@ st.markdown(f"""
         justify-content: space-between;
         align-items: center;
         padding: 15px 25px;
-        margin-top: -50px; /* Streamlit 기본 여백 상쇄 */
+        margin-top: -30px;
         margin-bottom: 20px;
         border-radius: 0 0 20px 20px;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        border-bottom: 4px solid #1B5E20;
-        z-index: 999;
-        position: relative;
-        background-color: white; /* 헤더 배경 확실하게 */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-bottom: 3px solid #2E7D32;
     }}
     
     .logo-group-right {{
         display: flex;
         align-items: center;
         gap: 20px;
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 8px 20px;
-        border-radius: 50px; /* 둥근 캡슐 형태 */
-        border: 2px solid #1B5E20;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 5px 15px;
+        border-radius: 10px;
+        border: 2px solid #2E7D32;
     }}
 
-    .top-left-logo {{ height: 80px; width: auto; object-fit: contain; }} /* 로고 사이즈 조절 */
-    .top-right-logo {{ height: 32px; width: auto; object-fit: contain; transition: transform 0.3s; }}
+    .top-left-logo {{ height: 120px; width: auto; object-fit: contain; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3)); }}
+    .top-right-logo {{ height: 35px; width: auto; object-fit: contain; transition: transform 0.3s; }}
     .top-right-logo:hover {{ transform: scale(1.1); }}
-    .logo-separator {{ width: 1px; height: 18px; background-color: #ccc; margin: 0 5px; }}
+    .logo-separator {{ width: 2px; height: 20px; background-color: #333; margin: 0 5px; }}
 
-    /* [탭바 스타일 강화] */
-    .stTabs [data-baseweb="tab-list"] {{
-        gap: 10px;
-        padding-bottom: 10px;
+    /* 탭바 스타일 */
+    button[data-baseweb="tab"] {{
+        font-size: 18px !important;
+        font-weight: 800 !important;
+        padding: 10px 30px !important;
+        color: #333 !important;
+        background-color: rgba(255,255,255,0.6) !important;
+        margin: 0 5px !important;
+        border-radius: 10px 10px 0 0 !important;
+        border: 2px solid #2E7D32 !important;
+        border-bottom: none !important;
     }}
-    .stTabs [data-baseweb="tab"] {{
-        height: 50px;
-        border-radius: 8px;
-        background-color: white;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        border: 1px solid #ddd;
-        font-weight: 700;
-        color: #555;
-    }}
-    .stTabs [aria-selected="true"] {{
-        background-color: #1B5E20 !important;
-        color: white !important;
-        border: none !important;
-        box-shadow: 0 4px 6px rgba(27, 94, 32, 0.3) !important;
+    button[data-baseweb="tab"][aria-selected="true"] {{
+        color: #d32f2f !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 -2px 5px rgba(0,0,0,0.1) !important;
     }}
 
-    /* [요청사항 1 반영] 입력창 컨테이너 (st.container(border=True)) 스타일링 */
-    /* Streamlit의 테두리 컨테이너를 특정해서 디자인 */
-    [data-testid="stVerticalBlockBorderWrapper"] {{
-        background-color: #FFFFFF !important; /* 배경 하얀색 통일 */
-        border: 3px solid #1B5E20 !important; /* 테두리 굵게, 진한 녹색 */
-        border-radius: 12px !important;
-        padding: 20px !important;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important; /* 입체감 그림자 */
+    /* 대제목 배경 애니메이션 */
+    @keyframes gradientAnimation {{
+        0% {{ background-position: 0% 50%; }}
+        50% {{ background-position: 100% 50%; }}
+        100% {{ background-position: 0% 50%; }}
     }}
 
-    /* 헤더 컨테이너 스타일 */
     .header-container {{
-        background: white; /* 그라데이션 대신 깔끔한 화이트 추천 (전문성 강조) */
+        background: linear-gradient(-45deg, #E8F5E9, #C8E6C9, #B2DFDB, #E0F2F1, #FFFFFF);
+        background-size: 400% 400%;
+        animation: gradientAnimation 8s ease infinite;
         padding: 40px 30px;
         border-radius: 15px;
         margin-top: 10px;
         margin-bottom: 30px;
         text-align: center;
-        border-left: 10px solid #1B5E20; /* 포인트 컬러 */
-        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        border: 3px solid #2E7D32; 
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
     }}
     
     .main-title {{
-        font-size: 2.5rem;
+        font-size: 2.8rem;
         font-weight: 900;
         color: #1B5E20;
         margin: 0;
-        letter-spacing: -0.5px;
+        letter-spacing: -1px;
+        text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
     }}
     .sub-title {{
-        font-size: 1.0rem;
-        color: #666;
-        margin-top: 8px;
-        font-weight: 500;
-        letter-spacing: 1px;
-        text-transform: uppercase;
+        font-size: 1.1rem;
+        color: #333;
+        margin-top: 10px;
+        font-weight: 600;
     }}
     
     /* Hero Section */
     .hero-container {{
         text-align: center;
-        padding: 80px 20px;
-        background: linear-gradient(rgba(0, 30, 10, 0.7), rgba(0, 30, 10, 0.7)), url('https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=2831&auto=format&fit=crop'); 
+        padding: 100px 20px;
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=2831&auto=format&fit=crop'); 
         background-size: cover;
         background-position: center;
         border-radius: 20px;
         color: white;
         margin-bottom: 40px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        border: 3px solid #2E7D32;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }}
+    .hero-title {{
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+    }}
+    .hero-subtitle {{
+        font-size: 1.5rem;
+        font-weight: 400;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     }}
     
-    /* 일반 텍스트 및 메트릭 스타일 */
-    h1, h2, h3, h4 {{ color: #1B5E20 !important; }}
-    
-    /* 버튼 스타일링 (Primary Button) */
-    .stButton > button {{
-        background-color: #1B5E20 !important;
-        color: white !important;
-        border-radius: 8px !important;
-        border: none !important;
-        font-weight: bold !important;
-        padding: 0.5rem 1rem !important;
-        transition: all 0.3s ease;
-    }}
-    .stButton > button:hover {{
-        background-color: #2E7D32 !important;
-        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4);
-        transform: translateY(-2px);
+    /* 컨테이너 스타일 */
+    div[data-testid="stVerticalBlock"] > div[style*="flex-direction: column;"] > div[data-testid="stVerticalBlock"] {{
+        background-color: #FFFFFF;
+        padding: 20px;
+        border-radius: 15px;
+        border: 3px solid #2E7D32 !important; 
+        box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
     }}
 
-    /* 페르소나 카드 */
+    /* 페르소나 카드 스타일 */
     .persona-card {{
+        display: flex;
+        flex-direction: row; 
+        align-items: center;
         background-color: white;
-        border-radius: 15px;
+        border-radius: 20px;
         padding: 20px;
         margin-bottom: 20px;
-        border: 1px solid #eaeaea;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-        transition: transform 0.2s, box-shadow 0.2s;
-        display: flex; flex-direction: row; align-items: center;
+        border: 1px solid #E0E0E0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        transition: transform 0.2s;
+        min-height: 140px;
     }}
     .persona-card:hover {{
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-        border-color: #1B5E20;
+        transform: translateY(-3px);
+        border-color: #2E7D32;
+        box-shadow: 0 8px 16px rgba(46, 125, 50, 0.15);
     }}
     .persona-img {{
-        width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
-        margin-right: 20px; border: 3px solid #E8F5E9;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 20px;
+        border: 2px solid #E8F5E9;
+        background-color: #F1F8E9;
+        flex-shrink: 0;
+    }}
+    .persona-content {{
+        text-align: left;
+        width: 100%;
+    }}
+    .persona-name {{
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #1B5E20;
+        margin-bottom: 4px;
+    }}
+    .persona-role {{
+        font-size: 0.85rem;
+        color: #555;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background-color: #E8F5E9;
+        padding: 2px 8px;
+        border-radius: 4px;
+        display: inline-block;
+    }}
+    .persona-desc {{
+        font-size: 0.95rem;
+        color: #333;
+        line-height: 1.5;
+        margin-bottom: 12px;
+        font-style: normal;
+        word-break: keep-all; /* 단어 단위 줄바꿈 */
     }}
     .tag-badge {{
-        background-color: #F1F8E9;
-        color: #2E7D32;
-        padding: 3px 8px;
-        border-radius: 4px;
-        font-size: 0.7rem;
-        font-weight: 700;
-        margin-right: 4px;
-        border: 1px solid #C8E6C9;
+        background-color: #E3F2FD;
+        color: #1565C0;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-right: 5px;
+        display: inline-block;
+        margin-top: 2px;
     }}
 </style>
 """, unsafe_allow_html=True)
@@ -356,7 +386,7 @@ tab_home, tab_e1, tab_e2, tab_data = st.tabs([
 # 대제목 헤더 박스
 header_html = f"""
 <div class="header-container">
-    <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
+    <h1 class="main-title">AI 기반 배터리 성능.환경 영향 시뮬레이터</h1>
     <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
 </div>
 """
@@ -378,12 +408,9 @@ with tab_home:
     # Project Overview & Key Features
     col1, col2 = st.columns([1, 1])
     with col1:
-        # 컨테이너를 사용하여 스타일 적용 (흰배경+굵은테두리)
-        with st.container(border=True):
-            st.info("### 🚀 Project Overview\n\n본 프로젝트는 **Google-아주대학교 AI 융합 캡스톤 디자인**의 일환으로 개발되었습니다. 기존의 고비용/장시간이 소요되는 배터리 소재 개발 및 공정 평가를 **AI 기반 가상 시뮬레이션**으로 대체하여 연구 효율성을 극대화합니다.")
+        st.info("### 🚀 Project Overview\n\n본 프로젝트는 **Google-아주대학교 AI 융합 캡스톤 디자인**의 일환으로 개발되었습니다. 기존의 고비용/장시간이 소요되는 배터리 소재 개발 및 공정 평가를 **AI 기반 가상 시뮬레이션**으로 대체하여 연구 효율성을 극대화합니다.")
     with col2:
-        with st.container(border=True):
-            st.success("### 💡 Key Features\n\n* **Engine 1**: AI 기반 가상 수명 예측 시뮬레이터\n* **Engine 2**: 공정 변수(LCA)에 따른 환경 영향 평가\n* **Our Data**: 실제 실험 데이터 기반 정밀 검증")
+        st.success("### 💡 Key Features\n\n* **Engine 1**: AI 기반 배터리 성능 예측 시뮬레이터\n* **Engine 2**: 공정 변수(LCA)에 따른 환경 영향 평가\n* **Our Data**: 실제 실험 데이터 기반 정밀 검증")
 
     st.markdown("---")
     
@@ -399,6 +426,7 @@ with tab_home:
         # 파일명으로 이미지 찾기
         profile_b64 = get_base64_image(member["photo_file"])
         
+        # 이미지가 있으면 로컬 사진, 없으면 기본 아바타 (Fallback)
         if profile_b64:
             img_src = f"data:image/jpeg;base64,{profile_b64}"
         else:
@@ -423,13 +451,12 @@ with tab_home:
 with tab_e1:
     st.markdown(header_html, unsafe_allow_html=True)
     
-    st.subheader("Engine 1. 배터리 수명 가상 시뮬레이터 (Interactive Mode)")
+    st.subheader("Engine 1. 배터리 성능 예측 시뮬레이터 (Interactive Mode)")
     st.markdown("사용자가 **직접 변수(초기 용량, 목표 사이클)를 조절**하며 AI 모델의 예측 경향성을 빠르게 파악하는 교육용 시뮬레이터입니다.")
     st.divider()
     
     col_input, col_view = st.columns([1, 2])
     with col_input:
-        # [요청 1] 좌측 조건 설정 박스: 흰색 배경 + 굵은 테두리
         with st.container(border=True): 
             st.markdown("#### 🔋 샘플 안정도 설정")
             sample_type = st.radio("패턴 선택", ["Perfectly Stable", "Stable", "Unstable"], label_visibility="collapsed", key="t1_radio")
@@ -440,55 +467,51 @@ with tab_e1:
             run_e1 = st.button("가상 예측 실행", type="primary", use_container_width=True)
 
     with col_view:
-        # [요청 1] 결과 박스도 동일한 디자인 적용
-        with st.container(border=True):
-            if run_e1:
-                with st.spinner("AI Analyzing..."):
-                    if sample_type == "Perfectly Stable": decay = 0.5; label = "Perfectly Stable"; color = '#28a745'
-                    elif sample_type == "Stable": decay = 2.5; label = "Stable"; color = '#fd7e14'
-                    else: decay = 8.0; label = "Unstable"; color = '#dc3545'
-                    
-                    cycles, capacity, ce = predict_life_and_ce(decay, init_cap_input, cycle_input)
-                    
-                    fig2, (ax_cap, ax_ce) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
-                    ax_cap.plot(cycles[:100], capacity[:100], 'k-', linewidth=2.5, label='Input Data')
-                    ax_cap.plot(cycles[100:], capacity[100:], '--', color=color, linewidth=2.5, label=f'Prediction ({label})')
-                    ax_cap.set_ylabel("Capacity (mAh/g)", fontweight='bold')
-                    ax_cap.set_title("Discharge Capacity Prediction", fontweight='bold')
-                    ax_cap.legend(); ax_cap.grid(True, alpha=0.3)
-                    
-                    ax_ce.plot(cycles, ce, '-', color='#007bff', alpha=0.8)
-                    ax_ce.set_ylabel("Coulombic Efficiency (%)", fontweight='bold')
-                    ax_ce.set_xlabel("Cycle Number", fontweight='bold')
-                    ax_ce.set_ylim(98.0 if decay > 5.0 else 99.5, 100.1)
-                    ax_ce.grid(True, alpha=0.3)
-                    
-                    st.pyplot(fig2)
-                    
-                    eol_limit = init_cap_input * 0.8
-                    eol_cycle = np.where(capacity < eol_limit)[0]
-                    if len(eol_cycle) > 0:
-                        st.error(f"⚠️ **Warning:** 약 **{eol_cycle[0]} Cycle**에서 수명이 80%({eol_limit:.1f} mAh/g) 이하로 떨어집니다.")
-                    else:
-                        st.success(f"✅ **Stable:** {cycle_input} Cycle까지 안정적입니다.")
-            else:
-                st.info("좌측 패널에서 조건을 설정하고 [가상 예측 실행]을 눌러주세요.")
+        if run_e1:
+            with st.spinner("AI Analyzing..."):
+                if sample_type == "Perfectly Stable": decay = 0.5; label = "Perfectly Stable"; color = '#28a745'
+                elif sample_type == "Stable": decay = 2.5; label = "Stable"; color = '#fd7e14'
+                else: decay = 8.0; label = "Unstable"; color = '#dc3545'
+                
+                cycles, capacity, ce = predict_life_and_ce(decay, init_cap_input, cycle_input)
+                
+                fig2, (ax_cap, ax_ce) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
+                ax_cap.plot(cycles[:100], capacity[:100], 'k-', linewidth=2.5, label='Input Data')
+                ax_cap.plot(cycles[100:], capacity[100:], '--', color=color, linewidth=2.5, label=f'Prediction ({label})')
+                ax_cap.set_ylabel("Capacity (mAh/g)", fontweight='bold')
+                ax_cap.set_title("Discharge Capacity Prediction", fontweight='bold')
+                ax_cap.legend(); ax_cap.grid(True, alpha=0.3)
+                
+                ax_ce.plot(cycles, ce, '-', color='#007bff', alpha=0.8)
+                ax_ce.set_ylabel("Coulombic Efficiency (%)", fontweight='bold')
+                ax_ce.set_xlabel("Cycle Number", fontweight='bold')
+                ax_ce.set_ylim(98.0 if decay > 5.0 else 99.5, 100.1)
+                ax_ce.grid(True, alpha=0.3)
+                
+                st.pyplot(fig2)
+                
+                eol_limit = init_cap_input * 0.8
+                eol_cycle = np.where(capacity < eol_limit)[0]
+                if len(eol_cycle) > 0:
+                    st.error(f"⚠️ **Warning:** 약 **{eol_cycle[0]} Cycle**에서 수명이 80%({eol_limit:.1f} mAh/g) 이하로 떨어집니다.")
+                else:
+                    st.success(f"✅ **Stable:** {cycle_input} Cycle까지 안정적입니다.")
 
 # ------------------------------------------------------------------------------
-# TAB 3: Engine 2
+# TAB 3: Engine 2 
 # ------------------------------------------------------------------------------
 with tab_e2:
     st.markdown(header_html, unsafe_allow_html=True)
     
-    st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA Optimization)")
+    st.subheader("Engine 2. 공정 환경 영향 시뮬레이터 ")
     st.info("💡 **Update:** 본 시뮬레이터는 **화학적 조성(불소 유무)**, **용매의 독성(VOC)**, **끓는점(Boiling Point)**에 기반한 물리학적 계산 모델을 적용했습니다.")
     
     col_input_e2, col_view_e2 = st.columns([1, 2])
     
     with col_input_e2:
-        # [요청 1] 좌측 조건 설정 박스: 흰색 배경 + 굵은 테두리
         with st.container(border=True): 
-            st.markdown("#### 🛠️ 공정 조건 설정 (음극)")
+            st.markdown("#### 🛠️ 공정 조건 설정 ")
+            # SBR Removed
             s_binder = st.selectbox("Binder Type", ["CMC", "CMGG", "GG", "PVDF"]) 
             s_solvent = st.radio("Solvent Type", ["Water", "NMP"])
             st.divider()
@@ -500,71 +523,70 @@ with tab_e2:
             run_e2 = st.button("Engine 2 계산 실행", type="primary", use_container_width=True)
 
     with col_view_e2:
-        with st.container(border=True): # 결과창도 디자인 통일
-            if run_e2:
-                if s_binder == "PVDF" and s_solvent == "Water":
-                    st.error("🚫 **Error: 부적절한 소재 조합입니다 (Invalid Combination)**")
-                    st.markdown("""
-                    **과학적 근거 (Scientific Basis):**
-                    * **PVDF**는 소수성(Hydrophobic) 고분자로 물에 용해되지 않습니다.
-                    * PVDF를 사용하려면 반드시 **NMP**와 같은 유기 용매를 선택해야 합니다.
-                    """)
-                elif s_binder in ["CMC", "CMGG", "GG"] and s_solvent == "NMP":
-                    st.error("🚫 **Error: 부적절한 소재 조합입니다 (Invalid Combination)**")
-                    st.markdown(f"""
-                    **과학적 근거 (Scientific Basis):**
-                    * **{s_binder}**는 수계 바인더(Water-based Binder)로, NMP에 녹지 않습니다.
-                    * {s_binder}를 사용하려면 **Water** 용매를 선택해야 합니다.
-                    """)
-                else:
-                    co2, energy, voc, co2_desc, voc_desc = calculate_lca_impact(
-                        s_binder, s_solvent, s_temp, s_loading, s_time
-                    )
-                    
-                    col1, col2, col3 = st.columns(3)
-                    col1.metric("CO₂ Emission", f"{co2:.4f} kg/m²", delta=co2_desc, delta_color="inverse")
-                    col2.metric("Energy Consumption", f"{energy:.4f} kWh/m²", help="Based on Solvent BP")
-                    col3.metric("VOC Emission", f"{voc:.4f} g/m²", delta=voc_desc, delta_color="inverse")
+        if run_e2:
+            if s_binder == "PVDF" and s_solvent == "Water":
+                st.error("🚫 **Error: 부적절한 소재 조합입니다 (Invalid Combination)**")
+                st.markdown("""
+                **과학적 근거 (Scientific Basis):**
+                * **PVDF**는 소수성(Hydrophobic) 고분자로 물에 용해되지 않습니다.
+                * PVDF를 사용하려면 반드시 **NMP**와 같은 유기 용매를 선택해야 합니다.
+                """)
+            elif s_binder in ["CMC", "CMGG", "GG"] and s_solvent == "NMP":
+                st.error("🚫 **Error: 부적절한 소재 조합입니다 (Invalid Combination)**")
+                st.markdown(f"""
+                **과학적 근거 (Scientific Basis):**
+                * **{s_binder}**는 수계 바인더(Water-based Binder)로, NMP에 녹지 않습니다.
+                * {s_binder}를 사용하려면 **Water** 용매를 선택해야 합니다.
+                """)
+            else:
+                co2, energy, voc, co2_desc, voc_desc = calculate_lca_impact(
+                    s_binder, s_solvent, s_temp, s_loading, s_time
+                )
+                
+                col1, col2, col3 = st.columns(3)
+                col1.metric("CO₂ Emission", f"{co2:.4f} kg/m²", delta=co2_desc, delta_color="inverse")
+                col2.metric("Energy Consumption", f"{energy:.4f} kWh/m²", help="Based on Solvent BP")
+                col3.metric("VOC Emission", f"{voc:.4f} g/m²", delta=voc_desc, delta_color="inverse")
+                
+                st.divider()
+                
+                st.markdown("#### 📋 Scientific Basis & Comparative Analysis")
+                
+                with st.expander("ℹ️ 산출 근거 및 상세 분석 (Click to expand)", expanded=True):
+                    st.markdown("##### 1. VOC & Solvent Toxicity")
+                    if s_solvent == "NMP": st.write("🔴 **NMP (유기용매):** 높은 독성 및 VOC 발생. 배기 정화 설비 필수.")
+                    else: st.write("🟢 **Water (수계용매):** 무독성, VOC 배출 없음 (수증기). 친환경 공정.")
+
+                    st.markdown("##### 2. CO₂ & Binder Chemistry")
+                    if "PVDF" in s_binder: st.write("🔴 **PVDF (불소계):** 높은 GWP(지구온난화지수), 폐기 시 환경 부담 큼.")
+                    else: st.write(f"🟢 **{s_binder} (바이오/수계):** 천연 유래 소재, 낮은 탄소 발자국.")
+
+                    st.markdown("##### 3. Process Energy (Drying)")
+                    bp = 204.1 if s_solvent == "NMP" else 100
+                    st.write(f"Solvent BP: **{bp}°C** vs Drying Temp: **{s_temp}°C**")
                     
                     st.divider()
+                    st.markdown("##### 📊 Impact Comparison (vs NMP/PVDF Reference)")
                     
-                    st.markdown("#### 📋 Scientific Basis & Comparative Analysis")
+                    ref_vals = calculate_lca_impact("PVDF", "NMP", 130, s_loading, 60)[:3]
+                    cur_vals = [co2, energy, voc]
                     
-                    with st.expander("ℹ️ 산출 근거 및 상세 분석 (Click to expand)", expanded=True):
-                        st.markdown("##### 1. VOC & Solvent Toxicity")
-                        if s_solvent == "NMP": st.write("🔴 **NMP (유기용매):** 높은 독성 및 VOC 발생. 배기 정화 설비 필수.")
-                        else: st.write("🟢 **Water (수계용매):** 무독성, VOC 배출 없음 (수증기). 친환경 공정.")
+                    fig, ax = plt.subplots(figsize=(8, 4))
+                    x = np.arange(3); width = 0.35
+                    rects1 = ax.bar(x - width/2, ref_vals, width, label='Ref (NMP/PVDF)', color='#FF8A80', alpha=0.7)
+                    rects2 = ax.bar(x + width/2, cur_vals, width, label='Current Settings', color='#69F0AE', edgecolor='k')
+                    ax.set_xticks(x); ax.set_xticklabels(['CO₂', 'Energy', 'VOC'])
+                    ax.set_ylabel('Impact Value'); ax.legend(); ax.grid(axis='y', linestyle=':')
+                    
+                    def autolabel(rects):
+                        for rect in rects:
+                            h = rect.get_height()
+                            ax.annotate(f'{h:.2f}', xy=(rect.get_x()+rect.get_width()/2, h), xytext=(0,3), textcoords="offset points", ha='center', fontsize=9)
+                    autolabel(rects1); autolabel(rects2)
+                    st.pyplot(fig)
 
-                        st.markdown("##### 2. CO₂ & Binder Chemistry")
-                        if "PVDF" in s_binder: st.write("🔴 **PVDF (불소계):** 높은 GWP(지구온난화지수), 폐기 시 환경 부담 큼.")
-                        else: st.write(f"🟢 **{s_binder} (바이오/수계):** 천연 유래 소재, 낮은 탄소 발자국.")
-
-                        st.markdown("##### 3. Process Energy (Drying)")
-                        bp = 204.1 if s_solvent == "NMP" else 100
-                        st.write(f"Solvent BP: **{bp}°C** vs Drying Temp: **{s_temp}°C**")
-                        
-                        st.divider()
-                        st.markdown("##### 📊 Impact Comparison (vs NMP/PVDF Reference)")
-                        
-                        ref_vals = calculate_lca_impact("PVDF", "NMP", 130, s_loading, 60)[:3]
-                        cur_vals = [co2, energy, voc]
-                        
-                        fig, ax = plt.subplots(figsize=(8, 4))
-                        x = np.arange(3); width = 0.35
-                        rects1 = ax.bar(x - width/2, ref_vals, width, label='Ref (NMP/PVDF)', color='#FF8A80', alpha=0.7)
-                        rects2 = ax.bar(x + width/2, cur_vals, width, label='Current Settings', color='#69F0AE', edgecolor='k')
-                        ax.set_xticks(x); ax.set_xticklabels(['CO₂', 'Energy', 'VOC'])
-                        ax.set_ylabel('Impact Value'); ax.legend(); ax.grid(axis='y', linestyle=':')
-                        
-                        def autolabel(rects):
-                            for rect in rects:
-                                h = rect.get_height()
-                                ax.annotate(f'{h:.2f}', xy=(rect.get_x()+rect.get_width()/2, h), xytext=(0,3), textcoords="offset points", ha='center', fontsize=9)
-                        autolabel(rects1); autolabel(rects2)
-                        st.pyplot(fig)
-
-            else:
-                st.info("좌측 패널에서 공정 조건을 설정하고 [Engine 2 계산 실행]을 눌러주세요.")
+        else:
+            st.info("좌측 패널에서 공정 조건을 설정하고 [Engine 2 계산 실행]을 눌러주세요.")
 
 # ------------------------------------------------------------------------------
 # TAB 4: Our Data
@@ -573,7 +595,7 @@ with tab_data:
     st.markdown(header_html, unsafe_allow_html=True)
     
     st.subheader("Our Data. 실제 실험 데이터 검증 (Ground Truth Validation)")
-    st.markdown("이 탭에서는 **Team 스물다섯이 직접 수행한 실험 데이터**를 기반으로 Engine 1의 예측 정확도를 검증합니다.")
+    st.markdown(" **Team 스물다섯이 직접 수행한 실험 데이터**를 기반으로 Engine 1의 예측 정확도를 검증합니다.")
     st.divider()
 
     df_results = load_real_case_data()
@@ -582,7 +604,6 @@ with tab_data:
     else:
         col_case_input, col_case_view = st.columns([1, 2])
         with col_case_input:
-            # [요청 1] 좌측 조건 설정 박스: 흰색 배경 + 굵은 테두리
             with st.container(border=True): 
                 st.markdown("#### 📂 실험 케이스 선택")
                 option = st.radio("데이터 선택:", ["초고속 충전 (Sample A)", "고속 충전 (Sample B)", "저속 충전 (Sample C)"], key="t2_radio")
@@ -592,17 +613,16 @@ with tab_data:
                 else: key = "Sample C"; st.error("🚫 **Unstable** (Abnormal)")
 
         with col_case_view:
-            with st.container(border=True): # 결과창도 디자인 통일
-                data = df_results[df_results['Sample_Type'] == key]
-                if not data.empty:
-                    hist = data[data['Data_Type'] == 'History']
-                    pred = data[data['Data_Type'] == 'Prediction']
-                    
-                    fig, ax = plt.subplots(figsize=(10, 5))
-                    ax.plot(hist['Cycle'], hist['Capacity'], 'o-', color='black', alpha=0.7, label='History')
-                    ax.plot(pred['Cycle'], pred['Capacity'], '--', color='#dc3545', linewidth=2, label='Prediction')
-                    ax.set_title(f"Model Validation - {key}", fontweight='bold')
-                    ax.set_ylabel("Capacity (mAh/g)"); ax.grid(True, alpha=0.3); ax.legend()
-                    st.pyplot(fig)
-                    
-                    st.info(f"📊 **AI Report**: 최종 용량 **{pred['Capacity'].iloc[-1]:.2f} mAh/g** 예측됨.")
+            data = df_results[df_results['Sample_Type'] == key]
+            if not data.empty:
+                hist = data[data['Data_Type'] == 'History']
+                pred = data[data['Data_Type'] == 'Prediction']
+                
+                fig, ax = plt.subplots(figsize=(10, 5))
+                ax.plot(hist['Cycle'], hist['Capacity'], 'o-', color='black', alpha=0.7, label='History')
+                ax.plot(pred['Cycle'], pred['Capacity'], '--', color='#dc3545', linewidth=2, label='Prediction')
+                ax.set_title(f"Model Validation - {key}", fontweight='bold')
+                ax.set_ylabel("Capacity (mAh/g)"); ax.grid(True, alpha=0.3); ax.legend()
+                st.pyplot(fig)
+                
+                st.info(f"📊 **AI Report**: 최종 용량 **{pred['Capacity'].iloc[-1]:.2f} mAh/g** 예측됨.")
