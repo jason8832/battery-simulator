@@ -40,7 +40,7 @@ tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-lo
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
-# 2. 상단 배너 배경 (Background.jpeg)
+# 2. 상단 배경 이미지 (Background.jpeg) 처리 - 기존 유지
 bg_file = "Background.jpeg"
 bg_base64 = get_base64_image(bg_file)
 
@@ -52,25 +52,25 @@ if bg_base64:
         background-repeat: no-repeat;
     """
 else:
-    header_bg_style = "background-color: #BBDEFB;" # 이미지 없을 시 대체색
+    header_bg_style = "background-color: #BBDEFB;"
 
 # ------------------------------------------------------------------------------
-# [CSS 스타일링] - 요청사항 반영 (3D 모션 배경 + 굵은 테두리)
+# 3. CSS 스타일링 (요청사항 반영)
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
-    /* 폰트 설정 */
+    /* 기본 폰트 설정 */
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
     html, body, [class*="css"] {{
         font-family: 'Noto Sans KR', 'Helvetica Neue', sans-serif;
     }}
 
-    /* 전체 배경 */
+    /* 전체 배경색 */
     .stApp {{
         background-color: #F1F8E9; 
     }}
     
-    /* 1. 상단 로고 바 (Background.jpeg 적용) */
+    /* 1. 상단 로고 바 (Background.jpeg 유지) */
     .top-header-bar {{
         {header_bg_style}
         display: flex;
@@ -80,45 +80,44 @@ st.markdown(f"""
         margin-top: -30px;
         margin-bottom: 20px;
         border-radius: 0 0 20px 20px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        border-bottom: 3px solid #2E7D32; /* 상단바 하단도 굵게 */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-bottom: 3px solid #2E7D32; /* 상단바 하단도 굵게 처리 */
     }}
     
     .logo-group-right {{
         display: flex;
         align-items: center;
         gap: 20px;
-        background-color: rgba(255, 255, 255, 0.85);
-        padding: 8px 18px;
-        border-radius: 12px;
-        border: 2px solid #2E7D32; /* 로고 박스 테두리 굵게 */
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 5px 15px;
+        border-radius: 10px;
+        border: 2px solid #2E7D32; /* 로고 박스도 굵은 테두리 */
     }}
 
-    /* 로고 스타일 */
     .top-left-logo {{ height: 120px; width: auto; object-fit: contain; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3)); }}
     .top-right-logo {{ height: 35px; width: auto; object-fit: contain; transition: transform 0.3s; }}
     .top-right-logo:hover {{ transform: scale(1.1); }}
     .logo-separator {{ width: 2px; height: 20px; background-color: #333; margin: 0 5px; }}
 
-    /* 2. 탭바 스타일 (굵은 테두리 적용) */
+    /* 2. 탭바 스타일 */
     button[data-baseweb="tab"] {{
         font-size: 18px !important;
         font-weight: 800 !important;
         padding: 10px 30px !important;
         color: #333 !important;
-        background-color: rgba(255,255,255,0.7) !important;
+        background-color: rgba(255,255,255,0.6) !important;
         margin: 0 5px !important;
-        border-radius: 12px 12px 0 0 !important;
-        border: 2px solid #81C784 !important; /* 탭 테두리 */
+        border-radius: 10px 10px 0 0 !important;
+        border: 2px solid #2E7D32 !important; /* 탭 테두리 굵게 */
         border-bottom: none !important;
     }}
     button[data-baseweb="tab"][aria-selected="true"] {{
-        color: #FFFFFF !important;
-        background-color: #2E7D32 !important; /* 선택된 탭 진한 녹색 */
-        border: 2px solid #1B5E20 !important;
+        color: #d32f2f !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 -2px 5px rgba(0,0,0,0.1) !important;
     }}
 
-    /* [핵심 1] 대제목 배경 (3D 모션 애니메이션 - Aurora Tech Effect) */
+    /* [요청 1] 대제목 배경 3D 모션 애니메이션 (Aurora Gradient) */
     @keyframes gradientAnimation {{
         0% {{ background-position: 0% 50%; }}
         50% {{ background-position: 100% 50%; }}
@@ -126,18 +125,18 @@ st.markdown(f"""
     }}
 
     .header-container {{
-        /* 배경: 친환경(Green) + 기술(Blue/Teal) 그라데이션 애니메이션 */
+        /* 친환경(Green) + 에너지(Blue/Teal) 그라데이션 애니메이션 */
         background: linear-gradient(-45deg, #E8F5E9, #C8E6C9, #B2DFDB, #E0F2F1, #FFFFFF);
         background-size: 400% 400%;
-        animation: gradientAnimation 10s ease infinite;
+        animation: gradientAnimation 8s ease infinite;
         
         padding: 40px 30px;
-        border-radius: 20px;
+        border-radius: 15px;
         margin-top: 10px;
         margin-bottom: 30px;
         text-align: center;
         
-        /* [핵심 2] 굵은 테두리 적용 */
+        /* [요청 2] 굵은 테두리 적용 */
         border: 3px solid #2E7D32; 
         box-shadow: 0 8px 16px rgba(0,0,0,0.15);
     }}
@@ -145,13 +144,13 @@ st.markdown(f"""
     .main-title {{
         font-size: 2.8rem;
         font-weight: 900;
-        color: #1B5E20; /* 텍스트 진한 녹색 */
+        color: #1B5E20; /* 텍스트 진한 녹색으로 변경하여 가독성 확보 */
         margin: 0;
-        text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
         letter-spacing: -1px;
+        text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
     }}
     .sub-title {{
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: #333;
         margin-top: 10px;
         font-weight: 600;
@@ -161,39 +160,37 @@ st.markdown(f"""
     .hero-container {{
         text-align: center;
         padding: 100px 20px;
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=2831&auto=format&fit=crop'); 
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=2831&auto=format&fit=crop'); 
         background-size: cover;
         background-position: center;
         border-radius: 20px;
+        color: white;
         margin-bottom: 40px;
         
         /* 굵은 테두리 */
         border: 3px solid #2E7D32;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     }}
     .hero-title {{
         font-size: 3.5rem;
-        font-weight: 900;
+        font-weight: 800;
         margin-bottom: 20px;
-        text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
-        color: white;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
     }}
     .hero-subtitle {{
         font-size: 1.5rem;
-        font-weight: 500;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
-        color: #f1f1f1;
+        font-weight: 400;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     }}
     
-    /* [핵심 2] 모든 입력창/결과창 컨테이너 테두리 굵게 */
-    /* Streamlit의 st.container(border=True) 스타일 오버라이딩 */
+    /* [요청 2] 모든 입력창/결과창 컨테이너 테두리 굵게 */
     div[data-testid="stVerticalBlock"] > div[style*="flex-direction: column;"] > div[data-testid="stVerticalBlock"] {{
         background-color: #FFFFFF;
         padding: 20px;
         border-radius: 15px;
         
         /* 굵은 테두리 적용 (진한 녹색) */
-        border: 2px solid #2E7D32 !important; 
+        border: 3px solid #2E7D32 !important; 
         box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
     }}
 
@@ -256,7 +253,7 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
 
 
 # ==============================================================================
-# [UI 구성] 1. 상단 로고 바
+# [UI 구성] 1. 상단 로고 바 (Background.jpeg 적용)
 # ==============================================================================
 st.markdown(f"""
 <div class="top-header-bar">
@@ -282,7 +279,7 @@ tab_home, tab_e1, tab_e2, tab_data = st.tabs([
     "  Our Data  "
 ])
 
-# [변경] 대제목 헤더 박스 (3D 애니메이션 배경 적용됨)
+# [변경] 대제목 헤더 박스 (3D 애니메이션 배경 + 굵은 테두리)
 header_html = f"""
 <div class="header-container">
     <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
@@ -305,7 +302,7 @@ with tab_home:
 
     col1, col2 = st.columns([1, 1])
     with col1:
-        st.info("### 🚀 Project Overview\n\n본 프로젝트는 **Google-아주대학교 AI 융합 캡스톤 디자인**의 일환으로 개발되었습니다. 기존의 고비용/장시간이 소요되는 배터리 소재 개발 및 공정 평가를 **AI 기반 가상 시뮬레이션**으로 대체하여 연구 효율성을 극대화합니다.")
+        st.info("### 🚀 Project Overview\n\n본 프로젝트는 **Google-아주대학교 AI 융합 캡스톤 디자인**의 일환으로 개발되었습니다. 기존의 고비용/장시간이 소요되는 배터리 소재 개발 및 공정 평가를 **AI 기반 가상 시뮬레이션**으로 대체하여 연구 효율성을 극대화하고 환경 영향을 최소화합니다.")
     with col2:
         st.success("### 💡 Key Features\n\n* **Engine 1**: AI 기반 가상 수명 예측 시뮬레이터\n* **Engine 2**: 공정 변수(LCA)에 따른 환경 영향 평가\n* **Our Data**: 실제 실험 데이터 기반 정밀 검증")
 
@@ -321,7 +318,7 @@ with tab_e1:
     
     col_input, col_view = st.columns([1, 2])
     with col_input:
-        with st.container(border=True): # 이 박스의 테두리가 굵게(Deep Green) 표시됩니다.
+        with st.container(border=True): # 굵은 테두리 적용됨
             st.markdown("#### 🔋 샘플 안정도 설정")
             sample_type = st.radio("패턴 선택", ["Perfectly Stable", "Stable", "Unstable"], label_visibility="collapsed", key="t1_radio")
             st.divider()
