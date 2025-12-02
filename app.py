@@ -10,43 +10,43 @@ from sklearn.ensemble import RandomForestRegressor
 st.set_page_config(page_title="Battery AI Simulator", layout="wide", page_icon="🔋")
 
 # ==============================================================================
-# [사용자 설정] 팀원 정보 편집 (사진 파일명을 여기서 직접 지정하세요!)
+# [사용자 설정] 팀원 정보 편집 (수정됨)
 # ==============================================================================
-# 주의: 파일명(Profile1.jpeg)의 대소문자를 정확히 맞춰주세요.
+# 사진 파일명(대소문자 구분)을 정확히 입력해주세요.
 team_members = [
     {
         "name": "이하영",
-        "role": "Team Leader",
-        "desc": "\"사용자 친화적 UI/UX 디자인 웹 구현 및 프로젝트 총괄 \"",
-        "tags": ["#PM", "#AI_Modeling"],
-        "photo_file": "Profile1.jpeg"  # 여기에 원하는 파일명을 입력하세요
+        "role": "TEAM LEADER",
+        "desc": "프로젝트 총괄 기획 및 웹사이트 UI/UX 디자인",
+        "tags": ["#PM", "#Design"],
+        "photo_file": "Profile1.jpeg"
     },
     {
         "name": "정회권",
-        "role": "Frontend Developer",
-        "desc": "\"배터리 수명 예측 알고리즘 설계 및 시뮬레이션 서버 구축\"",
-        "tags": ["#Streamlit", "#UI/UX"],
+        "role": "DEVELOPER",
+        "desc": "시뮬레이션 알고리즘 설계·코딩 및 웹사이트 구현",
+        "tags": ["#Algorithm", "#Web_Dev"],
         "photo_file": "Profile3.jpeg"
     },
     {
         "name": "신동하",
-        "role": "Data Analyst",
-        "desc": "\"배터리 실험 데이터 전처리 및 시각화 분석\"",
-        "tags": ["#Data_Analysis", "#Visualization"],
+        "role": "DATA ANALYST",
+        "desc": "배터리 실험 결과 해석 및 시뮬레이션 데이터 분석",
+        "tags": ["#Data_Analysis", "#Insight"],
         "photo_file": "Profile5.jpeg"
     },
     {
         "name": "권현정",
-        "role": "Chemical Engineer",
-        "desc": "\"친환경 바인더 소재 화학적 검증 및 배터리 실험\"",
-        "tags": ["#Battery_Material", "#LCA"],
+        "role": "CHEMICAL RESEARCHER",
+        "desc": "친환경 소재 바인더 화학적 검증 및 배터리 성능 실험",
+        "tags": ["#Chemistry", "#Experiment"],
         "photo_file": "Profile4.jpeg"
     },
     {
         "name": "박재찬",
-        "role": "Backend Developer",
-        "desc": "\"배터리 실험 및 배터리 수명 예측 알고리즘 최적화\"",
-        "tags": ["#Server", "#Optimization"],
+        "role": "RESEARCHER & ANALYST",
+        "desc": "배터리 실험 수행 및 시뮬레이션 데이터 분석",
+        "tags": ["#Experiment", "#Data_Analysis"],
         "photo_file": "Profile2.jpeg"
     }
 ]
@@ -55,6 +55,7 @@ team_members = [
 # [0] 디자인 & CSS 설정
 # ==============================================================================
 
+# 현재 파일(app.py)이 있는 절대 경로 확인
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 def get_base64_image(filename):
@@ -247,8 +248,8 @@ st.markdown(f"""
         box-shadow: 0 8px 16px rgba(46, 125, 50, 0.15);
     }}
     .persona-img {{
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
         object-fit: cover;
         margin-right: 20px;
@@ -261,35 +262,41 @@ st.markdown(f"""
         width: 100%;
     }}
     .persona-name {{
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         font-weight: 800;
-        color: #2E7D32;
+        color: #1B5E20;
         margin-bottom: 4px;
     }}
     .persona-role {{
-        font-size: 0.8rem;
-        color: #777;
+        font-size: 0.85rem;
+        color: #555;
         font-weight: 700;
         margin-bottom: 8px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        background-color: #E8F5E9;
+        padding: 2px 8px;
+        border-radius: 4px;
+        display: inline-block;
     }}
     .persona-desc {{
         font-size: 0.95rem;
         color: #333;
-        line-height: 1.4;
+        line-height: 1.5;
         margin-bottom: 12px;
-        font-style: italic;
+        font-style: normal;
+        word-break: keep-all; /* 단어 단위 줄바꿈 */
     }}
     .tag-badge {{
-        background-color: #E8F5E9;
-        color: #1B5E20;
+        background-color: #E3F2FD;
+        color: #1565C0;
         padding: 4px 8px;
         border-radius: 6px;
         font-size: 0.75rem;
         font-weight: 600;
         margin-right: 5px;
         display: inline-block;
+        margin-top: 2px;
     }}
 </style>
 """, unsafe_allow_html=True)
@@ -300,6 +307,7 @@ st.markdown(f"""
 @st.cache_data
 def load_real_case_data():
     try:
+        current_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(current_dir, "engine1_output.csv")
         df = pd.read_csv(file_path)
         return df
@@ -333,7 +341,7 @@ def calculate_lca_impact(binder_type, solvent_type, drying_temp, loading_mass, d
 
     if binder_type == "PVDF":
         co2_factor = 0.45; chem_formula = "-(C₂H₂F₂)ₙ-"; co2_desc = f"High ({chem_formula})"
-    elif binder_type in ["CMGG", "GG", "CMC"]: # SBR Removed
+    elif binder_type in ["CMGG", "GG", "CMC"]: 
         co2_factor = 0.12; chem_formula = "Bio-based (C,H,O)"; co2_desc = f"Low ({chem_formula})"
     else:
         co2_factor = 0.3; co2_desc = "Medium"
@@ -378,7 +386,7 @@ tab_home, tab_e1, tab_e2, tab_data = st.tabs([
 # 대제목 헤더 박스
 header_html = f"""
 <div class="header-container">
-    <h1 class="main-title">AI 기반 배터리 소재/공정 최적화 시뮬레이터</h1>
+    <h1 class="main-title">AI 기반 배터리 성능.환경 영향 시뮬레이터</h1>
     <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
 </div>
 """
@@ -402,29 +410,26 @@ with tab_home:
     with col1:
         st.info("### 🚀 Project Overview\n\n본 프로젝트는 **Google-아주대학교 AI 융합 캡스톤 디자인**의 일환으로 개발되었습니다. 기존의 고비용/장시간이 소요되는 배터리 소재 개발 및 공정 평가를 **AI 기반 가상 시뮬레이션**으로 대체하여 연구 효율성을 극대화합니다.")
     with col2:
-        st.success("### 💡 Key Features\n\n* **Engine 1**: AI 기반 가상 수명 예측 시뮬레이터\n* **Engine 2**: 공정 변수(LCA)에 따른 환경 영향 평가\n* **Our Data**: 실제 실험 데이터 기반 정밀 검증")
+        st.success("### 💡 Key Features\n\n* **Engine 1**: AI 기반 배터리 성능 예측 시뮬레이터\n* **Engine 2**: 공정 변수(LCA)에 따른 환경 영향 평가\n* **Our Data**: 실제 실험 데이터 기반 정밀 검증")
 
     st.markdown("---")
     
-    # [NEW] Team Member Section (업데이트됨)
+    # [Team Member Section]
     st.markdown("<h3 style='color: #1B5E20; margin-bottom: 20px;'>👥 Meet Team 25</h3>", unsafe_allow_html=True)
     
-    # 2열 그리드로 배치
     cols = st.columns(2) 
     
     for i, member in enumerate(team_members):
         col_idx = i % 2
         tags_html = "".join([f'<span class="tag-badge">{tag}</span>' for tag in member['tags']])
         
-        # 사용자가 설정한 사진 파일명 사용
-        profile_filename = member.get("photo_file", "") # photo_file 키가 없으면 빈 문자열
-        profile_b64 = get_base64_image(profile_filename)
+        # 파일명으로 이미지 찾기
+        profile_b64 = get_base64_image(member["photo_file"])
         
-        # 이미지가 있으면 로컬 사진, 없으면 기본 아바타 (DiceBear)
+        # 이미지가 있으면 로컬 사진, 없으면 기본 아바타 (Fallback)
         if profile_b64:
             img_src = f"data:image/jpeg;base64,{profile_b64}"
         else:
-            # 안전장치: 파일이 없을 때 랜덤 시드 아바타 표시
             img_src = f"https://api.dicebear.com/7.x/avataaars/svg?seed={member['name']}"
 
         with cols[col_idx]:
@@ -446,7 +451,7 @@ with tab_home:
 with tab_e1:
     st.markdown(header_html, unsafe_allow_html=True)
     
-    st.subheader("Engine 1. 배터리 수명 가상 시뮬레이터 (Interactive Mode)")
+    st.subheader("Engine 1. 배터리 성능 예측 시뮬레이터 (Interactive Mode)")
     st.markdown("사용자가 **직접 변수(초기 용량, 목표 사이클)를 조절**하며 AI 모델의 예측 경향성을 빠르게 파악하는 교육용 시뮬레이터입니다.")
     st.divider()
     
@@ -493,19 +498,20 @@ with tab_e1:
                     st.success(f"✅ **Stable:** {cycle_input} Cycle까지 안정적입니다.")
 
 # ------------------------------------------------------------------------------
-# TAB 3: Engine 2 (SBR 제거됨)
+# TAB 3: Engine 2 
 # ------------------------------------------------------------------------------
 with tab_e2:
     st.markdown(header_html, unsafe_allow_html=True)
     
-    st.subheader("Engine 2. 공정 변수에 따른 환경 영향 예측 (LCA Optimization)")
+    st.subheader("Engine 2. 공정 환경 영향 시뮬레이터 ")
     st.info("💡 **Update:** 본 시뮬레이터는 **화학적 조성(불소 유무)**, **용매의 독성(VOC)**, **끓는점(Boiling Point)**에 기반한 물리학적 계산 모델을 적용했습니다.")
     
     col_input_e2, col_view_e2 = st.columns([1, 2])
     
     with col_input_e2:
         with st.container(border=True): 
-            st.markdown("#### 🛠️ 공정 조건 설정 (음극)")
+            st.markdown("#### 🛠️ 공정 조건 설정 ")
+            # SBR Removed
             s_binder = st.selectbox("Binder Type", ["CMC", "CMGG", "GG", "PVDF"]) 
             s_solvent = st.radio("Solvent Type", ["Water", "NMP"])
             st.divider()
@@ -589,7 +595,7 @@ with tab_data:
     st.markdown(header_html, unsafe_allow_html=True)
     
     st.subheader("Our Data. 실제 실험 데이터 검증 (Ground Truth Validation)")
-    st.markdown("이 탭에서는 **Team 스물다섯이 직접 수행한 실험 데이터**를 기반으로 Engine 1의 예측 정확도를 검증합니다.")
+    st.markdown(" **Team 스물다섯이 직접 수행한 실험 데이터**를 기반으로 Engine 1의 예측 정확도를 검증합니다.")
     st.divider()
 
     df_results = load_real_case_data()
