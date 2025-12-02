@@ -98,7 +98,7 @@ else:
     header_bg_style = "background-color: #BBDEFB;"
 
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링
+# 3. CSS 스타일링 (수정됨)
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
@@ -108,8 +108,18 @@ st.markdown(f"""
         font-family: 'Noto Sans KR', 'Helvetica Neue', sans-serif;
     }}
 
+    /* [수정 2] 전체 배경색: 기존 연두색 대신 차분하고 세련된 세이지 그레이(Sage Grey) 톤 적용 */
     .stApp {{
-        background-color: #F1F8E9; 
+        background-color: #D8E0D8; 
+    }}
+    
+    /* [수정 1] 좌측 조건 설정 네모칸 (container(border=True)) 스타일링 */
+    div[data-testid="stVerticalBlockBorderWrapper"] {{
+        background-color: #FFFFFF !important;  /* 배경 하얀색 통일 */
+        border: 3px solid #1B5E20 !important;  /* 테두리 굵기 3px, 진한 녹색 */
+        border-radius: 12px !important;
+        padding: 20px !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
     }}
     
     /* 상단 로고 바 */
@@ -124,6 +134,7 @@ st.markdown(f"""
         border-radius: 0 0 20px 20px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         border-bottom: 3px solid #2E7D32;
+        background-color: white; /* 헤더 배경 확실하게 */
     }}
     
     .logo-group-right {{
@@ -219,7 +230,7 @@ st.markdown(f"""
         text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     }}
     
-    /* 컨테이너 스타일 */
+    /* 컨테이너 스타일 - 기존 코드 유지하되 위에 정의한 BorderWrapper가 우선 적용됨 */
     div[data-testid="stVerticalBlock"] > div[style*="flex-direction: column;"] > div[data-testid="stVerticalBlock"] {{
         background-color: #FFFFFF;
         padding: 20px;
