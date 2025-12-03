@@ -108,7 +108,7 @@ st.markdown(f"""
 
     /* 전체 배경색: 차분한 세이지 그레이 */
     .stApp {{
-        background-color: #D8E0D8; 
+        background-color: #DAE0DD; 
     }}
     
     /* 좌측 조건 설정 네모칸 강제 스타일링 */
