@@ -82,7 +82,7 @@ tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-lo
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
-# 2. 상단 배경 설정 (요청하신 색상 적용)
+# 2. 상단 배경 설정
 header_bg_style = "background-color: #B1B6B0;"
     
 # ------------------------------------------------------------------------------
@@ -101,16 +101,17 @@ st.markdown(f"""
         background-color: #DAE0DD; 
     }}
     
-    /* 좌측 조건 설정 네모칸 및 테두리 강제 스타일링 (수정됨) */
-    [data-testid="stVerticalBlockBorderWrapper"] {{
+    /* [수정됨] 조건 설정 네모칸(Border Wrapper) 강력 스타일링 */
+    div[data-testid="stVerticalBlockBorderWrapper"] {{
         background-color: #B1B6B0 !important;  /* 요청하신 배경색 적용 */
-        border: 10px solid #1B5E20 !important;  /* 테두리 굵기 증가 (3px -> 5px) */
+        border: 5px solid #1B5E20 !important;  /* 테두리 굵기 5px */
         border-radius: 15px !important;       
         padding: 20px !important;              
         box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
     }}
     
-    [data-testid="stVerticalBlockBorderWrapper"] > div {{
+    /* 내부 요소가 배경을 가리지 않도록 투명 처리 */
+    div[data-testid="stVerticalBlockBorderWrapper"] > div {{
         background-color: transparent !important; 
     }}
 
@@ -135,7 +136,7 @@ st.markdown(f"""
         background-color: rgba(255, 255, 255, 0.7);
         padding: 5px 15px;
         border-radius: 10px;
-        border: none; /* 요청하신 대로 테두리 제거 */
+        border: none !important; /* [수정됨] 테두리 제거 */
     }}
 
     .top-left-logo {{ height: 120px; width: auto; object-fit: contain; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3)); }}
@@ -444,7 +445,7 @@ with tab_e1:
     
     col_input, col_view = st.columns([1, 2])
     with col_input:
-        # [확인용] CSS에서 data-testid="stVerticalBlockBorderWrapper"를 강제로 스타일링 중입니다.
+        # [확인용] CSS에서 div[data-testid="stVerticalBlockBorderWrapper"]를 강제로 스타일링 중입니다.
         with st.container(border=True): 
             st.markdown("#### 🔋 샘플 안정도 설정")
             sample_type = st.radio("패턴 선택", ["Perfectly Stable", "Stable", "Unstable"], label_visibility="collapsed", key="t1_radio")
