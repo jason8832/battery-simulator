@@ -1,415 +1,467 @@
 ﻿Sample_Type,Cycle,Capacity,Data_Type
-고속 충전,1,197.26,History
-고속 충전,2,197.8,History
-고속 충전,3,195.14,History
-고속 충전,4,190.55,History
-고속 충전,5,185.49,History
-고속 충전,6,179.76,History
-고속 충전,7,173.44,History
-고속 충전,8,167.83,History
-고속 충전,9,162.4,History
-고속 충전,10,157.01,History
-고속 충전,11,151.99,History
-고속 충전,12,146.73,History
-고속 충전,13,141.9,History
-고속 충전,14,137.36,History
-고속 충전,15,132.63,History
-고속 충전,16,124.24,History
-고속 충전,17,124.51,History
-고속 충전,18,121.15,History
-고속 충전,19,118.53,History
-고속 충전,20,115.37,History
-고속 충전,21,113.37,History
-고속 충전,22,111.4,History
-고속 충전,23,109.7,History
-고속 충전,24,108.51,History
-고속 충전,25,107.61,History
-고속 충전,26,107.02,History
-고속 충전,27,106.82,History
-고속 충전,28,106.7,History
-고속 충전,29,106.62,History
-고속 충전,30,107.75,History
-고속 충전,31,109.16,History
-고속 충전,32,110.5,History
-고속 충전,33,111.96,History
-고속 충전,34,114.13,History
-고속 충전,35,118.06,History
-고속 충전,36,121.41,History
-고속 충전,37,122.08,History
-고속 충전,38,124.01,History
-고속 충전,39,126.91,History
-고속 충전,40,129.14,History
-고속 충전,41,132.57,History
-고속 충전,42,134.71,History
-고속 충전,43,135.93,History
-고속 충전,44,138.86,History
-고속 충전,45,138.91,History
-고속 충전,46,142.83,History
-고속 충전,47,143.82,History
-고속 충전,48,143.66,History
-고속 충전,49,145.26,History
-고속 충전,50,148.9,History
-고속 충전,51,150.07,History
-고속 충전,52,138.31,History
-고속 충전,53,152.26,History
-고속 충전,54,155.44,History
-고속 충전,55,156.31,History
-고속 충전,56,157.83,History
-고속 충전,57,158.84,History
-고속 충전,58,160.32,History
-고속 충전,59,161.14,History
-고속 충전,60,163.39,History
-고속 충전,61,164.24,History
-고속 충전,62,165.22,History
-고속 충전,63,167.56,History
-고속 충전,64,168.51,History
-고속 충전,65,169.5,History
-고속 충전,66,170.58,History
-고속 충전,67,171.91,History
-고속 충전,68,173.14,History
-고속 충전,69,174.46,History
-고속 충전,70,175.66,History
-고속 충전,71,176.77,History
-고속 충전,72,177.81,History
-고속 충전,73,179.15,History
-고속 충전,74,180.52,History
-고속 충전,75,181.86,History
-고속 충전,76,182.16,History
-고속 충전,77,183.1,History
-고속 충전,78,183.79,History
-고속 충전,79,185.29,History
-고속 충전,80,186.4,History
-고속 충전,81,186.5,History
-고속 충전,82,187.07,History
-고속 충전,83,187.65,History
-고속 충전,84,188.49,History
-고속 충전,85,189.05,History
-고속 충전,86,189.62,History
-고속 충전,87,190.31,History
-고속 충전,88,191.33,History
-고속 충전,89,192.25,History
-고속 충전,90,193.04,History
-고속 충전,91,194.03,History
-고속 충전,92,195.03,History
-고속 충전,93,196.3,History
-고속 충전,94,197.43,History
-고속 충전,95,198.36,History
-고속 충전,96,199.57,History
-고속 충전,97,200.49,History
-고속 충전,98,201.09,History
-고속 충전,99,202.43,History
-고속 충전,100,203.41,History
-고속 충전,101,120.28987847289014,Prediction
-고속 충전,102,120.10663222909115,Prediction
-고속 충전,103,120.10374643389865,Prediction
-고속 충전,104,120.29979884623563,Prediction
-고속 충전,105,120.23091042707297,Prediction
-고속 충전,106,120.26579403584604,Prediction
-고속 충전,107,120.26191850770766,Prediction
-고속 충전,108,120.24644275923102,Prediction
-고속 충전,109,119.97507279912374,Prediction
-고속 충전,110,119.98596007948571,Prediction
-고속 충전,111,120.07430171507191,Prediction
-고속 충전,112,120.13944641456219,Prediction
-고속 충전,113,120.13126197169399,Prediction
-고속 충전,114,120.29551077763664,Prediction
-고속 충전,115,120.42431578949537,Prediction
-고속 충전,116,120.35206852710367,Prediction
-고속 충전,117,120.33462815301847,Prediction
-고속 충전,118,120.43374225316248,Prediction
-고속 충전,119,120.47959413327571,Prediction
-고속 충전,120,120.55273404541722,Prediction
-고속 충전,121,120.655357025052,Prediction
-고속 충전,122,120.77699538378691,Prediction
-고속 충전,123,120.7876431327145,Prediction
-고속 충전,124,120.78827460592714,Prediction
-고속 충전,125,120.79938217443187,Prediction
-고속 충전,126,120.77172707054125,Prediction
-고속 충전,127,120.78728458277187,Prediction
-고속 충전,128,120.79892964995756,Prediction
-고속 충전,129,120.80774345308801,Prediction
-고속 충전,130,120.95245000123796,Prediction
-고속 충전,131,120.71095594025611,Prediction
-고속 충전,132,120.69293600644481,Prediction
-고속 충전,133,121.07842335174192,Prediction
-고속 충전,134,121.07765260859004,Prediction
-고속 충전,135,121.05622780368493,Prediction
-고속 충전,136,121.05624184750015,Prediction
-고속 충전,137,121.07051918365264,Prediction
-고속 충전,138,121.12484912737794,Prediction
-초고속 충전,1,59.55,History
-초고속 충전,2,61.4,History
-초고속 충전,3,61.0,History
-초고속 충전,4,59.8,History
-초고속 충전,5,58.42,History
-초고속 충전,6,56.79,History
-초고속 충전,7,54.71,History
-초고속 충전,8,52.49,History
-초고속 충전,9,50.44,History
-초고속 충전,10,48.17,History
-초고속 충전,11,45.99,History
-초고속 충전,12,43.71,History
-초고속 충전,13,41.36,History
-초고속 충전,14,39.01,History
-초고속 충전,15,36.93,History
-초고속 충전,16,34.85,History
-초고속 충전,17,32.83,History
-초고속 충전,18,30.81,History
-초고속 충전,19,29.0,History
-초고속 충전,20,27.36,History
-초고속 충전,21,26.02,History
-초고속 충전,22,24.8,History
-초고속 충전,23,23.93,History
-초고속 충전,24,23.08,History
-초고속 충전,25,22.5,History
-초고속 충전,26,21.73,History
-초고속 충전,27,21.46,History
-초고속 충전,28,21.39,History
-초고속 충전,29,21.5,History
-초고속 충전,30,21.6,History
-초고속 충전,31,21.95,History
-초고속 충전,32,22.08,History
-초고속 충전,33,22.6,History
-초고속 충전,34,23.37,History
-초고속 충전,35,24.07,History
-초고속 충전,36,24.83,History
-초고속 충전,37,25.77,History
-초고속 충전,38,26.77,History
-초고속 충전,39,27.75,History
-초고속 충전,40,28.8,History
-초고속 충전,41,29.88,History
-초고속 충전,42,31.1,History
-초고속 충전,43,32.16,History
-초고속 충전,44,33.2,History
-초고속 충전,45,34.28,History
-초고속 충전,46,35.25,History
-초고속 충전,47,36.24,History
-초고속 충전,48,37.35,History
-초고속 충전,49,38.44,History
-초고속 충전,50,39.38,History
-초고속 충전,51,40.41,History
-초고속 충전,52,41.6,History
-초고속 충전,53,42.56,History
-초고속 충전,54,43.39,History
-초고속 충전,55,44.42,History
-초고속 충전,56,45.49,History
-초고속 충전,57,46.44,History
-초고속 충전,58,47.54,History
-초고속 충전,59,48.44,History
-초고속 충전,60,49.51,History
-초고속 충전,61,50.57,History
-초고속 충전,62,51.61,History
-초고속 충전,63,52.63,History
-초고속 충전,64,53.47,History
-초고속 충전,65,54.56,History
-초고속 충전,66,55.29,History
-초고속 충전,67,56.32,History
-초고속 충전,68,57.16,History
-초고속 충전,69,58.1,History
-초고속 충전,70,59.21,History
-초고속 충전,71,60.28,History
-초고속 충전,72,61.32,History
-초고속 충전,73,62.2,History
-초고속 충전,74,63.04,History
-초고속 충전,75,63.96,History
-초고속 충전,76,64.95,History
-초고속 충전,77,66.0,History
-초고속 충전,78,66.95,History
-초고속 충전,79,67.7,History
-초고속 충전,80,68.65,History
-초고속 충전,81,69.51,History
-초고속 충전,82,70.4,History
-초고속 충전,83,71.38,History
-초고속 충전,84,72.34,History
-초고속 충전,85,73.22,History
-초고속 충전,86,74.16,History
-초고속 충전,87,75.16,History
-초고속 충전,88,76.11,History
-초고속 충전,89,76.89,History
-초고속 충전,90,77.79,History
-초고속 충전,91,78.62,History
-초고속 충전,92,79.24,History
-초고속 충전,93,80.08,History
-초고속 충전,94,80.76,History
-초고속 충전,95,81.55,History
-초고속 충전,96,82.4,History
-초고속 충전,97,83.35,History
-초고속 충전,98,83.95,History
-초고속 충전,99,84.75,History
-초고속 충전,100,85.48,History
-초고속 충전,101,130.5433840999453,Prediction
-초고속 충전,102,130.35713537192825,Prediction
-초고속 충전,103,130.36375270658783,Prediction
-초고속 충전,104,130.38255643274098,Prediction
-초고속 충전,105,130.6866539699222,Prediction
-초고속 충전,106,130.78841219126264,Prediction
-초고속 충전,107,130.95276322059564,Prediction
-초고속 충전,108,130.9062720995515,Prediction
-초고속 충전,109,130.6252479000175,Prediction
-초고속 충전,110,130.5675315947144,Prediction
-초고속 충전,111,130.62728742809458,Prediction
-초고속 충전,112,130.93593018272838,Prediction
-초고속 충전,113,130.9354972458918,Prediction
-초고속 충전,114,130.97621818156176,Prediction
-초고속 충전,115,130.99094801623306,Prediction
-초고속 충전,116,130.91142952518373,Prediction
-초고속 충전,117,130.9913318796367,Prediction
-초고속 충전,118,131.02181102932843,Prediction
-초고속 충전,119,131.02566313532222,Prediction
-초고속 충전,120,131.07083943333146,Prediction
-초고속 충전,121,131.23930716471386,Prediction
-초고속 충전,122,131.33953508535066,Prediction
-초고속 충전,123,131.43520466252522,Prediction
-초고속 충전,124,131.43593648884416,Prediction
-초고속 충전,125,131.4424247398239,Prediction
-초고속 충전,126,131.43224582164655,Prediction
-초고속 충전,127,131.554544058094,Prediction
-초고속 충전,128,131.5839641896662,Prediction
-초고속 충전,129,131.61867990767496,Prediction
-초고속 충전,130,131.69392366856158,Prediction
-초고속 충전,131,131.58842043686133,Prediction
-초고속 충전,132,131.5784575945721,Prediction
-초고속 충전,133,132.06150448006838,Prediction
-초고속 충전,134,132.06250625763786,Prediction
-초고속 충전,135,132.05533520430123,Prediction
-초고속 충전,136,132.06076430113114,Prediction
-초고속 충전,137,132.07599616594192,Prediction
-초고속 충전,138,132.0503835699531,Prediction
-저속 충전,1,205.5,History
-저속 충전,2,205.27,History
-저속 충전,3,200.67,History
-저속 충전,4,193.25,History
-저속 충전,5,185.63,History
-저속 충전,6,177.16,History
-저속 충전,7,169.09,History
-저속 충전,8,161.06,History
-저속 충전,9,153.36,History
-저속 충전,10,146.14,History
-저속 충전,11,138.26,History
-저속 충전,12,130.77,History
-저속 충전,13,123.62,History
-저속 충전,14,117.11,History
-저속 충전,15,110.9,History
-저속 충전,16,105.17,History
-저속 충전,17,99.67,History
-저속 충전,18,94.87,History
-저속 충전,19,90.36,History
-저속 충전,20,86.72,History
-저속 충전,21,84.46,History
-저속 충전,22,82.21,History
-저속 충전,23,80.35,History
-저속 충전,24,79.16,History
-저속 충전,25,78.16,History
-저속 충전,26,77.44,History
-저속 충전,27,76.7,History
-저속 충전,28,76.62,History
-저속 충전,29,76.77,History
-저속 충전,30,76.78,History
-저속 충전,31,76.9,History
-저속 충전,32,77.69,History
-저속 충전,33,78.09,History
-저속 충전,34,78.82,History
-저속 충전,35,79.68,History
-저속 충전,36,80.56,History
-저속 충전,37,81.29,History
-저속 충전,38,82.81,History
-저속 충전,39,84.52,History
-저속 충전,40,85.75,History
-저속 충전,41,87.08,History
-저속 충전,42,88.08,History
-저속 충전,43,91.48,History
-저속 충전,44,92.98,History
-저속 충전,45,94.67,History
-저속 충전,46,96.49,History
-저속 충전,47,98.82,History
-저속 충전,48,99.32,History
-저속 충전,49,100.74,History
-저속 충전,50,102.22,History
-저속 충전,51,104.24,History
-저속 충전,52,106.6,History
-저속 충전,53,107.37,History
-저속 충전,54,109.32,History
-저속 충전,55,110.04,History
-저속 충전,56,113.08,History
-저속 충전,57,115.07,History
-저속 충전,58,116.65,History
-저속 충전,59,118.22,History
-저속 충전,60,120.28,History
-저속 충전,61,122.6,History
-저속 충전,62,123.78,History
-저속 충전,63,124.59,History
-저속 충전,64,127.06,History
-저속 충전,65,128.47,History
-저속 충전,66,129.75,History
-저속 충전,67,132.29,History
-저속 충전,68,133.71,History
-저속 충전,69,135.5,History
-저속 충전,70,136.74,History
-저속 충전,71,138.06,History
-저속 충전,72,139.56,History
-저속 충전,73,138.57,History
-저속 충전,74,140.39,History
-저속 충전,75,141.44,History
-저속 충전,76,143.18,History
-저속 충전,77,144.69,History
-저속 충전,78,145.93,History
-저속 충전,79,147.01,History
-저속 충전,80,148.11,History
-저속 충전,81,149.26,History
-저속 충전,82,150.17,History
-저속 충전,83,151.6,History
-저속 충전,84,152.34,History
-저속 충전,85,152.85,History
-저속 충전,86,154.06,History
-저속 충전,87,154.68,History
-저속 충전,88,156.12,History
-저속 충전,89,156.77,History
-저속 충전,90,157.73,History
-저속 충전,91,158.56,History
-저속 충전,92,159.49,History
-저속 충전,93,160.32,History
-저속 충전,94,161.28,History
-저속 충전,95,162.24,History
-저속 충전,96,163.09,History
-저속 충전,97,163.48,History
-저속 충전,98,164.1,History
-저속 충전,99,164.71,History
-저속 충전,100,165.46,History
-저속 충전,101,123.61212886280963,Prediction
-저속 충전,102,123.58793155780508,Prediction
-저속 충전,103,123.5904994148987,Prediction
-저속 충전,104,123.61784594540617,Prediction
-저속 충전,105,123.82871627757473,Prediction
-저속 충전,106,123.85371449671878,Prediction
-저속 충전,107,124.09160135180792,Prediction
-저속 충전,108,124.14984732223978,Prediction
-저속 충전,109,123.8329436477216,Prediction
-저속 충전,110,123.86701528808476,Prediction
-저속 충전,111,124.0046213755042,Prediction
-저속 충전,112,124.02678115972854,Prediction
-저속 충전,113,124.01044281022168,Prediction
-저속 충전,114,124.07323431998772,Prediction
-저속 충전,115,124.09684141605125,Prediction
-저속 충전,116,124.13663993423171,Prediction
-저속 충전,117,124.16451105939991,Prediction
-저속 충전,118,124.23326701196957,Prediction
-저속 충전,119,124.24887851510124,Prediction
-저속 충전,120,124.29466484304139,Prediction
-저속 충전,121,124.53193335472311,Prediction
-저속 충전,122,124.55926050059075,Prediction
-저속 충전,123,124.55482553254788,Prediction
-저속 충전,124,124.57298942094462,Prediction
-저속 충전,125,124.58504979256682,Prediction
-저속 충전,126,124.5417392522989,Prediction
-저속 충전,127,124.52790863665719,Prediction
-저속 충전,128,124.56894981879755,Prediction
-저속 충전,129,124.57651366779652,Prediction
-저속 충전,130,124.70262232417382,Prediction
-저속 충전,131,124.66273066953104,Prediction
-저속 충전,132,124.62270898917076,Prediction
-저속 충전,133,124.7606409951015,Prediction
-저속 충전,134,124.74918612706051,Prediction
-저속 충전,135,124.7998176602965,Prediction
-저속 충전,136,124.80483219491556,Prediction
-저속 충전,137,124.81005021456399,Prediction
-저속 충전,138,124.94454880296593,Prediction
+Slow Charge/Discharge,1,240.89,History
+Slow Charge/Discharge,2,236.29,History
+Slow Charge/Discharge,3,230.66,History
+Slow Charge/Discharge,4,222.08,History
+Slow Charge/Discharge,5,213.85,History
+Slow Charge/Discharge,6,205.59,History
+Slow Charge/Discharge,7,198.89,History
+Slow Charge/Discharge,8,192.75,History
+Slow Charge/Discharge,9,188.29,History
+Slow Charge/Discharge,10,184.7,History
+Slow Charge/Discharge,11,180.74,History
+Slow Charge/Discharge,12,178.28,History
+Slow Charge/Discharge,13,176.8,History
+Slow Charge/Discharge,14,174.86,History
+Slow Charge/Discharge,15,174.42,History
+Slow Charge/Discharge,16,173.18,History
+Slow Charge/Discharge,17,174.08,History
+Slow Charge/Discharge,18,173.46,History
+Slow Charge/Discharge,19,173.39,History
+Slow Charge/Discharge,20,173.77,History
+Slow Charge/Discharge,21,173.89,History
+Slow Charge/Discharge,22,174.74,History
+Slow Charge/Discharge,23,175.35,History
+Slow Charge/Discharge,24,175.67,History
+Slow Charge/Discharge,25,176.67,History
+Slow Charge/Discharge,26,177.33,History
+Slow Charge/Discharge,27,177.79,History
+Slow Charge/Discharge,28,178.52,History
+Slow Charge/Discharge,29,180.32,History
+Slow Charge/Discharge,30,180.28,History
+Slow Charge/Discharge,31,182.13,History
+Slow Charge/Discharge,32,182.54,History
+Slow Charge/Discharge,33,183.48,History
+Slow Charge/Discharge,34,183.48,History
+Slow Charge/Discharge,35,185.13,History
+Slow Charge/Discharge,36,187.84,History
+Slow Charge/Discharge,37,188.81,History
+Slow Charge/Discharge,38,187.96,History
+Slow Charge/Discharge,39,189.66,History
+Slow Charge/Discharge,40,190.62,History
+Slow Charge/Discharge,41,189.79,History
+Slow Charge/Discharge,42,190.03,History
+Slow Charge/Discharge,43,192.04,History
+Slow Charge/Discharge,44,192.77,History
+Slow Charge/Discharge,45,192.76,History
+Slow Charge/Discharge,46,194.36,History
+Slow Charge/Discharge,47,195.66,History
+Slow Charge/Discharge,48,196.91,History
+Slow Charge/Discharge,49,192.23,History
+Slow Charge/Discharge,50,197.86,History
+Slow Charge/Discharge,51,198.41,History
+Slow Charge/Discharge,52,199.24,History
+Slow Charge/Discharge,53,200.91,History
+Slow Charge/Discharge,54,201.25,History
+Slow Charge/Discharge,55,201.24,History
+Slow Charge/Discharge,56,201.41,History
+Slow Charge/Discharge,57,201.31,History
+Slow Charge/Discharge,58,201.23,History
+Slow Charge/Discharge,59,201.7,History
+Slow Charge/Discharge,60,200.88,History
+Slow Charge/Discharge,61,201.31,History
+Slow Charge/Discharge,62,200.76,History
+Slow Charge/Discharge,63,200.29,History
+Slow Charge/Discharge,64,200.4,History
+Slow Charge/Discharge,65,199.6,History
+Slow Charge/Discharge,66,199.57,History
+Slow Charge/Discharge,67,199.55,History
+Slow Charge/Discharge,68,198.89,History
+Slow Charge/Discharge,69,198.02,History
+Slow Charge/Discharge,70,197.51,History
+Slow Charge/Discharge,71,197.71,History
+Slow Charge/Discharge,72,196.75,History
+Slow Charge/Discharge,73,197.03,History
+Slow Charge/Discharge,74,197.29,History
+Slow Charge/Discharge,75,196.25,History
+Slow Charge/Discharge,76,196.92,History
+Slow Charge/Discharge,77,198.13,History
+Slow Charge/Discharge,78,196.03,History
+Slow Charge/Discharge,79,197.13,History
+Slow Charge/Discharge,80,195.62,History
+Slow Charge/Discharge,81,199.19,History
+Slow Charge/Discharge,82,198.1,History
+Slow Charge/Discharge,83,196.06,History
+Slow Charge/Discharge,84,194.09,History
+Slow Charge/Discharge,85,192.63,History
+Slow Charge/Discharge,86,191.23,History
+Slow Charge/Discharge,87,190.48,History
+Slow Charge/Discharge,88,190.66,History
+Slow Charge/Discharge,89,190.67,History
+Slow Charge/Discharge,90,190.2,History
+Slow Charge/Discharge,91,188.89,History
+Slow Charge/Discharge,92,187.29,History
+Slow Charge/Discharge,93,186.5,History
+Slow Charge/Discharge,94,185.7,History
+Slow Charge/Discharge,95,184.56,History
+Slow Charge/Discharge,96,183.73,History
+Slow Charge/Discharge,97,182.57,History
+Slow Charge/Discharge,98,184.06,History
+Slow Charge/Discharge,99,182.17,History
+Slow Charge/Discharge,100,183.71,History
+Slow Charge/Discharge,101,118.9223067,Prediction
+Slow Charge/Discharge,102,118.826568,Prediction
+Slow Charge/Discharge,103,118.8353215,Prediction
+Slow Charge/Discharge,104,118.9470107,Prediction
+Slow Charge/Discharge,105,119.0922381,Prediction
+Slow Charge/Discharge,106,119.1518654,Prediction
+Slow Charge/Discharge,107,119.437449,Prediction
+Slow Charge/Discharge,108,119.7811666,Prediction
+Slow Charge/Discharge,109,119.4181479,Prediction
+Slow Charge/Discharge,110,119.3535801,Prediction
+Slow Charge/Discharge,111,119.4383275,Prediction
+Slow Charge/Discharge,112,119.5787192,Prediction
+Slow Charge/Discharge,113,119.5794584,Prediction
+Slow Charge/Discharge,114,119.6811022,Prediction
+Slow Charge/Discharge,115,119.7994976,Prediction
+Slow Charge/Discharge,116,120.03965,Prediction
+Slow Charge/Discharge,117,120.039838,Prediction
+Slow Charge/Discharge,118,120.0713605,Prediction
+Fast Charge/Discharge,1,108.39,History
+Fast Charge/Discharge,2,111.11,History
+Fast Charge/Discharge,3,109.93,History
+Fast Charge/Discharge,4,107.76,History
+Fast Charge/Discharge,5,104.02,History
+Fast Charge/Discharge,6,99.51,History
+Fast Charge/Discharge,7,94.22,History
+Fast Charge/Discharge,8,88.4,History
+Fast Charge/Discharge,9,82.31,History
+Fast Charge/Discharge,10,76.88,History
+Fast Charge/Discharge,11,71.79,History
+Fast Charge/Discharge,12,67.04,History
+Fast Charge/Discharge,13,62.39,History
+Fast Charge/Discharge,14,58.19,History
+Fast Charge/Discharge,15,55.12,History
+Fast Charge/Discharge,16,52.05,History
+Fast Charge/Discharge,17,49.06,History
+Fast Charge/Discharge,18,46.14,History
+Fast Charge/Discharge,19,44.17,History
+Fast Charge/Discharge,20,42.08,History
+Fast Charge/Discharge,21,40.22,History
+Fast Charge/Discharge,22,38.63,History
+Fast Charge/Discharge,23,37.43,History
+Fast Charge/Discharge,24,36.39,History
+Fast Charge/Discharge,25,35.47,History
+Fast Charge/Discharge,26,34.85,History
+Fast Charge/Discharge,27,34.3,History
+Fast Charge/Discharge,28,33.93,History
+Fast Charge/Discharge,29,33.89,History
+Fast Charge/Discharge,30,33.84,History
+Fast Charge/Discharge,31,34.01,History
+Fast Charge/Discharge,32,34.58,History
+Fast Charge/Discharge,33,34.41,History
+Fast Charge/Discharge,34,34.61,History
+Fast Charge/Discharge,35,34.96,History
+Fast Charge/Discharge,36,35.27,History
+Fast Charge/Discharge,37,35.71,History
+Fast Charge/Discharge,38,36.18,History
+Fast Charge/Discharge,39,37,History
+Fast Charge/Discharge,40,37.54,History
+Fast Charge/Discharge,41,37.89,History
+Fast Charge/Discharge,42,38.73,History
+Fast Charge/Discharge,43,39.28,History
+Fast Charge/Discharge,44,39.81,History
+Fast Charge/Discharge,45,40.49,History
+Fast Charge/Discharge,46,40.82,History
+Fast Charge/Discharge,47,41.19,History
+Fast Charge/Discharge,48,41.61,History
+Fast Charge/Discharge,49,42.12,History
+Fast Charge/Discharge,50,42.97,History
+Fast Charge/Discharge,51,43.14,History
+Fast Charge/Discharge,52,43.84,History
+Fast Charge/Discharge,53,44.62,History
+Fast Charge/Discharge,54,45.19,History
+Fast Charge/Discharge,55,45.56,History
+Fast Charge/Discharge,56,46.16,History
+Fast Charge/Discharge,57,46.58,History
+Fast Charge/Discharge,58,46.94,History
+Fast Charge/Discharge,59,47.56,History
+Fast Charge/Discharge,60,48.09,History
+Fast Charge/Discharge,61,48.5,History
+Fast Charge/Discharge,62,49.33,History
+Fast Charge/Discharge,63,49.84,History
+Fast Charge/Discharge,64,50.64,History
+Fast Charge/Discharge,65,51.06,History
+Fast Charge/Discharge,66,51.27,History
+Fast Charge/Discharge,67,52.39,History
+Fast Charge/Discharge,68,52.96,History
+Fast Charge/Discharge,69,53.62,History
+Fast Charge/Discharge,70,54.09,History
+Fast Charge/Discharge,71,54.44,History
+Fast Charge/Discharge,72,54.95,History
+Fast Charge/Discharge,73,55.33,History
+Fast Charge/Discharge,74,55.87,History
+Fast Charge/Discharge,75,56.35,History
+Fast Charge/Discharge,76,56.86,History
+Fast Charge/Discharge,77,57.12,History
+Fast Charge/Discharge,78,57.47,History
+Fast Charge/Discharge,79,57.78,History
+Fast Charge/Discharge,80,58.3,History
+Fast Charge/Discharge,81,58.61,History
+Fast Charge/Discharge,82,59.64,History
+Fast Charge/Discharge,83,59.7,History
+Fast Charge/Discharge,84,60.02,History
+Fast Charge/Discharge,85,60.27,History
+Fast Charge/Discharge,86,60.65,History
+Fast Charge/Discharge,87,60.92,History
+Fast Charge/Discharge,88,61.26,History
+Fast Charge/Discharge,89,61.68,History
+Fast Charge/Discharge,90,61.97,History
+Fast Charge/Discharge,91,62.19,History
+Fast Charge/Discharge,92,62.53,History
+Fast Charge/Discharge,93,62.84,History
+Fast Charge/Discharge,94,63.4,History
+Fast Charge/Discharge,95,63.63,History
+Fast Charge/Discharge,96,63.83,History
+Fast Charge/Discharge,97,64.04,History
+Fast Charge/Discharge,98,64.34,History
+Fast Charge/Discharge,99,64.64,History
+Fast Charge/Discharge,100,65.1,History
+Fast Charge/Discharge,101,125.0902668,Prediction
+Fast Charge/Discharge,102,125.0955075,Prediction
+Fast Charge/Discharge,103,125.1823123,Prediction
+Fast Charge/Discharge,104,125.0868499,Prediction
+Fast Charge/Discharge,105,124.9869937,Prediction
+Fast Charge/Discharge,106,124.9831926,Prediction
+Fast Charge/Discharge,107,125.035956,Prediction
+Fast Charge/Discharge,108,124.9512538,Prediction
+Fast Charge/Discharge,109,124.8334626,Prediction
+Fast Charge/Discharge,110,124.795721,Prediction
+Fast Charge/Discharge,111,125.0402495,Prediction
+Fast Charge/Discharge,112,125.0712542,Prediction
+Fast Charge/Discharge,113,125.0694837,Prediction
+Fast Charge/Discharge,114,125.1372116,Prediction
+Fast Charge/Discharge,115,125.222272,Prediction
+Fast Charge/Discharge,116,125.3642953,Prediction
+Fast Charge/Discharge,117,125.506818,Prediction
+Fast Charge/Discharge,118,125.5135789,Prediction
+Fast Charge/Discharge,119,125.5171656,Prediction
+Fast Charge/Discharge,120,125.5431069,Prediction
+Fast Charge/Discharge,121,125.7763778,Prediction
+Fast Charge/Discharge,122,125.8143434,Prediction
+Fast Charge/Discharge,123,125.8176973,Prediction
+Fast Charge/Discharge,124,125.844019,Prediction
+Fast Charge/Discharge,125,125.91407,Prediction
+Fast Charge/Discharge,126,125.9027996,Prediction
+Fast Charge/Discharge,127,125.9990453,Prediction
+Fast Charge/Discharge,128,126.0895361,Prediction
+Fast Charge/Discharge,129,126.1629103,Prediction
+Fast Charge/Discharge,130,126.2974811,Prediction
+Fast Charge/Discharge,131,126.0727198,Prediction
+Fast Charge/Discharge,132,126.0720948,Prediction
+Fast Charge/Discharge,133,126.4165674,Prediction
+Fast Charge/Discharge,134,126.3897783,Prediction
+Fast Charge/Discharge,135,126.3785467,Prediction
+Fast Charge/Discharge,136,126.3819776,Prediction
+Fast Charge/Discharge,137,126.3864094,Prediction
+Fast Charge/Discharge,138,126.4297778,Prediction
+Fast Charge/Discharge,139,126.2387104,Prediction
+Fast Charge/Discharge,140,126.2530983,Prediction
+Fast Charge/Discharge,141,126.2526647,Prediction
+Fast Charge/Discharge,142,126.2775213,Prediction
+Fast Charge/Discharge,143,126.2744898,Prediction
+Fast Charge/Discharge,144,126.2495335,Prediction
+Fast Charge/Discharge,145,126.3331321,Prediction
+Fast Charge/Discharge,146,126.311067,Prediction
+Fast Charge/Discharge,147,126.3116032,Prediction
+Fast Charge/Discharge,148,126.4220163,Prediction
+Charge/Discharge,1,114.32,History
+Charge/Discharge,2,120.04,History
+Charge/Discharge,3,124.15,History
+Charge/Discharge,4,127,History
+Charge/Discharge,5,128.49,History
+Charge/Discharge,6,128.45,History
+Charge/Discharge,7,127.1,History
+Charge/Discharge,8,125.3,History
+Charge/Discharge,9,123.18,History
+Charge/Discharge,10,120.53,History
+Charge/Discharge,11,118.08,History
+Charge/Discharge,12,114.86,History
+Charge/Discharge,13,112.02,History
+Charge/Discharge,14,108.9,History
+Charge/Discharge,15,105.99,History
+Charge/Discharge,16,104.36,History
+Charge/Discharge,17,102.81,History
+Charge/Discharge,18,100.09,History
+Charge/Discharge,19,99.3,History
+Charge/Discharge,20,98.09,History
+Charge/Discharge,21,96.96,History
+Charge/Discharge,22,96.07,History
+Charge/Discharge,23,95.39,History
+Charge/Discharge,24,94.94,History
+Charge/Discharge,25,95.38,History
+Charge/Discharge,26,94.42,History
+Charge/Discharge,27,96.37,History
+Charge/Discharge,28,96.7,History
+Charge/Discharge,29,97.29,History
+Charge/Discharge,30,98.83,History
+Charge/Discharge,31,100.03,History
+Charge/Discharge,32,102.77,History
+Charge/Discharge,33,104.6,History
+Charge/Discharge,34,107.61,History
+Charge/Discharge,35,109.26,History
+Charge/Discharge,36,110.3,History
+Charge/Discharge,37,110.7,History
+Charge/Discharge,38,114.05,History
+Charge/Discharge,39,116.36,History
+Charge/Discharge,40,118.12,History
+Charge/Discharge,41,119.66,History
+Charge/Discharge,42,120.71,History
+Charge/Discharge,43,121.69,History
+Charge/Discharge,44,123.83,History
+Charge/Discharge,45,125.13,History
+Charge/Discharge,46,126.2,History
+Charge/Discharge,47,129.34,History
+Charge/Discharge,48,129.95,History
+Charge/Discharge,49,131.51,History
+Charge/Discharge,50,132.36,History
+Charge/Discharge,51,134.62,History
+Charge/Discharge,52,136.1,History
+Charge/Discharge,53,137.62,History
+Charge/Discharge,54,138.99,History
+Charge/Discharge,55,140.1,History
+Charge/Discharge,56,140.86,History
+Charge/Discharge,57,142.36,History
+Charge/Discharge,58,143.28,History
+Charge/Discharge,59,144.02,History
+Charge/Discharge,60,144.94,History
+Charge/Discharge,61,145.98,History
+Charge/Discharge,62,147.01,History
+Charge/Discharge,63,148.23,History
+Charge/Discharge,64,149.62,History
+Charge/Discharge,65,150.85,History
+Charge/Discharge,66,152.04,History
+Charge/Discharge,67,153.53,History
+Charge/Discharge,68,154.79,History
+Charge/Discharge,69,156.08,History
+Charge/Discharge,70,157.22,History
+Charge/Discharge,71,158.51,History
+Charge/Discharge,72,159.7,History
+Charge/Discharge,73,160.68,History
+Charge/Discharge,74,161.67,History
+Charge/Discharge,75,163.03,History
+Charge/Discharge,76,164.19,History
+Charge/Discharge,77,165.53,History
+Charge/Discharge,78,166.98,History
+Charge/Discharge,79,168.49,History
+Charge/Discharge,80,170.16,History
+Charge/Discharge,81,171.63,History
+Charge/Discharge,82,172.84,History
+Charge/Discharge,83,174.4,History
+Charge/Discharge,84,176.1,History
+Charge/Discharge,85,177.29,History
+Charge/Discharge,86,178.4,History
+Charge/Discharge,87,179.86,History
+Charge/Discharge,88,181.07,History
+Charge/Discharge,89,182.53,History
+Charge/Discharge,90,183.92,History
+Charge/Discharge,91,185.41,History
+Charge/Discharge,92,187.03,History
+Charge/Discharge,93,188.46,History
+Charge/Discharge,94,190.26,History
+Charge/Discharge,95,191.78,History
+Charge/Discharge,96,193.63,History
+Charge/Discharge,97,194.95,History
+Charge/Discharge,98,195.99,History
+Charge/Discharge,99,197.15,History
+Charge/Discharge,100,198.39,History
+Charge/Discharge,101,119.8942145,Prediction
+Charge/Discharge,102,119.8550951,Prediction
+Charge/Discharge,103,120.0250089,Prediction
+Charge/Discharge,104,120.0266997,Prediction
+Charge/Discharge,105,120.0411589,Prediction
+Charge/Discharge,106,120.0619591,Prediction
+Charge/Discharge,107,120.1549018,Prediction
+Charge/Discharge,108,120.2176816,Prediction
+Charge/Discharge,109,119.9719921,Prediction
+Charge/Discharge,110,120.0390621,Prediction
+Charge/Discharge,111,120.1628482,Prediction
+Charge/Discharge,112,120.2344504,Prediction
+Charge/Discharge,113,120.2336246,Prediction
+Charge/Discharge,114,120.2842251,Prediction
+Charge/Discharge,115,120.4039195,Prediction
+Charge/Discharge,116,120.6312713,Prediction
+Charge/Discharge,117,120.6948187,Prediction
+Charge/Discharge,118,120.8323214,Prediction
+Charge/Discharge,119,120.8328737,Prediction
+Charge/Discharge,120,121.0987843,Prediction
+Charge/Discharge,121,121.3995388,Prediction
+Charge/Discharge,122,121.4909148,Prediction
+Charge/Discharge,123,121.6212464,Prediction
+Charge/Discharge,124,121.618876,Prediction
+Charge/Discharge,125,121.6378289,Prediction
+Charge/Discharge,126,121.6272942,Prediction
+Charge/Discharge,127,121.7855058,Prediction
+Charge/Discharge,128,121.813946,Prediction
+Charge/Discharge,129,121.8142215,Prediction
+Charge/Discharge,130,122.5786668,Prediction
+Charge/Discharge,131,122.5409916,Prediction
+Charge/Discharge,132,122.4716586,Prediction
+Charge/Discharge,133,122.743972,Prediction
+Charge/Discharge,134,122.7323274,Prediction
+Charge/Discharge,135,122.6855956,Prediction
+Charge/Discharge,136,122.6834978,Prediction
+Charge/Discharge,137,122.7927323,Prediction
+Charge/Discharge,138,122.9989482,Prediction
+Charge/Discharge,139,123.0086564,Prediction
+Charge/Discharge,140,123.0101805,Prediction
+Charge/Discharge,141,123.0134835,Prediction
+Charge/Discharge,142,123.0596255,Prediction
+Charge/Discharge,143,123.0500025,Prediction
+Charge/Discharge,144,123.0049787,Prediction
+Charge/Discharge,145,123.1659784,Prediction
+Charge/Discharge,146,123.2135236,Prediction
+Charge/Discharge,147,123.2017844,Prediction
+Charge/Discharge,148,123.2224881,Prediction
+Charge/Discharge,149,123.2156719,Prediction
+Charge/Discharge,150,123.2224283,Prediction
+Charge/Discharge,151,123.2262445,Prediction
+Charge/Discharge,152,123.2415147,Prediction
+Charge/Discharge,153,123.2320349,Prediction
+Charge/Discharge,154,123.2345776,Prediction
+Charge/Discharge,155,123.2442258,Prediction
+Charge/Discharge,156,123.3055609,Prediction
+Charge/Discharge,157,123.3429912,Prediction
+Charge/Discharge,158,123.332475,Prediction
+Charge/Discharge,159,123.3455619,Prediction
+Charge/Discharge,160,123.4217813,Prediction
+Charge/Discharge,161,123.4275692,Prediction
+Charge/Discharge,162,123.3563179,Prediction
+Charge/Discharge,163,123.3699124,Prediction
+Charge/Discharge,164,123.3685276,Prediction
+Charge/Discharge,165,123.4228119,Prediction
+Charge/Discharge,166,123.363731,Prediction
+Charge/Discharge,167,123.3682036,Prediction
+Charge/Discharge,168,123.3717768,Prediction
+Charge/Discharge,169,123.3756959,Prediction
+Charge/Discharge,170,123.3712409,Prediction
+Charge/Discharge,171,123.3714479,Prediction
+Charge/Discharge,172,123.514849,Prediction
+Charge/Discharge,173,123.5149015,Prediction
+Charge/Discharge,174,123.5116246,Prediction
+Charge/Discharge,175,123.5118732,Prediction
+Charge/Discharge,176,123.5121189,Prediction
+Charge/Discharge,177,123.5266755,Prediction
+Charge/Discharge,178,123.7086111,Prediction
+Charge/Discharge,179,123.7091326,Prediction
+Charge/Discharge,180,123.7091326,Prediction
+Charge/Discharge,181,123.708846,Prediction
+Charge/Discharge,182,123.7406708,Prediction
+Charge/Discharge,183,123.7399439,Prediction
+Charge/Discharge,184,123.823625,Prediction
+Charge/Discharge,185,123.8145967,Prediction
+Charge/Discharge,186,123.8145648,Prediction
+Charge/Discharge,187,123.8227517,Prediction
+Charge/Discharge,188,123.8227517,Prediction
+Charge/Discharge,189,123.8272043,Prediction
+Charge/Discharge,190,123.8271934,Prediction
+Charge/Discharge,191,123.7944408,Prediction
+Charge/Discharge,192,123.7922875,Prediction
+Charge/Discharge,193,123.7086747,Prediction
+Charge/Discharge,194,123.7582812,Prediction
+Charge/Discharge,195,123.7693356,Prediction
+Charge/Discharge,196,123.6884339,Prediction
+Charge/Discharge,197,123.6889259,Prediction
+Charge/Discharge,198,123.7219067,Prediction
+Charge/Discharge,199,123.6065095,Prediction
+Charge/Discharge,200,123.5758512,Prediction
