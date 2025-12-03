@@ -277,7 +277,7 @@ def load_real_case_data():
         file_path = os.path.join(current_dir, "engine1_output.csv")
         df = pd.read_csv(file_path)
         
-        # 🚨 [중요 수정] 데이터의 앞뒤 공백을 제거하여 매칭 오류 방지
+        # 데이터의 앞뒤 공백을 제거하여 매칭 오류 방지
         if 'Sample_Type' in df.columns:
             df['Sample_Type'] = df['Sample_Type'].astype(str).str.strip()
             
@@ -627,15 +627,16 @@ with tab_data:
                 
                 fig, ax = plt.subplots(figsize=(10, 5))
                 
-                # [수정됨] 점 그래프(Scatter Plot) - 요청 반영
-                # alpha=0.7로 투명도 조절, s=30으로 점 크기 조절
-                ax.scatter(hist['Cycle'], hist['Capacity'], color='black', alpha=0.7, s=30, label='History')
+                # [수정됨] History: 점 그래프 (원형)
+                ax.scatter(hist['Cycle'], hist['Capacity'], color='black', alpha=0.6, s=25, label='History')
                 
-                # 예측값은 실선(점선) 유지
-                ax.plot(pred['Cycle'], pred['Capacity'], '--', color='#dc3545', linewidth=2, label='Prediction')
+                # [수정됨] Prediction: 점 그래프 (사각형) - 요청 반영
+                ax.scatter(pred['Cycle'], pred['Capacity'], color='#dc3545', alpha=0.7, s=25, marker='s', label='Prediction')
                 
                 ax.set_title(f"Model Validation - {csv_key}", fontweight='bold')
-                ax.set_ylabel("Capacity (mAh/g)")
+                
+                # [수정됨] Y축 레이블 변경 - 요청 반영
+                ax.set_ylabel("Specific Capacity (mAh/g)")
                 ax.set_xlabel("Cycle Number")
                 ax.grid(True, alpha=0.3)
                 ax.legend()
