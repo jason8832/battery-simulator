@@ -602,7 +602,7 @@ with tab_data:
                 if "Slow Charge/Discharge" in option:
                     csv_key = "Slow Charge/Discharge"
                     st.success("✅ **Stable**")
-                elif "Sample B" in option:
+                elif "Charge/Discharge" in option:
                     csv_key = "Charge/Discharge"  # 중간 옵션
                     st.warning("⚠️ **Normal** ")
                 else:
