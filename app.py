@@ -605,7 +605,7 @@ with tab_data:
                 elif "Charge/Discharge" in option:
                     csv_key = "Charge/Discharge"  # 중간 옵션
                     st.warning("⚠️ **Normal** ")
-                elif "Fast Charge/Discharge" in option:
+                else: "Fast Charge/Discharge" in option:
                     csv_key = "Fast Charge/Discharge"  # 중간 옵션
                     st.warning("🚫 **Unstable** ")
 
