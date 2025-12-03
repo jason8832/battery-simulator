@@ -82,8 +82,8 @@ tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-lo
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
-# 2. 상단 배경 설정 (이미지 로직 제거하고 단색 적용)
-header_bg_style = "background-color: #DAE0DD;"
+# 2. 상단 배경 설정 (요청하신 색상 적용)
+header_bg_style = "background-color: #B1B6B0;"
     
 # ------------------------------------------------------------------------------
 # 3. CSS 스타일링
