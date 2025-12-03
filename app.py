@@ -369,7 +369,8 @@ with tab_home:
     # Project Overview & Key Features
     col1, col2 = st.columns([1, 1])
     with col1:
-        st.info("### 🚀 Project Overview\n\n본 프로젝트는 **Google-아주대학교 AI 융합 캡스톤 디자인**의 일환으로 개발되었습니다. 기존의 고비용/장시간이 소요되는 배터리 소재 개발 및 공정 평가를 **AI 기반 가상 시뮬레이션**으로 대체하여 연구 효율성을 극대화합니다.")
+        st.info("### 🚀 Project Overview\n\n본 프로젝트는 아주대학교 화학공학과 캡스톤 디자인에서 시작되어, Google-아주대학교 융합 캡스톤 디자인의 일환으로 만들어졌습니다.\n 이 웹페이지는 배터리가 얼마나 오래 사용할 수 있는지, 시간이 지나도 성능이 얼마나 유지되는지를 예측하고, 공정 조건에 따라 에너지 사용량과 환경 부담이 어떻게 달라지는지를 가상 실험으로 살펴볼 수 있는 도구입니다.\n
+복잡하고 시간이 많이 드는 실제 실험을 매번 반복하지 않아도, 여러 조건을 화면에서 바꿔 보면서 성능과 환경 부담을 함께 비교·검토할 수 있도록 설계되었습니다.")
     with col2:
         st.success("### 💡 Key Features\n\n* **Engine 1**: AI 기반 배터리 성능 예측 시뮬레이터\n* **Engine 2**: 공정 변수(LCA)에 따른 환경 영향 평가\n* **Our Data**: 실제 실험 데이터 기반 정밀 검증")
 
@@ -439,8 +440,8 @@ with tab_home:
 with tab_e1:
     st.markdown(header_html, unsafe_allow_html=True)
     
-    st.subheader("Engine 1. 배터리 성능 예측 시뮬레이터 (Interactive Mode)")
-    st.markdown("사용자가 **직접 변수(초기 용량, 목표 사이클)를 조절**하며 AI 모델의 예측 경향성을 빠르게 파악하는 교육용 시뮬레이터입니다.")
+    st.subheader("Engine 1. 배터리 성능 예측 시뮬레이터 ")
+    st.markdown("사용자가 직접 변수(초기 용량, 목표 사이클)를 조절하며 AI 모델의 예측 경향성을 빠르게 파악하는 시뮬레이터입니다.")
     st.divider()
     
     col_input, col_view = st.columns([1, 2])
@@ -452,8 +453,8 @@ with tab_e1:
             sample_type = st.radio("패턴 선택", ["Slow Charge/Discharge", "Charge/Discharge", "Fast Charge/Discharge"], label_visibility="collapsed", key="t1_radio")
             st.divider()
             st.markdown("#### ⚙️ 예측 조건 설정")
-            init_cap_input = st.number_input("Initial Capacity (mAh/g)", 100.0, 400.0, 350.0)
-            cycle_input = st.number_input("Prediction Cycles", 200, 2000, 500, step=50)
+            init_cap_input = st.number_input("Initial specific capacity (mAh/g)", 100.0, 400.0, 350.0)
+            cycle_input = st.number_input("Number of cycles for prediction", 200, 2000, 500, step=50)
             run_e1 = st.button("가상 예측 실행", type="primary", use_container_width=True)
 
     with col_view:
@@ -495,7 +496,7 @@ with tab_e2:
     st.markdown(header_html, unsafe_allow_html=True)
     
     st.subheader("Engine 2. 공정 환경 영향 시뮬레이터 ")
-    st.info("💡 **Update:** 본 시뮬레이터는 **화학적 조성(불소 유무)**, **용매의 독성(VOC)**, **끓는점(Boiling Point)**에 기반한 물리학적 계산 모델을 적용했습니다.")
+    st.info(" 본 시뮬레이터는 화학적 조성(불소 유무), 용매의 독성(VOC), 끓는점(Boiling Point)에 기반한 물리학적 계산 모델을 적용했습니다.")
     
     col_input_e2, col_view_e2 = st.columns([1, 2])
     
@@ -597,7 +598,7 @@ with tab_data:
         col_case_input, col_case_view = st.columns([1, 2])
         with col_case_input:
             with st.container(border=True): 
-                st.markdown("#### 📂 실험 케이스 선택")
+                st.markdown("#### 🔋 충/방전 속도")
                 # [수정됨] 괄호 내용 삭제 (Sample A/B/C)
                 option = st.radio("데이터 선택:", ["Slow Charge/Discharge", "Charge/Discharge", "Fast Charge/Discharge"], key="t2_radio")
                 
