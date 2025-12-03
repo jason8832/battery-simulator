@@ -439,36 +439,36 @@ with tab_home:
 with tab_e1:
     st.markdown(header_html, unsafe_allow_html=True)
     
-    st.subheader("Engine 1. 배터리 성능 예측 시뮬레이터 ")
-    st.markdown("사용자가 직접 변수(초기 용량, 목표 사이클)를 조절하며 AI 모델의 예측 경향성을 빠르게 파악하는 시뮬레이터입니다.")
+    st.subheader("Engine 1. 배터리 성능 예측 시뮬레이터 (Interactive Mode)")
+    st.markdown("사용자가 **직접 변수(초기 용량, 목표 사이클)를 조절**하며 AI 모델의 예측 경향성을 빠르게 파악하는 교육용 시뮬레이터입니다.")
     st.divider()
     
     col_input, col_view = st.columns([1, 2])
     with col_input:
         # [확인용] CSS에서 div[data-testid="stVerticalBlockBorderWrapper"]를 강제로 스타일링 중입니다.
         with st.container(border=True): 
-            st.markdown("#### 🔋 충/방전 속도 ")
-            sample_type = st.radio("패턴 선택", ["Slow Charge/Discharge", "Charge/Discharge", "Fast Charge/Discharge"], label_visibility="collapsed", key="t1_radio")
+            st.markdown("#### 🔋 샘플 안정도 설정")
+            sample_type = st.radio("패턴 선택", ["Perfectly Stable", "Stable", "Unstable"], label_visibility="collapsed", key="t1_radio")
             st.divider()
             st.markdown("#### ⚙️ 예측 조건 설정")
-            init_cap_input = st.number_input("Initial specific capacity  (mAh/g)", 100.0, 400.0, 350.0)
-            cycle_input = st.number_input("Number of cycles for prediction", 200, 2000, 500, step=50)
+            init_cap_input = st.number_input("Initial Capacity (mAh/g)", 100.0, 400.0, 350.0)
+            cycle_input = st.number_input("Prediction Cycles", 200, 2000, 500, step=50)
             run_e1 = st.button("가상 예측 실행", type="primary", use_container_width=True)
 
     with col_view:
         if run_e1:
             with st.spinner("AI Analyzing..."):
-                if sample_type == "Slow Charge/Discharge": decay = 0.5; label = "Perfectly Stable"; color = '#28a745'
-                elif sample_type == "Charge/Discharge": decay = 2.5; label = "Stable"; color = '#fd7e14'
-                else: decay = 8.0; label = "Fast Charge/Discharge"; color = '#dc3545'
+                if sample_type == "Perfectly Stable": decay = 0.5; label = "Perfectly Stable"; color = '#28a745'
+                elif sample_type == "Stable": decay = 2.5; label = "Stable"; color = '#fd7e14'
+                else: decay = 8.0; label = "Unstable"; color = '#dc3545'
                 
                 cycles, capacity, ce = predict_life_and_ce(decay, init_cap_input, cycle_input)
                 
                 fig2, (ax_cap, ax_ce) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
                 ax_cap.plot(cycles[:100], capacity[:100], 'k-', linewidth=2.5, label='Input Data')
                 ax_cap.plot(cycles[100:], capacity[100:], '--', color=color, linewidth=2.5, label=f'Prediction ({label})')
-                ax_cap.set_ylabel("Specific Capacity (mAh/g)", fontweight='bold')
-                ax_cap.set_title("Performance Prediction", fontweight='bold')
+                ax_cap.set_ylabel("Capacity (mAh/g)", fontweight='bold')
+                ax_cap.set_title("Discharge Capacity Prediction", fontweight='bold')
                 ax_cap.legend(); ax_cap.grid(True, alpha=0.3)
                 
                 ax_ce.plot(cycles, ce, '-', color='#007bff', alpha=0.8)
@@ -493,7 +493,7 @@ with tab_e2:
     st.markdown(header_html, unsafe_allow_html=True)
     
     st.subheader("Engine 2. 공정 환경 영향 시뮬레이터 ")
-    st.info("본 시뮬레이터는 화학적 조성(불소 유무), 용매의 독성(VOC), 끓는점(Boiling Point)에 기반한 물리학적 계산 모델을 적용했습니다.")
+    st.info("💡 **Update:** 본 시뮬레이터는 **화학적 조성(불소 유무)**, **용매의 독성(VOC)**, **끓는점(Boiling Point)**에 기반한 물리학적 계산 모델을 적용했습니다.")
     
     col_input_e2, col_view_e2 = st.columns([1, 2])
     
@@ -585,7 +585,7 @@ with tab_data:
     st.markdown(header_html, unsafe_allow_html=True)
     
     st.subheader("Our Data. 실제 실험 데이터 검증 (Ground Truth Validation)")
-    st.markdown(" 직접 수행한 실험 데이터를 기반으로 Engine 1 Mechanism의 예측 정확도를 검증합니다.")
+    st.markdown(" **Team 스물다섯이 직접 수행한 실험 데이터**를 기반으로 Engine 1의 예측 정확도를 검증합니다.")
     st.divider()
 
     df_results = load_real_case_data()
@@ -595,19 +595,34 @@ with tab_data:
         col_case_input, col_case_view = st.columns([1, 2])
         with col_case_input:
             with st.container(border=True): 
-                st.markdown("#### 🔋 충/방전 속도")
-                option = st.radio("데이터 선택:", ["Slow Charge/Discharge", "Charge/Discharge", "Fast Charge/Discharge"], key="t2_radio")
+                st.markdown("#### 📂 실험 케이스 선택")
+                option = st.radio("데이터 선택:", ["Slow Charge/Discharge (Sample A)", "Charge/Discharge (Sample B)", "Fast Charge/Discharge (Sample C)"], key="t2_radio")
                 
-                # CSV 데이터의 실제 Key 값으로 매핑
+                # [수정됨] SyntaxError 해결 및 논리적 오류 방지 (in -> ==)
                 if "Slow Charge/Discharge" in option:
                     csv_key = "Slow Charge/Discharge"
-                    st.success("✅ **Stable**")
-                elif "Charge/Discharge" in option:
-                    csv_key = "Charge/Discharge"  # 중간 옵션
-                    st.warning("⚠️ **Normal** ")
-                else: "Fast Charge/Discharge" in option:
-                    csv_key = "Fast Charge/Discharge"  # 중간 옵션
-                    st.warning("🚫 **Unstable** ")
+                    st.success("✅ **Perfectly Stable** (CMGG)")
+                elif "Charge/Discharge" in option: # 문자열 포함 관계 주의 (Fast에도 Charge/Discharge가 포함됨) -> 순서 중요하거나 == 사용 권장
+                    # 여기서는 라디오 버튼 값이 고유하므로 == 사용이 안전함. 
+                    # 하지만 기존 로직 유지를 위해 elif로 수정하고, Fast가 먼저 걸리지 않게 주의.
+                    # Fast가 제일 마지막 else로 빠지거나, 명시적 elif로 처리.
+                    # 안전하게 == 로 변경합니다.
+                    if option == "Charge/Discharge (Sample B)": # 라디오 버튼 값 전체 매칭
+                         csv_key = "Charge/Discharge"
+                         st.warning("⚠️ **Stable** (PVDF)")
+                    else: # Sample B가 아니라면 남은건... 로직이 복잡해지니 아래와 같이 깔끔하게 정리
+                        pass
+
+                # [최종 수정된 로직]
+                if "Sample A" in option:
+                    csv_key = "Slow Charge/Discharge"
+                    st.success("✅ **Perfectly Stable** (CMGG)")
+                elif "Sample B" in option:
+                    csv_key = "Charge/Discharge"
+                    st.warning("⚠️ **Stable** (PVDF)")
+                else: # Sample C
+                    csv_key = "Fast Charge/Discharge"
+                    st.error("🚫 **Unstable** (Abnormal)")
 
         with col_case_view:
             # 매핑된 csv_key로 필터링 (공백 제거된 상태에서 매칭)
