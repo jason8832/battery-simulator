@@ -96,7 +96,7 @@ else:
     header_bg_style = "background-color: #BBDEFF;"
     
 # ------------------------------------------------------------------------------
-# 3. CSS 스타일링 (초강력 수정 버전)
+# 3. CSS 스타일링
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <style>
@@ -106,24 +106,20 @@ st.markdown(f"""
         font-family: 'Noto Sans KR', 'Helvetica Neue', sans-serif;
     }}
 
-    /* 전체 배경색: 차분한 세이지 그레이 (화면 전체 적용) */
+    /* 전체 배경색: 차분한 세이지 그레이 */
     .stApp {{
         background-color: #D8E0D8; 
     }}
     
-    /* [🚨핵심 해결 부분] 좌측 조건 설정 네모칸 강제 스타일링 */
-    /* Streamlit 버전 차이를 고려하여 가능한 모든 선택자를 포함하고 우선순위를 최상(important)으로 높임 */
-    
-    /* 1. 표준 선택자 */
+    /* 좌측 조건 설정 네모칸 강제 스타일링 */
     [data-testid="stVerticalBlockBorderWrapper"] {{
-        background-color: #FFFFFF !important;  /* 배경: 무조건 흰색 */
-        border: 3px solid #1B5E20 !important;  /* 테두리: 3px 진한 녹색 */
-        border-radius: 15px !important;        
+        background-color: #FFFFFF !important;
+        border: 3px solid #1B5E20 !important;
+        border-radius: 15px !important;       
         padding: 20px !important;              
         box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
     }}
     
-    /* 2. 혹시 모를 내부 요소 투명화 처리 */
     [data-testid="stVerticalBlockBorderWrapper"] > div {{
         background-color: transparent !important; 
     }}
@@ -356,7 +352,7 @@ tab_home, tab_e1, tab_e2, tab_data = st.tabs([
 # 대제목 헤더 박스
 header_html = f"""
 <div class="header-container">
-    <h1 class="main-title">AI 기반 배터리 성능.환경 영향 시뮬레이터</h1>
+    <h1 class="main-title">AI 기반 배터리 성능·환경 영향 시뮬레이터</h1>
     <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
 </div>
 """
@@ -385,7 +381,7 @@ with tab_home:
     st.markdown("---")
     
     # [Team Member Section]
-    st.markdown("<h3 style='color: #1B5E20; margin-bottom: 20px;'> Group Member 👥 </h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #1B5E20; margin-bottom: 20px;'> Group Memeber 👥 </h3>", unsafe_allow_html=True)
     
     cols = st.columns(2) 
     
@@ -414,29 +410,44 @@ with tab_home:
                 </div>
             </div>
             """, unsafe_allow_html=True)
-# ==========================================================================
-    # [추가] 하단 푸터 로고 (Bottom Right Footer Logo)
+
+    # ==========================================================================
+    # [추가] 하단 푸터 로고 (Bottom Right Footer Logo) - 두 개 모두 표시
     # ==========================================================================
     st.write("")  # 여백 추가
     st.write("")
     
-    # CE.png (아주대 화학공학과) 또는 01_(국영문)공과대학.png 중 원하는 파일명 입력
-    footer_file = "CE.png"  
-    footer_b64 = get_base64_image(footer_file)
+    # 파일명 정의
+    file_ce = "CE.png"
+    file_eng = "01_(국영문)공과대학.png"
+    
+    # Base64 변환
+    b64_ce = get_base64_image(file_ce)
+    b64_eng = get_base64_image(file_eng)
 
-    if footer_b64:
-        st.markdown(f"""
+    # HTML 생성 (Flexbox를 사용하여 두 로고를 우측 정렬)
+    # 이미지가 로드된 경우에만 표시
+    if b64_ce or b64_eng:
+        
+        # 이미지 태그 생성 함수 (내부용)
+        def make_img_html(b64_str, width="280px"):
+            if not b64_str: return ""
+            return f'<img src="data:image/png;base64,{b64_str}" style="width: {width}; max-width: 100%; opacity: 0.9; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1)); margin-left: 20px;">'
+
+        html_content = f"""
         <div style="
             display: flex; 
             justify-content: flex-end;    /* 우측 정렬 */
             align-items: center; 
-            margin-top: 60px;             /* 위쪽 요소와의 간격 */
-            margin-bottom: 30px; 
+            flex-wrap: wrap;              /* 화면 작을 때 줄바꿈 */
+            margin-top: 80px;             /* 위쪽 요소와의 간격 */
+            margin-bottom: 40px; 
             padding-right: 10px;">
-            <img src="data:image/png;base64,{footer_b64}" 
-                 style="width: 300px; opacity: 0.9; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));">
+            {make_img_html(b64_ce, width="300px")}
+            {make_img_html(b64_eng, width="320px")}
         </div>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(html_content, unsafe_allow_html=True)
 
 # ------------------------------------------------------------------------------
 # TAB 2: Engine 1
