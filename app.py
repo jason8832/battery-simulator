@@ -385,7 +385,7 @@ with tab_home:
     st.markdown("---")
     
     # [Team Member Section]
-    st.markdown("<h3 style='color: #1B5E20; margin-bottom: 20px;'>👥 Meet Team 25</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #1B5E20; margin-bottom: 20px;'> Group Member 👥 </h3>", unsafe_allow_html=True)
     
     cols = st.columns(2) 
     
