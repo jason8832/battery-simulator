@@ -412,37 +412,28 @@ with tab_home:
             """, unsafe_allow_html=True)
 
     # ==========================================================================
-    # [추가] 하단 푸터 로고 (Bottom Right Footer Logo) - 두 개 모두 표시
+    # [수정] 하단 푸터 로고 (Bottom Right Footer Logo) - 공과대학 로고만 표시
     # ==========================================================================
     st.write("")  # 여백 추가
     st.write("")
     
     # 파일명 정의
-
     file_eng = "01_(국영문)공과대학.png"
     
     # Base64 변환
-    
     b64_eng = get_base64_image(file_eng)
 
-
-        
-        # 이미지 태그 생성 함수 (내부용)
-        def make_img_html(b64_str, width="280px"):
-            if not b64_str: return ""
-            return f'<img src="data:image/png;base64,{b64_str}" style="width: {width}; max-width: 100%; opacity: 0.9; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1)); margin-left: 20px;">'
-
+    if b64_eng:
         html_content = f"""
         <div style="
             display: flex; 
             justify-content: flex-end;    /* 우측 정렬 */
             align-items: center; 
-            flex-wrap: wrap;              /* 화면 작을 때 줄바꿈 */
             margin-top: 80px;             /* 위쪽 요소와의 간격 */
             margin-bottom: 40px; 
             padding-right: 10px;">
-            {make_img_html(b64_ce, width="300px")}
-            {make_img_html(b64_eng, width="320px")}
+            <img src="data:image/png;base64,{b64_eng}" 
+                 style="width: 320px; max-width: 100%; opacity: 0.9; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));">
         </div>
         """
         st.markdown(html_content, unsafe_allow_html=True)
