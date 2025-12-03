@@ -460,17 +460,17 @@ with tab_e1:
         if run_e1:
             with st.spinner("AI Analyzing..."):
                 # [수정됨] 그래프 라벨도 선택한 속도명과 일치시킴
-                if sample_type == "Slow Charge/Discharge": decay = 0.5; label = "Slow Charge/Discharge"; color = '#28a745'
-                elif sample_type == "Charge/Discharge": decay = 2.5; label = "Charge/Discharge"; color = '#fd7e14'
-                else: decay = 8.0; label = "Fast Charge/Discharge"; color = '#dc3545'
+                if sample_type == "Slow Charge/Discharge": decay = 0.5; label = "Perfectly Stable"; color = '#28a745'
+                elif sample_type == "Charge/Discharge": decay = 2.5; label = "Stable"; color = '#fd7e14'
+                else: decay = 8.0; label = "Unstable"; color = '#dc3545'
                 
                 cycles, capacity, ce = predict_life_and_ce(decay, init_cap_input, cycle_input)
                 
                 fig2, (ax_cap, ax_ce) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
                 ax_cap.plot(cycles[:100], capacity[:100], 'k-', linewidth=2.5, label='Input Data')
                 ax_cap.plot(cycles[100:], capacity[100:], '--', color=color, linewidth=2.5, label=f'Prediction ({label})')
-                ax_cap.set_ylabel("Capacity (mAh/g)", fontweight='bold')
-                ax_cap.set_title("Discharge Capacity Prediction", fontweight='bold')
+                ax_cap.set_ylabel("Specific Capacity (mAh/g)", fontweight='bold')
+                ax_cap.set_title("Performance Prediction", fontweight='bold')
                 ax_cap.legend(); ax_cap.grid(True, alpha=0.3)
                 
                 ax_ce.plot(cycles, ce, '-', color='#007bff', alpha=0.8)
@@ -630,7 +630,7 @@ with tab_data:
                 
                 ax.set_title(f"Model Validation - {csv_key}", fontweight='bold')
                 
-                # [수정됨] Y축 레이블 변경 - 요청 반영
+                # [수정됨] Y축 레이블 변경 - 요청 반영 (Specific Capacity로 복구됨)
                 ax.set_ylabel("Specific Capacity (mAh/g)")
                 ax.set_xlabel("Cycle Number")
                 ax.grid(True, alpha=0.3)
