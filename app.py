@@ -601,21 +601,43 @@ with tab_data:
                 st.markdown("#### 📂 실험 케이스 선택")
                 option = st.radio("데이터 선택:", ["Slow Charge/Discharge (Sample A)", " Charge/Discharge (Sample B)", "Fast Charge/Discharge (Sample C)"], key="t2_radio")
                 
-                if "Sample A" in option: key = "Sample A"; st.success("✅ **Perfectly Stable** (CMGG)")
-                elif "Sample B" in option: key = "Sample B"; st.warning("⚠️ **Stable** (PVDF)")
-                else: key = "Sample C"; st.error("🚫 **Unstable** (Abnormal)")
+                # CSV 데이터의 실제 Key 값으로 매핑
+                if "Sample A" in option:
+                    csv_key = "Slow Charge/Discharge"
+                    st.success("✅ **Perfectly Stable** (CMGG)")
+                elif "Sample B" in option:
+                    csv_key = "Charge/Discharge"  # 중간 옵션
+                    st.warning("⚠️ **Stable** (PVDF)")
+                else:
+                    csv_key = "Fast Charge/Discharge"
+                    st.error("🚫 **Unstable** (Abnormal)")
 
         with col_case_view:
-            data = df_results[df_results['Sample_Type'] == key]
+            # 매핑된 csv_key로 필터링
+            data = df_results[df_results['Sample_Type'] == csv_key]
+            
             if not data.empty:
                 hist = data[data['Data_Type'] == 'History']
                 pred = data[data['Data_Type'] == 'Prediction']
                 
                 fig, ax = plt.subplots(figsize=(10, 5))
-                ax.plot(hist['Cycle'], hist['Capacity'], 'o-', color='black', alpha=0.7, label='History')
+                
+                # [수정됨] 점 그래프(Scatter Plot)로 변경
+                # label='History'는 범례 표시용, s=30은 점 크기, alpha=0.7은 투명도
+                ax.scatter(hist['Cycle'], hist['Capacity'], color='black', alpha=0.7, s=30, label='History')
+                
+                # 예측값은 실선(점선) 유지 - 비교를 위해
                 ax.plot(pred['Cycle'], pred['Capacity'], '--', color='#dc3545', linewidth=2, label='Prediction')
-                ax.set_title(f"Model Validation - {key}", fontweight='bold')
-                ax.set_ylabel("Capacity (mAh/g)"); ax.grid(True, alpha=0.3); ax.legend()
+                
+                ax.set_title(f"Model Validation - {csv_key}", fontweight='bold')
+                ax.set_ylabel("Capacity (mAh/g)")
+                ax.set_xlabel("Cycle Number")
+                ax.grid(True, alpha=0.3)
+                ax.legend()
+                
                 st.pyplot(fig)
                 
-                st.info(f"📊 **AI Report**: 최종 용량 **{pred['Capacity'].iloc[-1]:.2f} mAh/g** 예측됨.")
+                if not pred.empty:
+                    st.info(f"📊 **AI Report**: 최종 용량 **{pred['Capacity'].iloc[-1]:.2f} mAh/g** 예측됨.")
+            else:
+                st.warning(f"⚠️ 선택하신 '{csv_key}'에 대한 데이터를 찾을 수 없습니다.")
