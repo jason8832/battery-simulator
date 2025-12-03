@@ -276,6 +276,11 @@ def load_real_case_data():
         current_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(current_dir, "engine1_output.csv")
         df = pd.read_csv(file_path)
+        
+        # 🚨 [중요 수정] 데이터의 앞뒤 공백을 제거하여 매칭 오류 방지
+        if 'Sample_Type' in df.columns:
+            df['Sample_Type'] = df['Sample_Type'].astype(str).str.strip()
+            
         return df
     except FileNotFoundError:
         return None
@@ -599,7 +604,7 @@ with tab_data:
         with col_case_input:
             with st.container(border=True): 
                 st.markdown("#### 📂 실험 케이스 선택")
-                option = st.radio("데이터 선택:", ["Slow Charge/Discharge (Sample A)", " Charge/Discharge (Sample B)", "Fast Charge/Discharge (Sample C)"], key="t2_radio")
+                option = st.radio("데이터 선택:", ["Slow Charge/Discharge (Sample A)", "Charge/Discharge (Sample B)", "Fast Charge/Discharge (Sample C)"], key="t2_radio")
                 
                 # CSV 데이터의 실제 Key 값으로 매핑
                 if "Sample A" in option:
@@ -613,7 +618,7 @@ with tab_data:
                     st.error("🚫 **Unstable** (Abnormal)")
 
         with col_case_view:
-            # 매핑된 csv_key로 필터링
+            # 매핑된 csv_key로 필터링 (공백 제거된 상태에서 매칭)
             data = df_results[df_results['Sample_Type'] == csv_key]
             
             if not data.empty:
@@ -622,11 +627,11 @@ with tab_data:
                 
                 fig, ax = plt.subplots(figsize=(10, 5))
                 
-                # [수정됨] 점 그래프(Scatter Plot)로 변경
-                # label='History'는 범례 표시용, s=30은 점 크기, alpha=0.7은 투명도
+                # [수정됨] 점 그래프(Scatter Plot) - 요청 반영
+                # alpha=0.7로 투명도 조절, s=30으로 점 크기 조절
                 ax.scatter(hist['Cycle'], hist['Capacity'], color='black', alpha=0.7, s=30, label='History')
                 
-                # 예측값은 실선(점선) 유지 - 비교를 위해
+                # 예측값은 실선(점선) 유지
                 ax.plot(pred['Cycle'], pred['Capacity'], '--', color='#dc3545', linewidth=2, label='Prediction')
                 
                 ax.set_title(f"Model Validation - {csv_key}", fontweight='bold')
