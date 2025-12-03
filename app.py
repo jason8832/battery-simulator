@@ -599,7 +599,7 @@ with tab_data:
                 option = st.radio("데이터 선택:", ["Slow Charge/Discharge", "Charge/Discharge", "Fast Charge/Discharge"], key="t2_radio")
                 
                 # CSV 데이터의 실제 Key 값으로 매핑
-                if "Sample A" in option:
+                if "Slow Charge/Discharge" in option:
                     csv_key = "Slow Charge/Discharge"
                     st.success("✅ **Stable**")
                 elif "Sample B" in option:
