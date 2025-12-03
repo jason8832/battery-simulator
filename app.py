@@ -92,7 +92,9 @@ if bg_base64:
         background-position: center;
         background-repeat: no-repeat;
     """
-
+else:
+    header_bg_style = "background-color: #BBDEFB;"
+    
 # ------------------------------------------------------------------------------
 # 3. CSS 스타일링 (초강력 수정 버전)
 # ------------------------------------------------------------------------------
