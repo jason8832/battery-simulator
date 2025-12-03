@@ -425,9 +425,7 @@ with tab_home:
     
     b64_eng = get_base64_image(file_eng)
 
-    # HTML 생성 (Flexbox를 사용하여 두 로고를 우측 정렬)
-    # 이미지가 로드된 경우에만 표시
-    if b64_ce or b64_eng:
+
         
         # 이미지 태그 생성 함수 (내부용)
         def make_img_html(b64_str, width="280px"):
