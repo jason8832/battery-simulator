@@ -101,10 +101,10 @@ st.markdown(f"""
         background-color: #DAE0DD; 
     }}
     
-    /* 좌측 조건 설정 네모칸 강제 스타일링 */
+    /* 좌측 조건 설정 네모칸 및 테두리 강제 스타일링 (수정됨) */
     [data-testid="stVerticalBlockBorderWrapper"] {{
-        background-color: #FFFFFF !important;
-        border: 3px solid #1B5E20 !important;
+        background-color: #B1B6B0 !important;  /* 요청하신 배경색 적용 */
+        border: 5px solid #1B5E20 !important;  /* 테두리 굵기 증가 (3px -> 5px) */
         border-radius: 15px !important;       
         padding: 20px !important;              
         box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
@@ -135,7 +135,7 @@ st.markdown(f"""
         background-color: rgba(255, 255, 255, 0.7);
         padding: 5px 15px;
         border-radius: 10px;
-        border: 2px solid #2E7D32;
+        border: none; /* 요청하신 대로 테두리 제거 */
     }}
 
     .top-left-logo {{ height: 120px; width: auto; object-fit: contain; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3)); }}
@@ -537,40 +537,42 @@ with tab_e2:
                 
                 st.divider()
                 
-                st.markdown("#### 📋 Scientific Basis & Comparative Analysis")
-                
-                with st.expander("ℹ️ 산출 근거 및 상세 분석 (Click to expand)", expanded=True):
-                    st.markdown("##### 1. VOC & Solvent Toxicity")
-                    if s_solvent == "NMP": st.write("🔴 **NMP (유기용매):** 높은 독성 및 VOC 발생. 배기 정화 설비 필수.")
-                    else: st.write("🟢 **Water (수계용매):** 무독성, VOC 배출 없음 (수증기). 친환경 공정.")
+                # [수정] 아래 섹션도 왼쪽 설정 박스와 동일한 스타일 적용 (배경색 및 테두리)
+                with st.container(border=True):
+                    st.markdown("#### 📋 Scientific Basis & Comparative Analysis")
+                    
+                    with st.expander("ℹ️ 산출 근거 및 상세 분석 (Click to expand)", expanded=True):
+                        st.markdown("##### 1. VOC & Solvent Toxicity")
+                        if s_solvent == "NMP": st.write("🔴 **NMP (유기용매):** 높은 독성 및 VOC 발생. 배기 정화 설비 필수.")
+                        else: st.write("🟢 **Water (수계용매):** 무독성, VOC 배출 없음 (수증기). 친환경 공정.")
 
-                    st.markdown("##### 2. CO₂ & Binder Chemistry")
-                    if "PVDF" in s_binder: st.write("🔴 **PVDF (불소계):** 높은 GWP(지구온난화지수), 폐기 시 환경 부담 큼.")
-                    else: st.write(f"🟢 **{s_binder} (바이오/수계):** 천연 유래 소재, 낮은 탄소 발자국.")
+                        st.markdown("##### 2. CO₂ & Binder Chemistry")
+                        if "PVDF" in s_binder: st.write("🔴 **PVDF (불소계):** 높은 GWP(지구온난화지수), 폐기 시 환경 부담 큼.")
+                        else: st.write(f"🟢 **{s_binder} (바이오/수계):** 천연 유래 소재, 낮은 탄소 발자국.")
 
-                    st.markdown("##### 3. Process Energy (Drying)")
-                    bp = 204.1 if s_solvent == "NMP" else 100
-                    st.write(f"Solvent BP: **{bp}°C** vs Drying Temp: **{s_temp}°C**")
-                    
-                    st.divider()
-                    st.markdown("##### 📊 Impact Comparison (vs NMP/PVDF Reference)")
-                    
-                    ref_vals = calculate_lca_impact("PVDF", "NMP", 130, s_loading, 60)[:3]
-                    cur_vals = [co2, energy, voc]
-                    
-                    fig, ax = plt.subplots(figsize=(8, 4))
-                    x = np.arange(3); width = 0.35
-                    rects1 = ax.bar(x - width/2, ref_vals, width, label='Ref (NMP/PVDF)', color='#FF8A80', alpha=0.7)
-                    rects2 = ax.bar(x + width/2, cur_vals, width, label='Current Settings', color='#69F0AE', edgecolor='k')
-                    ax.set_xticks(x); ax.set_xticklabels(['CO₂', 'Energy', 'VOC'])
-                    ax.set_ylabel('Impact Value'); ax.legend(); ax.grid(axis='y', linestyle=':')
-                    
-                    def autolabel(rects):
-                        for rect in rects:
-                            h = rect.get_height()
-                            ax.annotate(f'{h:.2f}', xy=(rect.get_x()+rect.get_width()/2, h), xytext=(0,3), textcoords="offset points", ha='center', fontsize=9)
-                    autolabel(rects1); autolabel(rects2)
-                    st.pyplot(fig)
+                        st.markdown("##### 3. Process Energy (Drying)")
+                        bp = 204.1 if s_solvent == "NMP" else 100
+                        st.write(f"Solvent BP: **{bp}°C** vs Drying Temp: **{s_temp}°C**")
+                        
+                        st.divider()
+                        st.markdown("##### 📊 Impact Comparison (vs NMP/PVDF Reference)")
+                        
+                        ref_vals = calculate_lca_impact("PVDF", "NMP", 130, s_loading, 60)[:3]
+                        cur_vals = [co2, energy, voc]
+                        
+                        fig, ax = plt.subplots(figsize=(8, 4))
+                        x = np.arange(3); width = 0.35
+                        rects1 = ax.bar(x - width/2, ref_vals, width, label='Ref (NMP/PVDF)', color='#FF8A80', alpha=0.7)
+                        rects2 = ax.bar(x + width/2, cur_vals, width, label='Current Settings', color='#69F0AE', edgecolor='k')
+                        ax.set_xticks(x); ax.set_xticklabels(['CO₂', 'Energy', 'VOC'])
+                        ax.set_ylabel('Impact Value'); ax.legend(); ax.grid(axis='y', linestyle=':')
+                        
+                        def autolabel(rects):
+                            for rect in rects:
+                                h = rect.get_height()
+                                ax.annotate(f'{h:.2f}', xy=(rect.get_x()+rect.get_width()/2, h), xytext=(0,3), textcoords="offset points", ha='center', fontsize=9)
+                        autolabel(rects1); autolabel(rects2)
+                        st.pyplot(fig)
 
         else:
             st.info("좌측 패널에서 공정 조건을 설정하고 [Engine 2 계산 실행]을 눌러주세요.")
