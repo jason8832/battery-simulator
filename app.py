@@ -590,7 +590,7 @@ with tab_data:
     st.markdown(header_html, unsafe_allow_html=True)
     
     st.subheader("Our Data. 실제 실험 데이터 검증 ")
-    st.markdown("  직접 수행한 실험 데이터*를 기반으로 Engine 1 Mechanism의 예측 정확도를 검증합니다.")
+    st.markdown("  직접 수행한 실험 데이터를 기반으로 Engine 1 Mechanism의 예측 정확도를 검증합니다.")
     st.divider()
 
     df_results = load_real_case_data()
