@@ -599,7 +599,7 @@ with tab_data:
         with col_case_input:
             with st.container(border=True): 
                 st.markdown("#### 📂 실험 케이스 선택")
-                option = st.radio("데이터 선택:", ["초고속 충전 (Sample A)", "고속 충전 (Sample B)", "저속 충전 (Sample C)"], key="t2_radio")
+                option = st.radio("데이터 선택:", ["Slow Charge/Discharge (Sample A)", " Charge/Discharge (Sample B)", "Fast Charge/Discharge (Sample C)"], key="t2_radio")
                 
                 if "Sample A" in option: key = "Sample A"; st.success("✅ **Perfectly Stable** (CMGG)")
                 elif "Sample B" in option: key = "Sample B"; st.warning("⚠️ **Stable** (PVDF)")
