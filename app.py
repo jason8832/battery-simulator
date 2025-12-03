@@ -83,7 +83,7 @@ tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-rig
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
 # 2. 상단 배경 이미지
-bg_base64 = get_base64_image("background.jpg")
+bg_base64 = get_base64_image("background.jpeg")
 
 if bg_base64:
     header_bg_style = f"""
@@ -92,8 +92,6 @@ if bg_base64:
         background-position: center;
         background-repeat: no-repeat;
     """
-else:
-    header_bg_style = "background-color: #BBDEFB;"
 
 # ------------------------------------------------------------------------------
 # 3. CSS 스타일링 (초강력 수정 버전)
