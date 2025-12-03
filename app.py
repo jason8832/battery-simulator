@@ -605,9 +605,9 @@ with tab_data:
                 elif "Charge/Discharge" in option:
                     csv_key = "Charge/Discharge"  # 중간 옵션
                     st.warning("⚠️ **Normal** ")
-                else:
-                    csv_key = "Fast Charge/Discharge"
-                    st.error("🚫 **Unstable**")
+                elif "Fast Charge/Discharge" in option:
+                    csv_key = "Fast Charge/Discharge"  # 중간 옵션
+                    st.warning("🚫 **Unstable** ")
 
         with col_case_view:
             # 매핑된 csv_key로 필터링 (공백 제거된 상태에서 매칭)
