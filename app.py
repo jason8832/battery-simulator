@@ -418,11 +418,11 @@ with tab_home:
     st.write("")
     
     # 파일명 정의
-    file_ce = "CE.png"
+
     file_eng = "01_(국영문)공과대학.png"
     
     # Base64 변환
-    b64_ce = get_base64_image(file_ce)
+    
     b64_eng = get_base64_image(file_eng)
 
     # HTML 생성 (Flexbox를 사용하여 두 로고를 우측 정렬)
