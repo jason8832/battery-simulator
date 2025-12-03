@@ -598,22 +598,7 @@ with tab_data:
                 st.markdown("#### 📂 실험 케이스 선택")
                 option = st.radio("데이터 선택:", ["Slow Charge/Discharge (Sample A)", "Charge/Discharge (Sample B)", "Fast Charge/Discharge (Sample C)"], key="t2_radio")
                 
-                # [수정됨] SyntaxError 해결 및 논리적 오류 방지 (in -> ==)
-                if "Slow Charge/Discharge" in option:
-                    csv_key = "Slow Charge/Discharge"
-                    st.success("✅ **Perfectly Stable** (CMGG)")
-                elif "Charge/Discharge" in option: # 문자열 포함 관계 주의 (Fast에도 Charge/Discharge가 포함됨) -> 순서 중요하거나 == 사용 권장
-                    # 여기서는 라디오 버튼 값이 고유하므로 == 사용이 안전함. 
-                    # 하지만 기존 로직 유지를 위해 elif로 수정하고, Fast가 먼저 걸리지 않게 주의.
-                    # Fast가 제일 마지막 else로 빠지거나, 명시적 elif로 처리.
-                    # 안전하게 == 로 변경합니다.
-                    if option == "Charge/Discharge (Sample B)": # 라디오 버튼 값 전체 매칭
-                         csv_key = "Charge/Discharge"
-                         st.warning("⚠️ **Stable** (PVDF)")
-                    else: # Sample B가 아니라면 남은건... 로직이 복잡해지니 아래와 같이 깔끔하게 정리
-                        pass
-
-                # [최종 수정된 로직]
+                # [수정됨] 중복 로직 제거하고 하나만 남김
                 if "Sample A" in option:
                     csv_key = "Slow Charge/Discharge"
                     st.success("✅ **Perfectly Stable** (CMGG)")
