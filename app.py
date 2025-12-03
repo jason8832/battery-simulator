@@ -414,6 +414,29 @@ with tab_home:
                 </div>
             </div>
             """, unsafe_allow_html=True)
+# ==========================================================================
+    # [추가] 하단 푸터 로고 (Bottom Right Footer Logo)
+    # ==========================================================================
+    st.write("")  # 여백 추가
+    st.write("")
+    
+    # CE.png (아주대 화학공학과) 또는 01_(국영문)공과대학.png 중 원하는 파일명 입력
+    footer_file = "CE.png"  
+    footer_b64 = get_base64_image(footer_file)
+
+    if footer_b64:
+        st.markdown(f"""
+        <div style="
+            display: flex; 
+            justify-content: flex-end;    /* 우측 정렬 */
+            align-items: center; 
+            margin-top: 60px;             /* 위쪽 요소와의 간격 */
+            margin-bottom: 30px; 
+            padding-right: 10px;">
+            <img src="data:image/png;base64,{footer_b64}" 
+                 style="width: 300px; opacity: 0.9; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));">
+        </div>
+        """, unsafe_allow_html=True)
 
 # ------------------------------------------------------------------------------
 # TAB 2: Engine 1
