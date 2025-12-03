@@ -447,8 +447,9 @@ with tab_e1:
     with col_input:
         # [확인용] CSS에서 div[data-testid="stVerticalBlockBorderWrapper"]를 강제로 스타일링 중입니다.
         with st.container(border=True): 
-            st.markdown("#### 🔋 샘플 안정도 설정")
-            sample_type = st.radio("패턴 선택", ["Perfectly Stable", "Stable", "Unstable"], label_visibility="collapsed", key="t1_radio")
+            st.markdown("#### 🔋 충/방전 속도")
+            # [수정됨] Engine 1 선택 목록을 속도별(Slow/Charge/Fast)로 유지
+            sample_type = st.radio("패턴 선택", ["Slow Charge/Discharge", "Charge/Discharge", "Fast Charge/Discharge"], label_visibility="collapsed", key="t1_radio")
             st.divider()
             st.markdown("#### ⚙️ 예측 조건 설정")
             init_cap_input = st.number_input("Initial Capacity (mAh/g)", 100.0, 400.0, 350.0)
@@ -458,9 +459,10 @@ with tab_e1:
     with col_view:
         if run_e1:
             with st.spinner("AI Analyzing..."):
-                if sample_type == "Perfectly Stable": decay = 0.5; label = "Perfectly Stable"; color = '#28a745'
-                elif sample_type == "Stable": decay = 2.5; label = "Stable"; color = '#fd7e14'
-                else: decay = 8.0; label = "Unstable"; color = '#dc3545'
+                # [수정됨] 그래프 라벨도 선택한 속도명과 일치시킴
+                if sample_type == "Slow Charge/Discharge": decay = 0.5; label = "Slow Charge/Discharge"; color = '#28a745'
+                elif sample_type == "Charge/Discharge": decay = 2.5; label = "Charge/Discharge"; color = '#fd7e14'
+                else: decay = 8.0; label = "Fast Charge/Discharge"; color = '#dc3545'
                 
                 cycles, capacity, ce = predict_life_and_ce(decay, init_cap_input, cycle_input)
                 
@@ -596,18 +598,19 @@ with tab_data:
         with col_case_input:
             with st.container(border=True): 
                 st.markdown("#### 📂 실험 케이스 선택")
-                option = st.radio("데이터 선택:", ["Slow Charge/Discharge (Sample A)", "Charge/Discharge (Sample B)", "Fast Charge/Discharge (Sample C)"], key="t2_radio")
+                # [수정됨] 괄호 내용 삭제 (Sample A/B/C)
+                option = st.radio("데이터 선택:", ["Slow Charge/Discharge", "Charge/Discharge", "Fast Charge/Discharge"], key="t2_radio")
                 
-                # [수정됨] 중복 로직 제거하고 하나만 남김
-                if "Sample A" in option:
+                # [수정됨] 안내문구에서 괄호 삭제 (CMGG, PVDF 등)
+                if option == "Slow Charge/Discharge":
                     csv_key = "Slow Charge/Discharge"
-                    st.success("✅ **Perfectly Stable** (CMGG)")
-                elif "Sample B" in option:
+                    st.success("✅ **Perfectly Stable**")
+                elif option == "Charge/Discharge":
                     csv_key = "Charge/Discharge"
-                    st.warning("⚠️ **Stable** (PVDF)")
-                else: # Sample C
+                    st.warning("⚠️ **Stable**")
+                else: 
                     csv_key = "Fast Charge/Discharge"
-                    st.error("🚫 **Unstable** (Abnormal)")
+                    st.error("🚫 **Unstable**")
 
         with col_case_view:
             # 매핑된 csv_key로 필터링 (공백 제거된 상태에서 매칭)
