@@ -348,7 +348,7 @@ tab_home, tab_e1, tab_e2, tab_data = st.tabs([
 header_html = f"""
 <div class="header-container">
     <h1 class="main-title">AI 기반 배터리 성능·환경 영향 시뮬레이터</h1>
-    <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인</div>
+    <div class="sub-title">Team 스물다섯 | Google-아주대학교 AI 융합 캡스톤 디자인 프로젝트</div>
 </div>
 """
 
