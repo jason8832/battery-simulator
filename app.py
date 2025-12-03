@@ -82,18 +82,8 @@ tag_ajou_sw = get_img_tag("ajou_sw_logo.png", "Ajou SW", css_class="top-right-lo
 tag_ajou    = get_img_tag("ajou_logo.png", "Ajou University", css_class="top-right-logo")
 tag_google  = get_img_tag("google_logo.png", "Google", css_class="top-right-logo")
 
-# 2. 상단 배경 이미지
-bg_base64 = get_base64_image("baound.jpeg")
-
-if bg_base64:
-    header_bg_style = f"""
-        background-image: url("data:image/jpeg;base64,{bg_base64}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-    """
-else:
-    header_bg_style = "background-color: #DAE0DD;"
+# 2. 상단 배경 설정 (이미지 로직 제거하고 단색 적용)
+header_bg_style = "background-color: #DAE0DD;"
     
 # ------------------------------------------------------------------------------
 # 3. CSS 스타일링
@@ -136,7 +126,6 @@ st.markdown(f"""
         border-radius: 0 0 20px 20px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         border-bottom: 3px solid #2E7D32;
-        background-color: white; 
     }}
     
     .logo-group-right {{
