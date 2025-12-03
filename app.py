@@ -104,7 +104,7 @@ st.markdown(f"""
     /* 좌측 조건 설정 네모칸 및 테두리 강제 스타일링 (수정됨) */
     [data-testid="stVerticalBlockBorderWrapper"] {{
         background-color: #B1B6B0 !important;  /* 요청하신 배경색 적용 */
-        border: 5px solid #1B5E20 !important;  /* 테두리 굵기 증가 (3px -> 5px) */
+        border: 10px solid #1B5E20 !important;  /* 테두리 굵기 증가 (3px -> 5px) */
         border-radius: 15px !important;       
         padding: 20px !important;              
         box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
