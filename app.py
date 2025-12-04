@@ -277,10 +277,12 @@ st.markdown(f"""
             padding: 20px 10px;
         }}
         .main-title {{
-            font-size: 1.8rem;
+            font-size: 1.5rem; /* [추천] 1.8rem -> 1.5rem으로 축소하여 모바일 최적화 */
+            line-height: 1.4;  /* 줄바꿈 시 간격 확보 */
+            word-break: keep-all; /* 단어 단위로 줄바꿈 */
         }}
         .hero-title {{
-            font-size: 2.2rem;
+            font-size: 2.0rem; /* Hero 섹션 제목도 비율에 맞춰 약간 축소 */
         }}
         .persona-card {{
             flex-direction: column;
