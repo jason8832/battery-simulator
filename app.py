@@ -181,7 +181,7 @@ st.markdown(f"""
         box-shadow: 0 8px 16px rgba(0,0,0,0.15);
     }}
     .main-title {{
-        font-size: 2.3rem;
+        font-size: 2.0rem;
         font-weight: 900;
         color: #1B5E20;
         margin: 0;
