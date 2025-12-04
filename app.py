@@ -406,7 +406,7 @@ with tab_home:
     st.markdown("""
     <div class="hero-container">
         <div class="hero-title">To make the world greener <br>and sustainable</div>
-        <div class="hero-subtitle">초격차 기술력을 통해 지속가능한 · 친환경 미래 사회 구현</div>
+        
     </div>
     """, unsafe_allow_html=True)
 
