@@ -254,8 +254,49 @@ st.markdown(f"""
     .persona-role {{ font-size: 0.85rem; color: #555; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; background-color: #E8F5E9; padding: 2px 8px; border-radius: 4px; display: inline-block; }}
     .persona-desc {{ font-size: 0.95rem; color: #333; line-height: 1.5; margin-bottom: 12px; }}
     .tag-badge {{ background-color: #E3F2FD; color: #1565C0; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; margin-right: 5px; display: inline-block; margin-top: 2px; }}
+/* [추가됨] 모바일 반응형 디자인 (Media Query) */
+    @media (max-width: 768px) {
+        .top-header-bar {
+            flex-direction: column;
+            height: auto;
+            padding: 10px;
+        }
+        .logo-group-right {
+            margin-top: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .top-left-logo {
+            height: 80px;
+            margin-bottom: 5px;
+        }
+        .top-right-logo {
+            height: 25px;
+        }
+        .header-container {
+            padding: 20px 10px;
+        }
+        .main-title {
+            font-size: 1.8rem;
+        }
+        .hero-title {
+            font-size: 2.2rem;
+        }
+        .persona-card {
+            flex-direction: column;
+            text-align: center;
+        }
+        .persona-img {
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+        .persona-content {
+            text-align: center;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
+
 
 # ==============================================================================
 # [함수 정의] 계산 로직
