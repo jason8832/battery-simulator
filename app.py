@@ -462,21 +462,26 @@ with tab_e1:
     with col_view:
         if run_e1:
             with st.spinner("AI Analyzing..."):
-                # [수정됨] 그래프 라벨도 선택한 속도명과 일치시킴
-                if sample_type == "Slow Charge/Discharge": decay = 0.5; label = "Perfectly Stable"; color = '#28a745'
-                elif sample_type == "Charge/Discharge": decay = 2.5; label = "Stable"; color = '#fd7e14'
-                else: decay = 8.0; label = "Unstable"; color = '#dc3545'
+                # [유지] 그래프 라벨도 선택한 속도명과 일치시킴
+                if sample_type == "Slow Charge/Discharge": decay = 0.5; label = "Slow Charge/Discharge"; color = '#28a745'
+                elif sample_type == "Charge/Discharge": decay = 2.5; label = "Charge/Discharge"; color = '#fd7e14'
+                else: decay = 8.0; label = "Fast Charge/Discharge"; color = '#dc3545'
                 
                 cycles, capacity, ce = predict_life_and_ce(decay, init_cap_input, cycle_input)
                 
                 fig2, (ax_cap, ax_ce) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
-                ax_cap.plot(cycles[:100], capacity[:100], 'k-', linewidth=2.5, label='Input Data')
-                ax_cap.plot(cycles[100:], capacity[100:], '--', color=color, linewidth=2.5, label=f'Prediction ({label})')
+                
+                # [수정됨] plot() -> scatter()로 변경 (Engine 1 그래프)
+                ax_cap.scatter(cycles[:100], capacity[:100], color='black', s=15, alpha=0.6, label='Input Data')
+                ax_cap.scatter(cycles[100:], capacity[100:], color=color, s=15, alpha=0.6, label=f'Prediction ({label})')
+                
+                # [유지] Y축 이름: Specific Capacity (mAh/g)
                 ax_cap.set_ylabel("Specific Capacity (mAh/g)", fontweight='bold')
                 ax_cap.set_title("Performance Prediction", fontweight='bold')
                 ax_cap.legend(); ax_cap.grid(True, alpha=0.3)
                 
-                ax_ce.plot(cycles, ce, '-', color='#007bff', alpha=0.8)
+                # [수정됨] CE 그래프도 일관성을 위해 scatter로 변경
+                ax_ce.scatter(cycles, ce, color='#007bff', s=15, alpha=0.6)
                 ax_ce.set_ylabel("Coulombic Efficiency (%)", fontweight='bold')
                 ax_ce.set_xlabel("Cycle Number", fontweight='bold')
                 ax_ce.set_ylim(98.0 if decay > 5.0 else 99.5, 100.1)
@@ -490,7 +495,6 @@ with tab_e1:
                     st.error(f"⚠️ **Warning:** 약 **{eol_cycle[0]} Cycle**에서 수명이 80%({eol_limit:.1f} mAh/g) 이하로 떨어집니다.")
                 else:
                     st.success(f"✅ **Stable:** {cycle_input} Cycle까지 안정적입니다.")
-
 # ------------------------------------------------------------------------------
 # TAB 3: Engine 2 
 # ------------------------------------------------------------------------------
