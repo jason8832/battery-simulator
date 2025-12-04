@@ -181,8 +181,8 @@ st.markdown(f"""
         box-shadow: 0 8px 16px rgba(0,0,0,0.15);
     }}
     .main-title {{
-        font-size: 1.5rem;
-        font-weight: 900;
+        font-size: 2.8rem;
+        font-weight: 500;
         color: #1B5E20;
         margin: 0;
         letter-spacing: -1px;
